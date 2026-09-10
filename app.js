@@ -11,13 +11,14 @@ const CONFIG = {
   day40Date: "2026-09-27T00:00:00-04:00",
   birthdayFinale: "2026-11-06T00:00:00-05:00",
 
-  // Replace this later with the real Day 40 YouTube URL.
-  day40VideoUrl: "https://www.youtube.com/",
+  // Temporary Day 40 test video supplied by RK.
+  day40VideoUrl: "https://youtu.be/z3DiPjZfbFY",
 
   acceptedAnswers: ["dubai"]
 };
 
 document.getElementById('openPuzzleBtn').addEventListener('click', () => show('puzzle'));
+
 document.querySelectorAll('[data-back]').forEach(btn => {
   btn.addEventListener('click', () => show(btn.dataset.back));
 });
@@ -52,24 +53,21 @@ function checkAnswer() {
   }
 }
 
-document.getElementById('showQrBtn').addEventListener('click', () => {
+document.getElementById('showVideoOptionsBtn').addEventListener('click', () => {
   makeQr(CONFIG.day40VideoUrl);
-  show('qr');
+  show('video');
 });
 
-document.getElementById('openVideoBtn').addEventListener('click', () => {
-  window.open(CONFIG.day40VideoUrl, '_blank', 'noopener');
+document.getElementById('watchVideoBtn').addEventListener('click', () => {
+  window.location.href = CONFIG.day40VideoUrl;
 });
 
-// Uses a public QR image endpoint only for the prototype.
-// Production version can bundle QR generation locally/offline.
 function makeQr(url) {
   const q = encodeURIComponent(url);
   document.getElementById('qrImage').src =
     `https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${q}`;
 }
 
-// Installable PWA
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
 }

@@ -29,7 +29,7 @@ h2{font-size:31px;margin:8px 0 18px}
 .hero-card,.puzzle-card,.qr-wrap{background:rgba(26,26,40,.88);border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 50px rgba(0,0,0,.28);border-radius:24px}
 .hero-card{padding:30px 20px;margin:28px 0 22px}
 .name{font-size:28px;font-weight:800}
-.sub{color:var(--muted)}
+.sub{color:var(--muted);line-height:1.5}
 .day-number{font-size:52px;font-weight:900;color:var(--accent);margin:20px 0 2px}
 .date{color:var(--muted)}
 .puzzle-card{padding:26px 22px;margin-bottom:20px;line-height:1.6}
@@ -40,9 +40,13 @@ button{width:100%;padding:15px 18px;margin-top:11px;border-radius:16px;border:no
 .primary{background:linear-gradient(135deg,var(--accent),#7a6cff);color:#fff}
 .secondary{background:#263049;color:var(--cyan)}
 .ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.10)}
+.video-button{font-size:18px;padding:18px 20px}
 .feedback{min-height:24px;font-weight:700}
 .feedback.bad{color:var(--danger)}
 .feedback.good{color:var(--success)}
 .tiny{font-size:12px;color:var(--muted);margin-top:16px}
-.qr-wrap{padding:22px;margin:20px auto;width:min(86vw,330px)}
-.qr-wrap img{display:block;width:100%;height:auto;border-radius:10px;background:#fff}
+.qr-wrap{padding:20px;margin:18px auto;width:min(78vw,300px);background:#fff}
+.qr-wrap img{display:block;width:100%;height:auto;border-radius:8px;background:#fff}
+.divider{display:flex;align-items:center;gap:12px;margin:28px 0 10px;color:var(--muted)}
+.divider span{height:1px;background:rgba(255,255,255,.14);flex:1}
+.divider em{font-style:normal;font-size:13px;font-weight:800;letter-spacing:1px}

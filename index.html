@@ -18,8 +18,8 @@
       <div class="hero-card">
         <div class="name">Mika</div>
         <div class="sub">Your adventure begins soon…</div>
-        <div id="dayLabel" class="day-number">DAY 40</div>
-        <div id="dateLabel" class="date">September 27, 2026</div>
+        <div class="day-number">DAY 40</div>
+        <div class="date">September 27, 2026</div>
       </div>
 
       <button id="openPuzzleBtn" class="primary">OPEN DAY 40</button>
@@ -35,9 +35,7 @@
           Forty days before you entered this world,<br>
           your story had already begun.
         </p>
-        <p>
-          Your mother could have been anywhere on Earth…
-        </p>
+        <p>Your mother could have been anywhere on Earth…</p>
         <p class="question">
           Can you name the city where she may have been physically present?
         </p>
@@ -55,19 +53,24 @@
       <h2>CORRECT!</h2>
       <p>You found the first clue.</p>
       <p class="sub">Your surprise is waiting…</p>
-      <button id="showQrBtn" class="primary">SHOW QR CODE</button>
+      <button id="showVideoOptionsBtn" class="primary">OPEN TODAY'S SURPRISE</button>
     </section>
 
-    <section id="qr" class="screen">
+    <section id="video" class="screen">
       <div class="eyebrow">DAY 40 UNLOCKED</div>
       <h2>A message is waiting for you.</h2>
+
+      <button id="watchVideoBtn" class="primary video-button">▶ WATCH TODAY'S VIDEO</button>
+
+      <div class="divider">
+        <span></span><em>OR</em><span></span>
+      </div>
 
       <div class="qr-wrap">
         <img id="qrImage" alt="QR code for today's video" />
       </div>
 
-      <p class="sub">Scan the code, or tap below.</p>
-      <button id="openVideoBtn" class="primary">OPEN VIDEO</button>
+      <p class="sub">Using a laptop or another device?<br>Scan this QR code with your phone.</p>
       <button data-back="success" class="ghost">BACK</button>
     </section>
   </main>
