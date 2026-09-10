@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0d1422">
 <title>MIKA'S JOURNEY TO 40</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=14">
+<link rel="stylesheet" href="styles.css?v=15">
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
@@ -15,15 +15,12 @@
 <section id="home" class="screen active">
   <header class="masthead">
     <div class="sigil">✦</div>
-    <div class="overline">A FORTY-DAY MYSTERY</div>
-    <h1>MIKA'S <span>40</span> EXITS</h1>
-    <p class="tagline">Some mystries are meant to be unlocked.</p>
+    <div class="journey-intro">
+      A 40-DAY JOURNEY HAS BEGUN. ONE MYSTERY AWAITS EACH DAY.<br>
+      SOLVE THE MYSTERY, UNLOCK THE EXITS, GRAB THE SURPRISE GIFTS.
+    </div>
+    <h1>MIKA'S JOURNEY WITH <span>40</span> EXITS</h1>
   </header>
-
-  <section class="welcome-card">
-    <div class="overline">THE JOURNEY HAS BEGUN</div>
-    <p>One mystery awaits you each day.<br>Solve the mystery. Unlock the surprise.</p>
-  </section>
 
   <section class="score-card" aria-label="Scoreboard">
     <div class="score-title">MIKA <span>vs.</span> THE MYSTERY</div>
@@ -46,7 +43,7 @@
   <p id="emptyState" class="empty-state hidden">Your first mystery has not been revealed yet.</p>
 
   <div class="test-tools">
-    <div>v1.4 TEST MODE</div>
+    <div>v1.5 TEST MODE</div>
     <div>Simulated date: <b id="simDateText"></b></div>
     <div class="test-hint">Try <code>?testDate=0930</code>, <code>?testDate=1012</code>, or <code>?testDate=1106</code></div>
     <button id="resetTestBtn" class="reset-test" type="button">RESET TEST PROGRESS</button>
@@ -104,7 +101,7 @@
   <p class="muted">The answer was…</p>
   <div id="answerReveal" class="answer-reveal"></div>
   <p class="muted">Don't worry. We won't tell anyone. 🤫</p>
-  <button id="surrenderSurpriseBtn" class="primary">OPEN TODAY'S SURPRISE</button>
+  <button id="surrenderSurpriseBtn" class="primary">CLAIM YOUR CONSOLATION GIFT</button>
 </section>
 
 
@@ -142,6 +139,6 @@
 </section>
 
 </main>
-<script src="app.js?v=14"></script>
+<script src="app.js?v=15"></script>
 </body>
 </html>

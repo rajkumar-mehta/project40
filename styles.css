@@ -184,3 +184,27 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
 @media(prefers-reduced-motion:reduce){
  .confetti-piece,.birthday-balloon{display:none!important}
 }
+
+
+/* v1.5 streamlined home masthead */
+.journey-intro{
+  max-width:900px;
+  margin:10px auto 16px;
+  text-align:center;
+  color:#9fb2dc;
+  font-size:clamp(10px,1.3vw,13px);
+  font-weight:700;
+  line-height:1.65;
+  letter-spacing:.12em;
+}
+.masthead h1{
+  margin-top:4px;
+}
+@media(max-width:700px){
+  .journey-intro{
+    padding:0 8px;
+    font-size:10px;
+    line-height:1.55;
+    letter-spacing:.08em;
+  }
+}
