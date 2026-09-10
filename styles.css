@@ -182,7 +182,8 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
   100%{transform:translateY(-120vh) rotate(-3deg);opacity:.75}
 }
 @media(prefers-reduced-motion:reduce){
- .confetti-piece,.birthday-balloon{display:none!important}
+ .confetti-piece{animation-duration:6.5s!important;animation-timing-function:linear!important}
+ .birthday-balloon{animation-duration:9s!important;animation-timing-function:linear!important}
 }
 
 
@@ -217,4 +218,250 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
 .masthead h1 .title-second-line em{
   color:#E8DFFF;
   font-style:italic;
+}
+
+
+/* v1.7 mobile-first frozen dashboard + reliable birthday celebration */
+
+/*
+   PHONE HOME SCREEN ARCHITECTURE
+   - one fixed app viewport
+   - page/body do not scroll
+   - scoreboard + YOUR EXITS remain in place
+   - only EXIT cards scroll
+   - masthead gently collapses after the card pane starts moving
+*/
+@media(max-width:620px){
+  html,
+  body.home-active{
+    height:100%;
+    height:100dvh;
+    overflow:hidden;
+    overscroll-behavior:none;
+  }
+
+  body.home-active .app-shell{
+    width:100%;
+    max-width:520px;
+    height:100vh;
+    height:100dvh;
+    min-height:0;
+    padding:
+      max(10px, env(safe-area-inset-top))
+      12px
+      max(8px, env(safe-area-inset-bottom));
+    overflow:hidden;
+    display:block;
+  }
+
+  body.home-active #home.active{
+    height:100%;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+
+  body.home-active #home .masthead{
+    flex:0 0 auto;
+    max-height:178px;
+    overflow:hidden;
+    padding:0 0 8px;
+    opacity:1;
+    transform:translateY(0);
+    transition:
+      max-height .28s ease,
+      opacity .20s ease,
+      transform .28s ease,
+      padding .28s ease;
+  }
+
+  body.home-active #home .sigil{
+    font-size:24px;
+    margin:0 0 4px;
+  }
+
+  body.home-active #home .journey-intro{
+    margin:2px auto 6px;
+    padding:0 4px;
+    font-size:8.8px;
+    line-height:1.4;
+    letter-spacing:.055em;
+  }
+
+  body.home-active #home .masthead h1{
+    font-size:clamp(28px,8.4vw,38px);
+    line-height:1.02;
+    margin:3px 0 2px;
+    letter-spacing:.35px;
+  }
+
+  /* Once Mika starts scrolling the exits, free the masthead space.
+     The dashboard itself never jumps; the EXIT pane simply gains room. */
+  body.home-active.home-grid-scrolled #home .masthead{
+    max-height:0;
+    opacity:0;
+    transform:translateY(-12px);
+    padding:0;
+    pointer-events:none;
+  }
+
+  body.home-active #home .score-card{
+    position:relative!important;
+    top:auto!important;
+    z-index:20;
+    flex:0 0 auto;
+    margin:4px 0 5px;
+    padding:10px 12px 9px;
+    border-radius:14px;
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+  }
+
+  body.home-active #home .score-title{
+    font-size:10.5px;
+    letter-spacing:1.05px;
+  }
+
+  body.home-active #home .score-main{
+    margin:5px 0 6px;
+    gap:18px;
+  }
+
+  body.home-active #home .score-main>div:not(.score-divider){
+    min-width:58px;
+  }
+
+  body.home-active #home .score-main strong{
+    font-size:29px;
+    line-height:1;
+  }
+
+  body.home-active #home .score-main small{
+    font-size:7.5px;
+  }
+
+  body.home-active #home .score-divider{
+    font-size:20px;
+  }
+
+  body.home-active #home .score-stats{
+    padding-top:7px;
+    gap:4px 9px;
+    font-size:8.8px;
+    line-height:1.25;
+  }
+
+  body.home-active #home .section-heading{
+    position:relative!important;
+    top:auto!important;
+    z-index:19;
+    flex:0 0 auto;
+    margin:0;
+    padding:6px 0 7px;
+    background:linear-gradient(180deg,rgba(11,17,29,.99),rgba(11,17,29,.96));
+  }
+
+  body.home-active #home .day-grid{
+    flex:1 1 auto;
+    min-height:0;
+    max-height:none!important;
+    overflow-y:auto;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-y:contain;
+    touch-action:pan-y;
+    padding:1px 2px max(14px, env(safe-area-inset-bottom)) 0;
+    scrollbar-gutter:stable;
+  }
+
+  body.home-active #home .day-card{
+    min-height:96px;
+    padding:14px 15px;
+  }
+
+  body.home-active #home .day-card .day{
+    font-size:20px;
+  }
+
+  body.home-active #home .test-tools{
+    flex:0 0 auto;
+    margin:4px 0 0;
+    padding-top:2px;
+    line-height:1.25;
+    font-size:8px;
+  }
+
+  body.home-active #home .test-tools .test-hint{
+    display:none;
+  }
+
+  body.home-active #home .reset-test{
+    margin-top:4px;
+    padding:5px 9px;
+    font-size:8px;
+  }
+}
+
+/* Normal scrolling resumes on puzzle / gift / finale screens. */
+@media(max-width:620px){
+  body:not(.home-active){
+    min-height:100%;
+    overflow-y:auto;
+    overscroll-behavior-y:auto;
+  }
+}
+
+/*
+   Birthday celebration:
+   keep animation viewport-wide and above the background on mobile.
+   Content stays above the effects so buttons remain readable/tappable.
+*/
+.celebration-layer{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw;
+  width:100dvw;
+  height:100vh;
+  height:100dvh;
+  z-index:90!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+  contain:layout paint;
+}
+
+.finale-content{
+  position:relative;
+  z-index:100!important;
+}
+
+.confetti-piece{
+  will-change:transform,opacity;
+  text-shadow:0 0 8px rgba(255,255,255,.22);
+}
+
+.birthday-balloon{
+  will-change:transform,opacity;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.28));
+}
+
+@media(max-width:620px){
+  .finale-screen{
+    overflow:visible;
+    min-height:calc(100dvh - 30px);
+  }
+  .finale-content{
+    padding-bottom:max(20px,env(safe-area-inset-bottom));
+  }
+  .finale-cake{
+    font-size:48px;
+    margin:3px 0 11px;
+  }
+  .birthday-title{
+    font-size:clamp(30px,9vw,42px);
+    line-height:1.08;
+  }
+  .finale-gift{
+    margin-top:18px;
+  }
 }

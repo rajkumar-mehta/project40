@@ -681,7 +681,12 @@ function todayISO(){
  const d=new Date();
  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 }
-function show(id){screens.forEach(s=>s.classList.toggle("active",s.id===id));window.scrollTo({top:0,left:0,behavior:"auto"})}
+function show(id){
+ screens.forEach(s=>s.classList.toggle("active",s.id===id));
+ document.body.classList.toggle("home-active",id==="home");
+ if(id!=="home") document.body.classList.remove("home-grid-scrolled");
+ window.scrollTo({top:0,left:0,behavior:"auto"});
+}
 function norm(v){return v.trim().toLowerCase().replace(/\s+/g," ")}
 function key(day){return `mika40_day_${day}`}
 function getResult(day){try{return JSON.parse(localStorage.getItem(key(day))||"null")}catch{return null}}
@@ -725,6 +730,28 @@ function renderScore(){
  $("firstTryCount").textContent=s.firstTry;
  $("streakCount").textContent=s.current;
  $("bestStreakCount").textContent=s.best;
+}
+
+function syncMobileHomeChrome(){
+ const grid=$("dayGrid");
+ if(!grid) return;
+ const mobile=window.matchMedia("(max-width: 620px)").matches;
+ if(!mobile){
+   document.body.classList.remove("home-grid-scrolled");
+   return;
+ }
+ document.body.classList.toggle("home-grid-scrolled",grid.scrollTop>18);
+}
+
+let mobileHomeScrollBound=false;
+function bindMobileHomeScroll(){
+ if(mobileHomeScrollBound) return;
+ const grid=$("dayGrid");
+ if(!grid) return;
+ grid.addEventListener("scroll",syncMobileHomeChrome,{passive:true});
+ window.addEventListener("resize",syncMobileHomeChrome,{passive:true});
+ window.addEventListener("orientationchange",()=>setTimeout(syncMobileHomeChrome,120),{passive:true});
+ mobileHomeScrollBound=true;
 }
 
 function lockIcon(open=false){
@@ -787,6 +814,8 @@ function renderGrid(){
  });
  renderScore();
  $("simDateText").textContent=todayISO();
+ bindMobileHomeScroll();
+ requestAnimationFrame(syncMobileHomeChrome);
 }
 function renderQuestion(lines){
  $("puzzleText").innerHTML=lines.map(line=>line===""?`<div class="gap"></div>`:`<span class="line">${line}</span>`).join("");
@@ -866,45 +895,55 @@ function openSurprise(solved=true){
 function launchBirthdayCelebration(){
  const layer=$("celebrationLayer");
  if(!layer) return;
- layer.innerHTML="";
- if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
- const confettiChars=["✦","◆","●","★","♥"];
- for(let i=0;i<52;i++){
+ // Put the effect layer directly under <body>. This avoids mobile browsers
+ // clipping fixed-position effects while the finale screen is fading in.
+ if(layer.parentElement!==document.body) document.body.appendChild(layer);
+
+ layer.innerHTML="";
+ const reduced=window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ layer.classList.toggle("reduced-motion",!!reduced);
+
+ // Reduced-motion still gets a celebration, just fewer/slower elements.
+ const confettiCount=reduced?22:60;
+ const balloonCount=reduced?5:10;
+ const confettiChars=["✦","◆","●","★","♥","✧"];
+
+ for(let i=0;i<confettiCount;i++){
    const piece=document.createElement("span");
    piece.className="confetti-piece";
    piece.textContent=confettiChars[Math.floor(Math.random()*confettiChars.length)];
    piece.style.left=`${Math.random()*100}%`;
-   piece.style.animationDelay=`${Math.random()*.8}s`;
-   piece.style.animationDuration=`${2.6+Math.random()*2.2}s`;
-   piece.style.fontSize=`${8+Math.random()*10}px`;
-   piece.style.setProperty("--drift",`${-70+Math.random()*140}px`);
+   piece.style.animationDelay=`${Math.random()*.65}s`;
+   piece.style.animationDuration=reduced?`${5.8+Math.random()*1.8}s`:`${2.8+Math.random()*2.1}s`;
+   piece.style.fontSize=`${9+Math.random()*11}px`;
+   piece.style.setProperty("--drift",`${-72+Math.random()*144}px`);
    layer.appendChild(piece);
  }
 
- for(let i=0;i<8;i++){
+ for(let i=0;i<balloonCount;i++){
    const balloon=document.createElement("span");
    balloon.className="birthday-balloon";
    balloon.textContent="🎈";
-   balloon.style.left=`${5+Math.random()*90}%`;
-   balloon.style.animationDelay=`${.15+i*.18}s`;
-   balloon.style.animationDuration=`${5+Math.random()*2}s`;
+   balloon.style.left=`${4+Math.random()*92}%`;
+   balloon.style.animationDelay=`${.08+i*.14}s`;
+   balloon.style.animationDuration=reduced?`${8+Math.random()*1.5}s`:`${5.2+Math.random()*1.8}s`;
    layer.appendChild(balloon);
  }
 
- window.setTimeout(()=>{ if(layer) layer.innerHTML=""; },8000);
+ window.setTimeout(()=>{ if(layer) layer.innerHTML=""; },reduced?9500:8200);
 }
-
 function openBirthdayFinale(){
  $("birthdayQrImage").src=`https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${encodeURIComponent(currentDay.video)}`;
  show("finale");
- launchBirthdayCelebration();
+ window.setTimeout(launchBirthdayCelebration,260);
 }
 
 $("surrenderSurpriseBtn").onclick=()=>currentDay.day===0?openBirthdayFinale():openSurprise(false);
 $("watchBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
 $("birthdaySurpriseBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
 document.querySelectorAll("[data-home]").forEach(b=>b.onclick=()=>{renderGrid();show("home")});
+document.body.classList.add("home-active");
 renderGrid();
 
 
@@ -920,5 +959,5 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=16").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=17").catch(()=>{}));
 }
