@@ -1,3 +1,16 @@
+PROJECT 40 — v1.3
+
+Built from the current GitHub package supplied by the user, preserving manual edits.
+
+v1.3 change:
+- Gift screen remains random, but heading and button no longer repeat the same wording:
+  1) ENJOY TODAY'S GIFT -> OPEN TODAY'S SURPRISE
+  2) OPEN TODAY'S SURPRISE -> GRAB YOUR GIFT
+- Existing YOU SOLVED IT! continuity is preserved.
+- Surrender behavior is preserved.
+- Answer-validation logic is unchanged (accepted-answer variants will be handled later with final riddles).
+- Cache/assets bumped to v13.
+
 MIKA'S 40 SECRETS — v1.2
 
 What's new

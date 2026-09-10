@@ -835,8 +835,8 @@ function openSurprise(solved=true){
  $("solvedHeading").style.display=solved?"":"none";
  $("solvedSubheading").style.display=solved?"":"none";
  const options=[
-   {heading:"ENJOY TODAY'S GIFT",button:"ENJOY TODAY'S GIFT"},
-   {heading:"OPEN TODAY'S SURPRISE",button:"OPEN TODAY'S SURPRISE"}
+   {heading:"ENJOY TODAY'S GIFT",button:"OPEN TODAY'S SURPRISE"},
+   {heading:"OPEN TODAY'S SURPRISE",button:"GRAB YOUR GIFT"}
  ];
  const pick=options[Math.floor(Math.random()*options.length)];
  $("giftHeading").textContent=pick.heading;
@@ -863,5 +863,5 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=12").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=13").catch(()=>{}));
 }
