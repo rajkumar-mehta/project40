@@ -831,7 +831,9 @@ $("saveMeBtn").onclick=()=>{
  saveResult(currentDay.day,{outcome:"gave-up",attempts:MAX_ATTEMPTS,completedAt:new Date().toISOString()});
  $("answerReveal").textContent=currentDay.answerDisplay;show("surrender");
 };
-function openSurprise(){
+function openSurprise(solved=true){
+ $("solvedHeading").style.display=solved?"":"none";
+ $("solvedSubheading").style.display=solved?"":"none";
  const options=[
    {heading:"ENJOY TODAY'S GIFT",button:"ENJOY TODAY'S GIFT"},
    {heading:"OPEN TODAY'S SURPRISE",button:"OPEN TODAY'S SURPRISE"}
@@ -843,7 +845,7 @@ function openSurprise(){
  $("videoEyebrow").textContent=`EXIT ${currentDay.day} UNLOCKED`;
  show("video");
 }
-$("surrenderSurpriseBtn").onclick=openSurprise;
+$("surrenderSurpriseBtn").onclick=()=>openSurprise(false);
 $("watchBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
 document.querySelectorAll("[data-home]").forEach(b=>b.onclick=()=>{renderGrid();show("home")});
 renderGrid();
