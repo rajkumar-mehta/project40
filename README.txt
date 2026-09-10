@@ -1,31 +1,21 @@
-PROJECT 40 — PWA PROTOTYPE
+PROJECT 40 v0.4
 
-This is the first installable web-app prototype for Mika.
+What changed:
+- Wrong answers are erased immediately after each failed attempt.
+- Visual design updated to a cleaner, more modern, less childish look.
+- Puzzle/question card has a brighter, more distinct border and subtle glow.
+- Prototype now includes Days 40, 39, 38, 37, 36, and 35.
+- All six days use the same 4-attempt / playful-message / give-up engine.
+- Completed-day state is stored on the device.
+- Direct video button + QR remain available.
+- Day 40 uses RK's test YouTube link.
+- Days 39–35 currently use temporary 2026 Hindi-music YouTube links/playlists and sample riddles.
+- Real date-locking is NOT enabled yet; all six days stay open for testing.
 
-WHAT WORKS
-- Project 40 branding
-- Day 40 puzzle
-- Answer: Dubai (case-insensitive)
-- Hint
-- Unlock screen
-- QR code screen
-- Video button
-- Installable as an Android home-screen app once hosted over HTTPS
-- Local progress storage
+Upload/replace in GitHub:
+index.html
+styles.css
+app.js
+sw.js
 
-IMPORTANT
-1. The current YouTube URL is a placeholder.
-2. The QR code currently uses an online QR image service.
-3. Day 40 is intentionally unlocked for prototype testing.
-4. The final version will enforce the actual day-by-day schedule:
-   Sep 27, 2026 = Day 40
-   Nov 5, 2026 = Day 1
-   Nov 6, 2026 at 12:00 AM = Birthday Finale
-
-QUICK LOCAL TEST ON WINDOWS
-Double-click index.html to see the basic UI.
-Some PWA features (installation/service worker) require HTTPS or localhost.
-
-NEXT STEP
-Host the folder on a simple HTTPS host, then open it on Android Chrome and choose:
-Menu > Add to Home screen / Install app.
+You may also replace manifest.webmanifest and icons if you want the refreshed theme/icon immediately.
