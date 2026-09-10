@@ -774,7 +774,7 @@ function renderGrid(){
    const todayChip=d.date===todayISO()?`<span class="today-chip">TODAY</span>`:"";
    b.dataset.secret=String(d.day);
    b.dataset.date=d.date;
-   b.innerHTML=`<div class="dayline"><div class="day">SECRET ${d.day}</div>${status.icon}</div><div class="date">${d.displayDate} ${todayChip}</div><div class="state">${status.state}</div>`;
+   b.innerHTML=`<div class="dayline"><div class="day">EXIT ${d.day}</div>${status.icon}</div><div class="date">${d.displayDate} ${todayChip}</div><div class="state">${status.state}</div>`;
    b.onclick=()=>openDay(d.day);
    grid.appendChild(b);
  });
@@ -798,7 +798,7 @@ function openDay(n){
    return;
  }
  resetPuzzle();
- $("dayEyebrow").textContent=`SECRET ${currentDay.day} · ${currentDay.displayDate.toUpperCase()}`;
+ $("dayEyebrow").textContent=`EXIT ${currentDay.day} · ${currentDay.displayDate.toUpperCase()}`;
  renderQuestion(currentDay.lines);
  show("puzzle");
 }
@@ -840,7 +840,7 @@ function openSurprise(){
  $("giftHeading").textContent=pick.heading;
  $("watchBtn").textContent=pick.button;
  $("qrImage").src=`https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${encodeURIComponent(currentDay.video)}`;
- $("videoEyebrow").textContent=`SECRET ${currentDay.day} UNLOCKED`;
+ $("videoEyebrow").textContent=`EXIT ${currentDay.day} UNLOCKED`;
  show("video");
 }
 $("surrenderSurpriseBtn").onclick=openSurprise;
