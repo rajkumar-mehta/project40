@@ -1,80 +1,85 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#101018" />
-  <title>Project 40</title>
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101018">
+<title>Project 40</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="app-shell">
-    <section id="home" class="screen active">
-      <div class="sparkle">✦</div>
-      <h1>PROJECT 40</h1>
-      <p class="tagline">40 days. 40 clues. 40 surprises.</p>
+<main class="app-shell">
 
-      <div class="hero-card">
-        <div class="name">Mika</div>
-        <div class="sub">Your adventure begins soon…</div>
-        <div class="day-number">DAY 40</div>
-        <div class="date">September 27, 2026</div>
-      </div>
+<section id="home" class="screen active">
+  <div class="sparkle">✦</div>
+  <h1>PROJECT 40</h1>
+  <p class="tagline">40 days. 40 clues. 40 surprises.</p>
+  <div class="hero-card">
+    <div class="name">Mika</div>
+    <div class="sub">Your adventure begins soon…</div>
+    <div class="day-number">DAY 40</div>
+    <div class="date">September 27, 2026</div>
+  </div>
+  <button id="openPuzzleBtn" class="primary">OPEN DAY 40</button>
+  <p class="tiny">Prototype mode: Day 40 is unlocked for testing.</p>
+</section>
 
-      <button id="openPuzzleBtn" class="primary">OPEN DAY 40</button>
-      <p class="tiny">Prototype mode: Day 40 is unlocked for testing.</p>
-    </section>
+<section id="puzzle" class="screen">
+  <div class="eyebrow">DAY 40</div>
+  <h2>THE FIRST CLUE</h2>
+  <div class="puzzle-card">
+    <p>Forty days before you entered this world,<br>your story had already begun.</p>
+    <p>Your mother could have been anywhere on Earth…</p>
+    <p class="question">Can you name the city where she may have been physically present?</p>
+  </div>
+  <input id="answerInput" type="text" placeholder="Enter your answer" autocomplete="off">
+  <button id="submitBtn" class="primary">UNLOCK TODAY'S SURPRISE</button>
+  <button id="hintBtn" class="secondary">HINT</button>
+  <p id="feedback" class="feedback"></p>
+  <p id="attempts" class="attempts"></p>
+  <button id="giveUpBtn" class="giveup hidden">I GIVE UP — I'M SO OLD… I'M ABOUT TO TURN 40! 😂</button>
+  <button data-back="home" class="ghost">BACK</button>
+</section>
 
-    <section id="puzzle" class="screen">
-      <div class="eyebrow">DAY 40</div>
-      <h2>THE FIRST CLUE</h2>
+<section id="confirmGiveUp" class="screen">
+  <div class="bigemoji">🤨</div>
+  <h2>ARE YOU SURE?</h2>
+  <div class="puzzle-card">
+    <p>There's no going back.</p>
+    <p>Your 39-year-old puzzle-solving reputation is at stake. 😏</p>
+  </div>
+  <button id="tryAgainBtn" class="secondary">WAIT! LET ME TRY AGAIN</button>
+  <button id="saveMeBtn" class="giveup">YES. SAVE ME. 😂</button>
+</section>
 
-      <div class="puzzle-card">
-        <p>
-          Forty days before you entered this world,<br>
-          your story had already begun.
-        </p>
-        <p>Your mother could have been anywhere on Earth…</p>
-        <p class="question">
-          Can you name the city where she may have been physically present?
-        </p>
-      </div>
+<section id="surrender" class="screen">
+  <div class="bigemoji">🏳️</div>
+  <h2>THE WHITE FLAG HAS BEEN RAISED</h2>
+  <p class="sub">The answer was…</p>
+  <div class="answer-reveal">DUBAI</div>
+  <p>Don't worry. We won't tell anyone. 🤫</p>
+  <button id="surrenderSurpriseBtn" class="primary">OPEN TODAY'S SURPRISE</button>
+</section>
 
-      <input id="answerInput" type="text" placeholder="Enter your answer" autocomplete="off" />
-      <button id="submitAnswerBtn" class="primary">UNLOCK TODAY'S SURPRISE</button>
-      <button id="hintBtn" class="secondary">HINT</button>
-      <button data-back="home" class="ghost">BACK</button>
-      <p id="answerMessage" class="feedback"></p>
-    </section>
+<section id="success" class="screen">
+  <div class="bigemoji">🎉</div>
+  <h2>CORRECT!</h2>
+  <p>You found the first clue.</p>
+  <p class="sub">Your surprise is waiting…</p>
+  <button id="successSurpriseBtn" class="primary">OPEN TODAY'S SURPRISE</button>
+</section>
 
-    <section id="success" class="screen">
-      <div class="celebrate">🎉</div>
-      <h2>CORRECT!</h2>
-      <p>You found the first clue.</p>
-      <p class="sub">Your surprise is waiting…</p>
-      <button id="showVideoOptionsBtn" class="primary">OPEN TODAY'S SURPRISE</button>
-    </section>
+<section id="video" class="screen">
+  <div class="eyebrow">DAY 40 UNLOCKED</div>
+  <h2>A message is waiting for you.</h2>
+  <button id="watchBtn" class="primary video-button">▶ WATCH TODAY'S VIDEO</button>
+  <div class="divider"><span></span><em>OR</em><span></span></div>
+  <div class="qr-wrap"><img id="qrImage" alt="QR code for today's video"></div>
+  <p class="sub">Using a laptop or another device?<br>Scan this QR code with your phone.</p>
+</section>
 
-    <section id="video" class="screen">
-      <div class="eyebrow">DAY 40 UNLOCKED</div>
-      <h2>A message is waiting for you.</h2>
-
-      <button id="watchVideoBtn" class="primary video-button">▶ WATCH TODAY'S VIDEO</button>
-
-      <div class="divider">
-        <span></span><em>OR</em><span></span>
-      </div>
-
-      <div class="qr-wrap">
-        <img id="qrImage" alt="QR code for today's video" />
-      </div>
-
-      <p class="sub">Using a laptop or another device?<br>Scan this QR code with your phone.</p>
-      <button data-back="success" class="ghost">BACK</button>
-    </section>
-  </main>
-
-  <script src="app.js"></script>
+</main>
+<script src="app.js"></script>
 </body>
 </html>
