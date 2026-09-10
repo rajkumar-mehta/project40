@@ -1,29 +1,43 @@
-PROJECT 40 — v1.7
+PROJECT 40 — v1.8
 
-Built directly from v1.6.
+Built directly from v1.7 after mobile + laptop usability testing.
 
-MOBILE-FIRST CHANGES
-- Rebuilt the phone home screen as a fixed app viewport using 100dvh.
-- Removed the page-scroll + card-scroll handoff on phones.
-- Scoreboard and YOUR EXITS now remain stable.
-- Only the EXIT-card pane scrolls on mobile.
-- The masthead/title gently collapses once the EXIT pane starts scrolling, giving more card space without making the dashboard jump.
-- Scoreboard is more compact on phones.
-- Android/iPhone safe-area and dynamic browser-bar sizing are accounted for.
-- Touch scrolling uses momentum scrolling and overscroll containment.
+HOME / SCROLLING
+- The top journey-intro/title area now scrolls away normally.
+- Only the scoreboard remains sticky; YOUR EXITS scrolls normally.
+- Removed the nested EXIT-list scroll pane; the page itself scrolls naturally.
+- Desktop/laptop sticky scoreboard is reduced to about 90% of its former footprint.
 
-EXIT 0 CELEBRATION FIX
-- Birthday celebration no longer disappears when prefers-reduced-motion is enabled.
-- Reduced-motion devices receive a gentler celebration instead.
-- Celebration layer is moved directly under the document body to prevent mobile clipping during screen transitions.
-- Confetti/balloons render above the background while finale content remains above the effects.
-- Slight launch delay avoids the fade-in transform interfering with fixed-position animation.
-- Increased mobile-safe confetti/balloon visibility.
+MOBILE PORTRAIT + LANDSCAPE
+- Scoreboard reduced overall in both orientations.
+- Portrait uses a compact ~75–80% footprint.
+- Short landscape phones use an even tighter ~60% footprint.
+- EXIT cards use a compact 2-column grid in both portrait and landscape.
+- Padlock is moved directly beside the EXIT number.
+- Extra card whitespace is removed.
+- Existing journey ordering is preserved; EXIT 40 remains at the bottom.
+
+MOBILE GIFT / REWARD SCREEN
+- Fixed vertical page scrolling after a correct answer.
+- QR code is completely hidden on mobile portrait and landscape.
+- Direct video/surprise button remains the primary action.
+- Laptop/desktop reward behavior is unchanged: primary direct button + secondary QR code.
+
+EXIT 0 CELEBRATION
+- Confetti now uses multiple celebration colors instead of white-only glyphs.
+- Balloons begin almost together with the confetti.
+- Balloon delays are shortened and synchronized.
+- Balloons launch from the reward/QR region rather than from the bottom of the phone.
+- On mobile, where QR is hidden, the launch origin is just below the primary birthday-surprise button.
+
+NOT APPLIED YET
+- The alternate Project 40 script-style header mockup remains saved as a final-design option only.
 
 PRESERVED
-- All v1.6 title/intro wording and styling.
-- EXIT logic, scoring, surrender behavior, replay behavior, gift screens, date filtering and localStorage behavior.
+- Date filtering and availability logic.
+- Scoring, surrender behavior, replay behavior and localStorage results.
+- Existing desktop/laptop direct-button-first reward behavior.
 - No answer-matching changes.
 
 TEST URL AFTER DEPLOYMENT
-https://rajkumar-mehta.github.io/project40/?v=17&testDate=1106
+https://rajkumar-mehta.github.io/project40/?v=18&testDate=1106

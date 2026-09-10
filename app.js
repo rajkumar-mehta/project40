@@ -908,16 +908,33 @@ function launchBirthdayCelebration(){
  const confettiCount=reduced?22:60;
  const balloonCount=reduced?5:10;
  const confettiChars=["✦","◆","●","★","♥","✧"];
+ const confettiColors=["#ff6680","#ffd166","#b8a8ff","#78c7ff","#ff9ed2","#8ee3c0"];
+
+ // Balloons begin at the QR/reward region instead of the bottom edge.
+ // On mobile the QR is hidden, so anchor them just below the primary button.
+ const mobileReward=window.matchMedia && window.matchMedia("(max-width: 620px)").matches;
+ const qrWrap=document.querySelector("#finale .qr-wrap");
+ const birthdayButton=$("birthdaySurpriseBtn");
+ let balloonOrigin=Math.round(window.innerHeight*.72);
+ if(!mobileReward && qrWrap){
+   const qrRect=qrWrap.getBoundingClientRect();
+   if(qrRect.height>0) balloonOrigin=Math.round(qrRect.top);
+ }else if(birthdayButton){
+   const buttonRect=birthdayButton.getBoundingClientRect();
+   balloonOrigin=Math.round(Math.min(window.innerHeight-54,buttonRect.bottom+18));
+ }
+ layer.style.setProperty("--balloon-origin-y",`${balloonOrigin}px`);
 
  for(let i=0;i<confettiCount;i++){
    const piece=document.createElement("span");
    piece.className="confetti-piece";
    piece.textContent=confettiChars[Math.floor(Math.random()*confettiChars.length)];
    piece.style.left=`${Math.random()*100}%`;
-   piece.style.animationDelay=`${Math.random()*.65}s`;
+   piece.style.animationDelay=`${Math.random()*.34}s`;
    piece.style.animationDuration=reduced?`${5.8+Math.random()*1.8}s`:`${2.8+Math.random()*2.1}s`;
    piece.style.fontSize=`${9+Math.random()*11}px`;
    piece.style.setProperty("--drift",`${-72+Math.random()*144}px`);
+   piece.style.setProperty("--confetti-color",confettiColors[Math.floor(Math.random()*confettiColors.length)]);
    layer.appendChild(piece);
  }
 
@@ -926,8 +943,8 @@ function launchBirthdayCelebration(){
    balloon.className="birthday-balloon";
    balloon.textContent="🎈";
    balloon.style.left=`${4+Math.random()*92}%`;
-   balloon.style.animationDelay=`${.08+i*.14}s`;
-   balloon.style.animationDuration=reduced?`${8+Math.random()*1.5}s`:`${5.2+Math.random()*1.8}s`;
+   balloon.style.animationDelay=`${.12+i*.08}s`;
+   balloon.style.animationDuration=reduced?`${7.3+Math.random()*1.2}s`:`${4.6+Math.random()*1.2}s`;
    layer.appendChild(balloon);
  }
 
@@ -959,5 +976,5 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=17").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=18").catch(()=>{}));
 }

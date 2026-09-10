@@ -465,3 +465,192 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
     margin-top:18px;
   }
 }
+
+
+/* =========================================================
+   v1.8 — responsive home + mobile reward usability
+   ========================================================= */
+
+/* HOME: page is the scroller on every device. The journey intro/title
+   scrolls away naturally; only the scoreboard remains sticky. */
+#home .day-grid{
+  max-height:none!important;
+  overflow:visible!important;
+  overscroll-behavior:auto!important;
+  scrollbar-gutter:auto!important;
+  padding-right:0!important;
+}
+#home .section-heading{
+  position:relative!important;
+  top:auto!important;
+  z-index:auto!important;
+  margin:10px 0 14px!important;
+  padding:0!important;
+  background:none!important;
+}
+#home .score-card{
+  position:sticky!important;
+  top:10px;
+  z-index:30;
+}
+
+/* Laptop/desktop sticky scoreboard: approximately 90% of prior footprint. */
+@media(min-width:621px){
+  #home .score-card{padding:18px 20px;margin:12px 0 18px}
+  #home .score-main{margin:14px 0}
+  #home .score-main strong{font-size:clamp(36px,6.2vw,43px)}
+  #home .score-stats{padding-top:11px;gap:8px 16px;font-size:11px}
+}
+
+/* MOBILE PORTRAIT + LANDSCAPE */
+@media(max-width:620px){
+  html{
+    height:auto!important;
+    min-height:100%!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    overscroll-behavior-y:auto!important;
+  }
+  body,
+  body.home-active,
+  body:not(.home-active){
+    height:auto!important;
+    min-height:100vh!important;
+    min-height:100dvh!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    overscroll-behavior-y:auto!important;
+  }
+  body.home-active .app-shell,
+  body:not(.home-active) .app-shell{
+    width:100%!important;
+    max-width:520px;
+    height:auto!important;
+    min-height:100vh!important;
+    min-height:100dvh!important;
+    overflow:visible!important;
+    display:block!important;
+    padding:max(10px,env(safe-area-inset-top)) 10px max(34px,env(safe-area-inset-bottom))!important;
+  }
+  body.home-active #home.active{
+    height:auto!important;
+    min-height:0!important;
+    display:block!important;
+    overflow:visible!important;
+  }
+  body.home-active #home .masthead,
+  body.home-active.home-grid-scrolled #home .masthead{
+    max-height:none!important;
+    overflow:visible!important;
+    opacity:1!important;
+    transform:none!important;
+    padding:0 0 8px!important;
+    pointer-events:auto!important;
+  }
+
+  /* Portrait scoreboard ≈75–80% of previous mobile footprint. */
+  body.home-active #home .score-card{
+    position:sticky!important;
+    top:max(4px,env(safe-area-inset-top))!important;
+    margin:4px 0 7px!important;
+    padding:8px 10px 7px!important;
+    border-radius:13px;
+  }
+  body.home-active #home .score-title{font-size:9.6px;letter-spacing:.95px}
+  body.home-active #home .score-main{margin:4px 0 5px;gap:14px}
+  body.home-active #home .score-main>div:not(.score-divider){min-width:52px}
+  body.home-active #home .score-main strong{font-size:26px;line-height:1}
+  body.home-active #home .score-main small{font-size:6.8px;letter-spacing:1px}
+  body.home-active #home .score-divider{font-size:17px}
+  body.home-active #home .score-stats{padding-top:6px;gap:3px 7px;font-size:8px;line-height:1.18}
+  body.home-active #home .section-heading{margin:7px 0 8px!important}
+
+  /* Two columns on phone. Existing newest-first ordering is intentionally
+     preserved, which keeps EXIT 40 at the bottom of the full journey. */
+  body.home-active #home .day-grid,
+  #home .day-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    overflow:visible!important;
+    max-height:none!important;
+    padding:0 1px 6px!important;
+  }
+  body.home-active #home .day-card{
+    min-width:0;
+    min-height:88px;
+    padding:11px 10px;
+    border-radius:13px;
+  }
+  body.home-active #home .day-card .dayline{justify-content:flex-start;gap:6px}
+  body.home-active #home .day-card .day{font-size:18px;line-height:1.05;white-space:nowrap}
+  body.home-active #home .day-card .state-icon{width:19px;height:19px}
+  body.home-active #home .day-card .date{font-size:9.5px;line-height:1.25;margin-top:6px}
+  body.home-active #home .day-card .state{font-size:9.6px;line-height:1.2;margin-top:9px;overflow-wrap:anywhere}
+  body.home-active #home .day-card .today-chip{margin-left:3px;padding:1px 4px;font-size:6.5px}
+  body.home-active #home .test-tools{margin-top:12px}
+
+  /* QR is not useful on the same phone. Direct surprise/video button stays primary. */
+  #video .divider,
+  #video .qr-wrap,
+  #video .qr-wrap + .muted.small,
+  #finale .divider,
+  #finale .qr-wrap,
+  #finale .qr-wrap + .muted.small{display:none!important}
+  #video.active,
+  #finale.active{overflow:visible!important;min-height:auto!important}
+  #video .home-button,
+  #finale .home-button{margin-top:18px}
+  .finale-screen{overflow:visible!important;min-height:auto!important}
+  .finale-content{padding-bottom:max(44px,env(safe-area-inset-bottom))!important}
+}
+
+/* Short landscape phones: tighter ≈60% scoreboard footprint. */
+@media(max-width:920px) and (orientation:landscape) and (max-height:620px){
+  .app-shell{
+    width:min(100%,920px)!important;
+    max-width:none!important;
+    padding:max(6px,env(safe-area-inset-top)) 10px max(22px,env(safe-area-inset-bottom))!important;
+  }
+  body.home-active #home .masthead{padding-bottom:4px!important}
+  body.home-active #home .sigil{font-size:18px;margin-bottom:1px}
+  body.home-active #home .journey-intro{margin:1px auto 3px;font-size:7.3px;line-height:1.25}
+  body.home-active #home .masthead h1{font-size:23px;line-height:1;margin:2px 0 1px}
+  body.home-active #home .score-card{
+    top:max(3px,env(safe-area-inset-top))!important;
+    padding:5px 8px!important;
+    margin:2px 0 4px!important;
+    border-radius:11px;
+  }
+  body.home-active #home .score-title{font-size:8px;letter-spacing:.75px}
+  body.home-active #home .score-main{margin:2px 0 3px;gap:10px}
+  body.home-active #home .score-main>div:not(.score-divider){min-width:42px}
+  body.home-active #home .score-main strong{font-size:21px}
+  body.home-active #home .score-main small{font-size:5.8px}
+  body.home-active #home .score-divider{font-size:14px}
+  body.home-active #home .score-stats{padding-top:4px;gap:2px 6px;font-size:7.2px;line-height:1.1}
+  body.home-active #home .section-heading{margin:4px 0 5px!important;font-size:9px}
+  body.home-active #home .day-grid,
+  #home .day-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  body.home-active #home .day-card{min-height:72px;padding:8px 10px}
+  body.home-active #home .day-card .day{font-size:16px}
+  body.home-active #home .day-card .state-icon{width:17px;height:17px}
+  body.home-active #home .day-card .date{font-size:8.5px;margin-top:4px}
+  body.home-active #home .day-card .state{font-size:8.5px;margin-top:6px}
+}
+
+/* Birthday effects */
+.confetti-piece{
+  color:var(--confetti-color,#f3c5d2);
+  text-shadow:0 0 8px rgba(255,255,255,.18);
+}
+.birthday-balloon{
+  top:var(--balloon-origin-y,calc(100vh - 90px))!important;
+  bottom:auto!important;
+}
+@keyframes balloonRise{
+  0%{transform:translateY(20px) rotate(-4deg);opacity:0}
+  5%{opacity:.95}
+  50%{transform:translateY(-58vh) rotate(5deg)}
+  100%{transform:translateY(-118vh) rotate(-3deg);opacity:.72}
+}
