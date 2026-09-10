@@ -208,3 +208,13 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
     letter-spacing:.08em;
   }
 }
+
+
+/* v1.6 title refinement */
+.masthead h1 .title-second-line{
+  display:inline-block;
+}
+.masthead h1 .title-second-line em{
+  color:#E8DFFF;
+  font-style:italic;
+}
