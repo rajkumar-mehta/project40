@@ -1,52 +1,21 @@
-PROJECT 40 — v1.3
+PROJECT 40 — v1.4
 
-Built from the current GitHub package supplied by the user, preserving manual edits.
+Built from v1.3. Everything not listed below is preserved.
 
-v1.3 change:
-- Gift screen remains random, but heading and button no longer repeat the same wording:
-  1) ENJOY TODAY'S GIFT -> OPEN TODAY'S SURPRISE
-  2) OPEN TODAY'S SURPRISE -> GRAB YOUR GIFT
-- Existing YOU SOLVED IT! continuity is preserved.
-- Surrender behavior is preserved.
-- Answer-validation logic is unchanged (accepted-answer variants will be handled later with final riddles).
-- Cache/assets bumped to v13.
+v1.4 changes:
+- EXIT 0 now has a real sample riddle/puzzle instead of auto-solving.
+- Solving EXIT 0 opens a special HAPPY BIRTHDAY, MIKA! finale.
+- Finale includes confetti + floating balloons and a birthday-surprise button/QR.
+- EXIT 0 now counts in the scoreboard, First-Try, Current Streak, and Best Streak.
+- Solved EXIT 0 card displays HAPPY BIRTHDAY! rather than MYSTERY SOLVED · 0 ATTEMPTS.
+- Already-solved EXITs no longer reopen their riddles; they reopen their reward/finale without changing stats.
+- Already-surrendered EXITs no longer reopen their riddles; they reopen the approved answer-reveal screen.
+- EXIT 0 surrender still reveals the answer, then continues to the birthday finale.
+- Approved random gift pairs:
+    OPEN TODAY'S SURPRISE -> GRAB YOUR GIFT
+    ENJOY TODAY'S GIFT -> REVEAL YOUR SURPRISE
+- Answer matching is unchanged for now.
+- Cache/assets bumped to v14.
 
-MIKA'S 40 SECRETS — v1.2
-
-What's new
-----------
-1. Calendar is now populated all the way from Secret 40 (Sep 27) through Secret 0 (Nov 6).
-2. Test URL supports both full dates and MMDD shorthand:
-   ?testDate=0930
-   ?testDate=1012
-   ?testDate=1106
-3. On Nov 6 all Secret cards 40 through 0 are available, newest first.
-4. Secret 0 is treated as the birthday finale and opens directly to the gift screen.
-5. Added TEST MODE button: RESET TEST PROGRESS.
-   It clears only this browser's local test progress and immediately redraws the dashboard.
-6. Preserves v1.1 behavior:
-   - newest secret first
-   - future secrets hidden
-   - missed secrets remain playable
-   - date-filtered scoreboard
-   - green open locks / white flags
-   - sticky scorecard + YOUR SECRETS
-   - only cards scroll
-   - correct answer goes directly to gift/surprise
-   - random ENJOY TODAY'S GIFT / OPEN TODAY'S SURPRISE
-   - gift box visual
-   - Current Streak / Best Streak labels
-   - browser/device responsive layout
-
-NOTE
-----
-Secrets 34 through 1 currently contain temporary placeholder riddles and temporary YouTube search links.
-They are only there so the complete calendar/date behavior can be tested.
-Cross-device progress is still browser-local until a cloud sync backend is added.
-
-Full URLs after deployment
---------------------------
-https://rajkumar-mehta.github.io/project40/?v=12
-https://rajkumar-mehta.github.io/project40/?v=12&testDate=0930
-https://rajkumar-mehta.github.io/project40/?v=12&testDate=1012
-https://rajkumar-mehta.github.io/project40/?v=12&testDate=1106
+TEST:
+https://rajkumar-mehta.github.io/project40/?v=14&testDate=1106

@@ -636,17 +636,19 @@ const DAYS = [
   "date": "2026-11-06",
   "displayDate": "November 6, 2026",
   "lines": [
-   "Forty secrets. Forty days.",
-   "And now, the final one…",
+   "I come once every year,",
+   "but today I arrive with forty candles.",
    "",
-   "Happy 40th Birthday, Mika! 🎉"
+   "What am I?"
   ],
-  "answerDisplay": "HAPPY BIRTHDAY",
+  "answerDisplay": "A BIRTHDAY",
   "answers": [
-   "happy birthday",
-   "happy 40th birthday"
+   "birthday",
+   "a birthday",
+   "40th birthday",
+   "fortieth birthday"
   ],
-  "hint": "No real puzzle today — this is the finale.",
+  "hint": "Today, this celebration belongs entirely to you.",
   "video": "https://www.youtube.com/results?search_query=happy+birthday+hindi+song"
  }
 ];
@@ -706,7 +708,6 @@ function computeStats(){
    const r=getResult(d.day);
    if(!r) continue; // missed day doesn't break streak
    if(r.outcome==="solved"){
-     if(d.day===0) continue;
      solved++; if(r.attempts===1) firstTry++;
      current++; best=Math.max(best,current);
    }else if(r.outcome==="gave-up"){
@@ -747,6 +748,12 @@ function flagIcon(){
 function stateMarkup(d){
  const r=getResult(d.day);
  if(r?.outcome==="solved"){
+   if(d.day===0){
+     return {
+       icon:lockIcon(true),
+       state:`<span class="solved">🎉 HAPPY BIRTHDAY!</span>`
+     };
+   }
    return {
      icon:lockIcon(true),
      state:`<span class="solved">MYSTERY SOLVED · ${r.attempts} ATTEMPT${r.attempts===1?"":"S"}</span>`
@@ -792,11 +799,20 @@ function resetPuzzle(){
 }
 function openDay(n){
  currentDay=DAYS.find(d=>d.day===n);
- if(currentDay.day===0){
-   saveResult(0,{outcome:"solved",attempts:0,completedAt:new Date().toISOString()});
-   openSurprise();
+ const existing=getResult(currentDay.day);
+
+ // Completed EXITs never reopen the riddle or alter saved stats.
+ if(existing?.outcome==="solved"){
+   if(currentDay.day===0) openBirthdayFinale();
+   else openSurprise(true);
    return;
  }
+ if(existing?.outcome==="gave-up"){
+   $("answerReveal").textContent=currentDay.answerDisplay;
+   show("surrender");
+   return;
+ }
+
  resetPuzzle();
  $("dayEyebrow").textContent=`EXIT ${currentDay.day} · ${currentDay.displayDate.toUpperCase()}`;
  renderQuestion(currentDay.lines);
@@ -809,7 +825,8 @@ function check(){
    const tries=attemptsUsed+1;
    saveResult(currentDay.day,{outcome:"solved",attempts:tries,completedAt:new Date().toISOString()});
    input.value="";
-   openSurprise();
+   if(currentDay.day===0) openBirthdayFinale();
+   else openSurprise(true);
    return;
  }
  attemptsUsed++;
@@ -835,8 +852,8 @@ function openSurprise(solved=true){
  $("solvedHeading").style.display=solved?"":"none";
  $("solvedSubheading").style.display=solved?"":"none";
  const options=[
-   {heading:"ENJOY TODAY'S GIFT",button:"OPEN TODAY'S SURPRISE"},
-   {heading:"OPEN TODAY'S SURPRISE",button:"GRAB YOUR GIFT"}
+   {heading:"OPEN TODAY'S SURPRISE",button:"GRAB YOUR GIFT"},
+   {heading:"ENJOY TODAY'S GIFT",button:"REVEAL YOUR SURPRISE"}
  ];
  const pick=options[Math.floor(Math.random()*options.length)];
  $("giftHeading").textContent=pick.heading;
@@ -845,15 +862,55 @@ function openSurprise(solved=true){
  $("videoEyebrow").textContent=`EXIT ${currentDay.day} UNLOCKED`;
  show("video");
 }
-$("surrenderSurpriseBtn").onclick=()=>openSurprise(false);
+
+function launchBirthdayCelebration(){
+ const layer=$("celebrationLayer");
+ if(!layer) return;
+ layer.innerHTML="";
+ if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+ const confettiChars=["✦","◆","●","★","♥"];
+ for(let i=0;i<52;i++){
+   const piece=document.createElement("span");
+   piece.className="confetti-piece";
+   piece.textContent=confettiChars[Math.floor(Math.random()*confettiChars.length)];
+   piece.style.left=`${Math.random()*100}%`;
+   piece.style.animationDelay=`${Math.random()*.8}s`;
+   piece.style.animationDuration=`${2.6+Math.random()*2.2}s`;
+   piece.style.fontSize=`${8+Math.random()*10}px`;
+   piece.style.setProperty("--drift",`${-70+Math.random()*140}px`);
+   layer.appendChild(piece);
+ }
+
+ for(let i=0;i<8;i++){
+   const balloon=document.createElement("span");
+   balloon.className="birthday-balloon";
+   balloon.textContent="🎈";
+   balloon.style.left=`${5+Math.random()*90}%`;
+   balloon.style.animationDelay=`${.15+i*.18}s`;
+   balloon.style.animationDuration=`${5+Math.random()*2}s`;
+   layer.appendChild(balloon);
+ }
+
+ window.setTimeout(()=>{ if(layer) layer.innerHTML=""; },8000);
+}
+
+function openBirthdayFinale(){
+ $("birthdayQrImage").src=`https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${encodeURIComponent(currentDay.video)}`;
+ show("finale");
+ launchBirthdayCelebration();
+}
+
+$("surrenderSurpriseBtn").onclick=()=>currentDay.day===0?openBirthdayFinale():openSurprise(false);
 $("watchBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
+$("birthdaySurpriseBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
 document.querySelectorAll("[data-home]").forEach(b=>b.onclick=()=>{renderGrid();show("home")});
 renderGrid();
 
 
 function resetTestProgress(){
  if(!TEST_MODE) return;
- const ok=confirm("Reset all test progress for Mika's 40 Secrets on this browser?");
+ const ok=confirm("Reset all test progress for Mika's 40 Exits on this browser?");
  if(!ok) return;
  for(let day=0; day<=40; day++) localStorage.removeItem(key(day));
  renderGrid();
@@ -863,5 +920,5 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=13").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=14").catch(()=>{}));
 }
