@@ -1,21 +1,24 @@
-PROJECT 40 v0.4
+MIKA'S 40 SECRETS — v0.5
 
-What changed:
-- Wrong answers are erased immediately after each failed attempt.
-- Visual design updated to a cleaner, more modern, less childish look.
-- Puzzle/question card has a brighter, more distinct border and subtle glow.
-- Prototype now includes Days 40, 39, 38, 37, 36, and 35.
-- All six days use the same 4-attempt / playful-message / give-up engine.
-- Completed-day state is stored on the device.
-- Direct video button + QR remain available.
-- Day 40 uses RK's test YouTube link.
-- Days 39–35 currently use temporary 2026 Hindi-music YouTube links/playlists and sample riddles.
-- Real date-locking is NOT enabled yet; all six days stay open for testing.
+Major changes:
+• New public-facing title: MIKA'S 40 SECRETS
+• Sophisticated magical visual direction; simplified color palette
+• MIKA vs. THE MYSTERY running scoreboard
+• Tracks solved puzzles, white flags, first-try wins and current streak
+• Day cards store attempt count and outcome
+• Removed daily titles such as LOOK UP / PACK LIGHT
+• BACK TO DAYS replaced by HOME
+• YouTube opens in a NEW browser tab so the game remains open
+• Responsive layout for phones, tablets, laptops and desktops
+• Wrong-answer text and remaining attempts use a calmer unified treatment
+• 4 attempts + randomized non-repeating messages + white-flag flow retained
+• Wrong answer is erased after each failed attempt
+• Days 40–35 remain unlocked in TEST MODE for this build
+• Calendar availability logic is included; set TEST_MODE=false in app.js for production behavior
+• Missed available days remain playable; future days lock once production calendar mode is enabled
 
-Upload/replace in GitHub:
-index.html
-styles.css
-app.js
-sw.js
+NOTE:
+Temporary video destinations for Days 39–35 are YouTube search-result pages for 2026 Hindi/Bollywood music.
+Day 40 retains the supplied test video.
 
-You may also replace manifest.webmanifest and icons if you want the refreshed theme/icon immediately.
+For GitHub testing, replace ALL files in the repository with this build, then allow Pages to redeploy.

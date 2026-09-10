@@ -1,50 +1,29 @@
 
+const TEST_MODE = true; // v0.5: keep Days 40–35 open while RK tests.
+const MAX_ATTEMPTS = 4;
+
 const DAYS = [
- {
-  day:40,date:"September 27, 2026",title:"THE FIRST CLUE",
+ {day:40,date:"2026-09-27",displayDate:"September 27, 2026",
   question:"Forty days before you entered this world, your story had already begun.<br><br>Your mother could have been anywhere on Earth…<br><br>Can you name the city where she may have been physically present?",
-  answerDisplay:"DUBAI",answers:["dubai"],
-  hint:"Think of a city in the United Arab Emirates.",
-  video:"https://youtu.be/z3DiPjZfbFY"
- },
- {
-  day:39,date:"September 28, 2026",title:"A LITTLE WARM-UP",
+  answerDisplay:"DUBAI",answers:["dubai"],hint:"Think of a city in the United Arab Emirates.",video:"https://youtu.be/z3DiPjZfbFY"},
+ {day:39,date:"2026-09-28",displayDate:"September 28, 2026",
   question:"I have cities, but no houses. I have mountains, but no trees. I have water, but no fish.<br><br>What am I?",
-  answerDisplay:"A MAP",answers:["map","a map"],
-  hint:"You might use one before a hiking or travel adventure.",
-  video:"https://www.youtube.com/watch?v=Ngn-J5F9h1U"
- },
- {
-  day:38,date:"September 29, 2026",title:"PACK LIGHT",
+  answerDisplay:"A MAP",answers:["map","a map"],hint:"You might use one before a hiking or travel adventure.",video:"https://www.youtube.com/results?search_query=top+hindi+songs+2026"},
+ {day:38,date:"2026-09-29",displayDate:"September 29, 2026",
   question:"The more of me you take, the more you leave behind.<br><br>What am I?",
-  answerDisplay:"FOOTSTEPS",answers:["footsteps","steps"],
-  hint:"Think about what follows you on a hike.",
-  video:"https://www.youtube.com/watch?v=DEd37hP36tg"
- },
- {
-  day:37,date:"September 30, 2026",title:"LOOK UP",
+  answerDisplay:"FOOTSTEPS",answers:["footsteps","steps"],hint:"Think about what follows you on a hike.",video:"https://www.youtube.com/results?search_query=best+hindi+songs+2026"},
+ {day:37,date:"2026-09-30",displayDate:"September 30, 2026",
   question:"I travel around the world while staying in one corner.<br><br>What am I?",
-  answerDisplay:"A STAMP",answers:["stamp","a stamp","postage stamp"],
-  hint:"Travel, envelopes, and one small corner.",
-  video:"https://music.youtube.com/playlist?list=PLFFyMei_d85W1LfAatQhezLeJ7pDkOSoG"
- },
- {
-  day:36,date:"October 1, 2026",title:"TAKE A BREAK",
+  answerDisplay:"A STAMP",answers:["stamp","a stamp","postage stamp"],hint:"Travel, envelopes, and one small corner.",video:"https://www.youtube.com/results?search_query=2026+bollywood+hits"},
+ {day:36,date:"2026-10-01",displayDate:"October 1, 2026",
   question:"What gets wetter the more it dries?",
-  answerDisplay:"A TOWEL",answers:["towel","a towel"],
-  hint:"You might need one after a spa day.",
-  video:"https://music.youtube.com/playlist?list=PLFFyMei_d85W1LfAatQhezLeJ7pDkOSoG"
- },
- {
-  day:35,date:"October 2, 2026",title:"THE ROAD AHEAD",
+  answerDisplay:"A TOWEL",answers:["towel","a towel"],hint:"You might need one after a spa day.",video:"https://www.youtube.com/results?search_query=top+10+bollywood+songs+2026"},
+ {day:35,date:"2026-10-02",displayDate:"October 2, 2026",
   question:"What has many keys but can’t open a single lock?",
-  answerDisplay:"A PIANO",answers:["piano","a piano","keyboard"],
-  hint:"These keys make music.",
-  video:"https://music.youtube.com/playlist?list=PLFFyMei_d85W1LfAatQhezLeJ7pDkOSoG"
- }
+  answerDisplay:"A PIANO",answers:["piano","a piano","keyboard"],hint:"These keys make music.",video:"https://www.youtube.com/results?search_query=hindi+romantic+songs+2026"}
 ];
 
-const WRONG_MESSAGES = [
+const WRONG_MESSAGES=[
  "Not quite, birthday girl 😏",
  "Hmm… that one didn’t unlock anything.",
  "Nice try, Mika. The mystery survives.",
@@ -53,115 +32,120 @@ const WRONG_MESSAGES = [
  "The vault remains locked."
 ];
 
-let currentDay = DAYS[0];
-let attemptsUsed = 0;
-let unusedMessages = [];
-const maxAttempts = 4;
+let currentDay=DAYS[0], attemptsUsed=0, unusedMessages=[];
 
-const screens=[...document.querySelectorAll('.screen')];
-function show(id){screens.forEach(s=>s.classList.toggle('active',s.id===id));window.scrollTo({top:0,behavior:'smooth'})}
-function normalize(s){return s.trim().toLowerCase().replace(/\s+/g," ")}
+const $=id=>document.getElementById(id);
+const screens=[...document.querySelectorAll(".screen")];
+
+function show(id){screens.forEach(s=>s.classList.toggle("active",s.id===id));window.scrollTo({top:0,behavior:"smooth"})}
+function norm(v){return v.trim().toLowerCase().replace(/\s+/g," ")}
+function key(day){return `mika40_day_${day}`}
+function getResult(day){try{return JSON.parse(localStorage.getItem(key(day))||"null")}catch{return null}}
+function saveResult(day,result){localStorage.setItem(key(day),JSON.stringify(result))}
+function available(d){
+ if(TEST_MODE) return true;
+ const today=new Date(); today.setHours(23,59,59,999);
+ const unlock=new Date(d.date+"T00:00:00");
+ return today>=unlock;
+}
 function randomWrong(){
- if(!unusedMessages.length) unusedMessages=[...WRONG_MESSAGES];
- const i=Math.floor(Math.random()*unusedMessages.length);
- return unusedMessages.splice(i,1)[0];
+ if(!unusedMessages.length)unusedMessages=[...WRONG_MESSAGES];
+ return unusedMessages.splice(Math.floor(Math.random()*unusedMessages.length),1)[0];
 }
-function statusFor(day){
- const v=localStorage.getItem(`project40_day${day}_solved`);
- return v ? (v==="gave-up" ? "✓ Completed (with white flag 😂)" : "✓ Completed") : "Ready to play";
+function computeStats(){
+ const completed=DAYS.map(d=>({d,r:getResult(d.day)})).filter(x=>x.r);
+ const solved=completed.filter(x=>x.r.outcome==="solved");
+ const flags=completed.filter(x=>x.r.outcome==="gave-up");
+ let firstTry=solved.filter(x=>x.r.attempts===1).length;
+ let streak=0;
+ for(const d of DAYS){
+   const r=getResult(d.day);
+   if(!r) continue;
+   if(r.outcome==="solved") streak++;
+   else streak=0;
+ }
+ return {solved:solved.length,flags:flags.length,firstTry,streak};
 }
-function renderDayGrid(){
- const grid=document.getElementById('dayGrid');
- grid.innerHTML="";
- DAYS.forEach(d=>{
-  const b=document.createElement('button');
-  b.className='day-card';
-  b.innerHTML=`<div class="day">DAY ${d.day}</div><div class="date">${d.date}</div><div class="state">${statusFor(d.day)}</div>`;
-  b.onclick=()=>openDay(d.day);
-  grid.appendChild(b);
+function renderScore(){
+ const s=computeStats();
+ $("mikaScore").textContent=s.solved;
+ $("mysteryScore").textContent=s.flags;
+ $("solvedCount").textContent=s.solved;
+ $("flagCount").textContent=s.flags;
+ $("firstTryCount").textContent=s.firstTry;
+ $("streakCount").textContent=s.streak;
+}
+function stateText(d){
+ const r=getResult(d.day);
+ if(r?.outcome==="solved") return `<span class="solved">✦ Mystery solved · ${r.attempts} attempt${r.attempts===1?"":"s"}</span>`;
+ if(r?.outcome==="gave-up") return `<span class="flag">🏳 The Mystery won this one</span>`;
+ if(!available(d)) return `🔒 Not yet revealed`;
+ return `Ready to unlock`;
+}
+function renderGrid(){
+ const grid=$("dayGrid");grid.innerHTML="";
+ DAYS.forEach((d,i)=>{
+   const b=document.createElement("button");b.className="day-card";
+   if(i===0)b.classList.add("today");
+   b.disabled=!available(d);
+   b.innerHTML=`<div class="day">SECRET ${d.day}</div><div class="date">${d.displayDate}</div><div class="state">${stateText(d)}</div>`;
+   if(available(d))b.onclick=()=>openDay(d.day);
+   grid.appendChild(b);
  });
+ renderScore();
 }
 function resetPuzzle(){
- attemptsUsed=0; unusedMessages=[...WRONG_MESSAGES];
- const input=document.getElementById('answerInput');
- input.value="";
- input.disabled=false;
- document.getElementById('feedback').textContent="";
- document.getElementById('attempts').textContent="";
- document.getElementById('giveUpBtn').classList.add('hidden');
- document.getElementById('submitBtn').disabled=false;
+ attemptsUsed=0;unusedMessages=[...WRONG_MESSAGES];
+ $("answerInput").value="";$("answerInput").disabled=false;
+ $("feedback").textContent="";$("attempts").textContent="";
+ $("giveUpBtn").classList.add("hidden");$("submitBtn").disabled=false;
 }
-function openDay(dayNum){
- currentDay=DAYS.find(d=>d.day===dayNum);
- resetPuzzle();
- document.getElementById('dayEyebrow').textContent=`DAY ${currentDay.day} • ${currentDay.date.toUpperCase()}`;
- document.getElementById('puzzleTitle').textContent=currentDay.title;
- document.getElementById('puzzleText').innerHTML=currentDay.question;
- show('puzzle');
- setTimeout(()=>document.getElementById('answerInput').focus(),220);
+function openDay(n){
+ currentDay=DAYS.find(d=>d.day===n);resetPuzzle();
+ $("dayEyebrow").textContent=`SECRET ${currentDay.day} · ${currentDay.displayDate.toUpperCase()}`;
+ $("puzzleText").innerHTML=currentDay.question;show("puzzle");
+ setTimeout(()=>$("answerInput").focus(),180);
 }
 function check(){
- const input=document.getElementById('answerInput');
- const val=normalize(input.value);
- const feedback=document.getElementById('feedback');
- const attempts=document.getElementById('attempts');
-
- if(currentDay.answers.includes(val)){
-   localStorage.setItem(`project40_day${currentDay.day}_solved`,'yes');
-   feedback.textContent="Correct.";
-   feedback.className="feedback good";
-   attempts.textContent="";
-   input.value="";
-   setTimeout(()=>show('success'),220);
-   return;
+ const input=$("answerInput"), value=norm(input.value);
+ if(!value)return;
+ if(currentDay.answers.includes(value)){
+   const tries=attemptsUsed+1;
+   saveResult(currentDay.day,{outcome:"solved",attempts:tries,completedAt:new Date().toISOString()});
+   input.value="";$("feedback").textContent="Secret unlocked."; $("feedback").className="feedback good";$("attempts").textContent="";
+   setTimeout(()=>show("success"),220);return;
  }
  attemptsUsed++;
- const remaining=maxAttempts-attemptsUsed;
- feedback.textContent=randomWrong();
- feedback.className="feedback bad";
-
- // v0.4 improvement: erase the previous wrong answer immediately.
- input.value="";
- input.focus();
-
- if(remaining>0){
-   attempts.textContent=`${remaining} attempt${remaining===1?"":"s"} remaining`;
- }else{
-   attempts.textContent="That's all four attempts. 😬";
-   document.getElementById('submitBtn').disabled=true;
-   input.disabled=true;
-   document.getElementById('giveUpBtn').classList.remove('hidden');
+ input.value="";input.focus();
+ const remaining=MAX_ATTEMPTS-attemptsUsed;
+ $("feedback").textContent=randomWrong();$("feedback").className="feedback bad";
+ $("attempts").textContent=remaining>0?`${remaining} attempt${remaining===1?"":"s"} remaining`:"Four attempts used.";
+ if(remaining===0){
+   $("submitBtn").disabled=true;input.disabled=true;$("giveUpBtn").classList.remove("hidden");
  }
 }
-document.getElementById('submitBtn').onclick=check;
-document.getElementById('answerInput').addEventListener('keydown',e=>{
- if(e.key==='Enter'&&!document.getElementById('submitBtn').disabled) check();
-});
-document.getElementById('hintBtn').onclick=()=>{
- const f=document.getElementById('feedback');
- f.textContent=`Hint: ${currentDay.hint}`;
- f.className="feedback";
-};
-document.getElementById('giveUpBtn').onclick=()=>show('confirmGiveUp');
-document.getElementById('tryAgainBtn').onclick=()=>{resetPuzzle();show('puzzle')};
-document.getElementById('saveMeBtn').onclick=()=>{
- localStorage.setItem(`project40_day${currentDay.day}_solved`,'gave-up');
- document.getElementById('answerReveal').textContent=currentDay.answerDisplay;
- show('surrender');
+$("submitBtn").onclick=check;
+$("answerInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!$("submitBtn").disabled)check()});
+$("hintBtn").onclick=()=>{$("feedback").textContent=`Hint: ${currentDay.hint}`;$("feedback").className="feedback";};
+$("giveUpBtn").onclick=()=>show("confirmGiveUp");
+$("tryAgainBtn").onclick=()=>{resetPuzzle();show("puzzle")};
+$("saveMeBtn").onclick=()=>{
+ saveResult(currentDay.day,{outcome:"gave-up",attempts:MAX_ATTEMPTS,completedAt:new Date().toISOString()});
+ $("answerReveal").textContent=currentDay.answerDisplay;show("surrender");
 };
 function openSurprise(){
- const q=encodeURIComponent(currentDay.video);
- document.getElementById('qrImage').src=`https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${q}`;
- document.getElementById('videoEyebrow').textContent=`DAY ${currentDay.day} UNLOCKED`;
- show('video');
+ $("qrImage").src=`https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${encodeURIComponent(currentDay.video)}`;
+ $("videoEyebrow").textContent=`SECRET ${currentDay.day} UNLOCKED`;show("video");
 }
-document.getElementById('successSurpriseBtn').onclick=openSurprise;
-document.getElementById('surrenderSurpriseBtn').onclick=openSurprise;
-document.getElementById('watchBtn').onclick=()=>window.location.href=currentDay.video;
-document.getElementById('backHomeBtn').onclick=()=>{renderDayGrid();show('home')};
-document.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>{renderDayGrid();show(b.dataset.back)});
-renderDayGrid();
+$("successSurpriseBtn").onclick=openSurprise;
+$("surrenderSurpriseBtn").onclick=openSurprise;
 
-if('serviceWorker' in navigator){
- window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));
+// v0.5: preserve the game tab when the video opens.
+$("watchBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
+
+document.querySelectorAll("[data-home]").forEach(b=>b.onclick=()=>{renderGrid();show("home")});
+renderGrid();
+
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));
 }

@@ -2,98 +2,117 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0c0f17">
-<title>Project 40</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090d16">
+<title>Mika's 40 Secrets</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="stars" aria-hidden="true"></div>
 <main class="app-shell">
-  <section id="home" class="screen active">
-    <div class="brand-orbit">✦</div>
-    <h1>PROJECT 40</h1>
-    <p class="tagline">Forty days. Forty clues. Forty surprises.</p>
 
-    <div class="hero-card glow-border">
-      <div class="kicker">FOR</div>
-      <div class="name">MIKA</div>
-      <div class="hero-copy">A little mystery. A little adventure.<br>A lot of love.</div>
+<section id="home" class="screen active">
+  <header class="masthead">
+    <div class="sigil">✦</div>
+    <div class="overline">A FORTY-DAY MYSTERY</div>
+    <h1>MIKA'S <span>40</span> SECRETS</h1>
+    <p class="tagline">Some secrets are meant to be unlocked.</p>
+  </header>
+
+  <section class="welcome-card">
+    <div class="overline">THE JOURNEY HAS BEGUN</div>
+    <p>One secret awaits you each day.<br>Solve the mystery. Unlock the surprise.</p>
+  </section>
+
+  <section class="score-card" aria-label="Scoreboard">
+    <div class="score-title">MIKA <span>vs.</span> THE MYSTERY</div>
+    <div class="score-main">
+      <div><strong id="mikaScore">0</strong><small>MIKA</small></div>
+      <div class="score-divider">—</div>
+      <div><strong id="mysteryScore">0</strong><small>THE MYSTERY</small></div>
     </div>
-
-    <div class="section-title">PROTOTYPE DAYS 40 → 35</div>
-    <div id="dayGrid" class="day-grid"></div>
-
-    <p class="tiny">Prototype mode: Days 40–35 are unlocked for testing.</p>
-  </section>
-
-  <section id="puzzle" class="screen">
-    <div id="dayEyebrow" class="eyebrow"></div>
-    <h2 id="puzzleTitle"></h2>
-
-    <div class="puzzle-card glow-border">
-      <p id="puzzleText" class="question"></p>
+    <div class="score-stats">
+      <span>✦ Solved <b id="solvedCount">0</b></span>
+      <span>🏳 White Flags <b id="flagCount">0</b></span>
+      <span>◎ First-Try <b id="firstTryCount">0</b></span>
+      <span>🔥 Streak <b id="streakCount">0</b></span>
     </div>
-
-    <input id="answerInput" type="text" placeholder="Type your answer" autocomplete="off">
-    <button id="submitBtn" class="primary">UNLOCK TODAY'S SURPRISE</button>
-    <button id="hintBtn" class="secondary">SHOW HINT</button>
-
-    <div class="status-panel">
-      <p id="feedback" class="feedback"></p>
-      <p id="attempts" class="attempts"></p>
-    </div>
-
-    <button id="giveUpBtn" class="giveup hidden">I GIVE UP — I'M SO OLD… I'M ABOUT TO TURN 40! 😂</button>
-    <button data-back="home" class="ghost">BACK TO DAYS</button>
   </section>
 
-  <section id="confirmGiveUp" class="screen">
-    <div class="bigemoji">🤨</div>
-    <div class="eyebrow">ONE LAST CHANCE</div>
-    <h2>ARE YOU SURE?</h2>
-    <div class="puzzle-card glow-border">
-      <p>There's no going back.</p>
-      <p>Your 39-year-old puzzle-solving reputation is at stake. 😏</p>
-    </div>
-    <button id="tryAgainBtn" class="secondary">WAIT! LET ME TRY AGAIN</button>
-    <button id="saveMeBtn" class="giveup">YES. SAVE ME. 😂</button>
-  </section>
+  <div class="section-heading">YOUR SECRETS</div>
+  <div id="dayGrid" class="day-grid"></div>
+  <p class="prototype-note">v0.5 testing mode · Secrets 40–35 are available.</p>
+</section>
 
-  <section id="surrender" class="screen">
-    <div class="bigemoji">🏳️</div>
-    <div class="eyebrow">PUZZLE SURRENDERED</div>
-    <h2>THE WHITE FLAG HAS BEEN RAISED</h2>
-    <p class="sub">The answer was…</p>
-    <div id="answerReveal" class="answer-reveal"></div>
-    <p>Don't worry. We won't tell anyone. 🤫</p>
-    <button id="surrenderSurpriseBtn" class="primary">OPEN TODAY'S SURPRISE</button>
-  </section>
+<section id="puzzle" class="screen">
+  <button class="home-link" data-home>← HOME</button>
+  <div id="dayEyebrow" class="day-eyebrow"></div>
+  <div class="secret-mark">✦</div>
 
-  <section id="success" class="screen">
-    <div class="bigemoji">✦</div>
-    <div class="eyebrow">UNLOCKED</div>
-    <h2>YOU GOT IT, MIKA.</h2>
-    <p id="successCopy">You solved today's clue.</p>
-    <p class="sub">Your surprise is waiting.</p>
-    <button id="successSurpriseBtn" class="primary">OPEN TODAY'S SURPRISE</button>
-  </section>
+  <div class="puzzle-card">
+    <div class="card-label">TODAY'S SECRET</div>
+    <p id="puzzleText" class="question"></p>
+  </div>
 
-  <section id="video" class="screen">
-    <div id="videoEyebrow" class="eyebrow"></div>
-    <h2>A MESSAGE IS WAITING FOR YOU</h2>
+  <input id="answerInput" type="text" placeholder="Type your answer" autocomplete="off">
+  <button id="submitBtn" class="primary">UNLOCK THE SECRET</button>
+  <button id="hintBtn" class="secondary">SHOW HINT</button>
 
-    <button id="watchBtn" class="primary video-button">▶ WATCH TODAY'S VIDEO</button>
+  <div id="statusPanel" class="status-panel">
+    <p id="feedback" class="feedback"></p>
+    <p id="attempts" class="attempts"></p>
+  </div>
 
-    <div class="divider"><span></span><em>OR</em><span></span></div>
+  <button id="giveUpBtn" class="giveup hidden">I GIVE UP — I'M SO OLD… I'M ABOUT TO TURN 40! 😂</button>
+  <button class="home-button" data-home>HOME</button>
+</section>
 
-    <div class="qr-wrap glow-border">
-      <img id="qrImage" alt="QR code for today's video">
-    </div>
+<section id="confirmGiveUp" class="screen">
+  <button class="home-link" data-home>← HOME</button>
+  <div class="secret-mark">✦</div>
+  <div class="day-eyebrow">ONE LAST CHANCE</div>
+  <h2>ARE YOU SURE?</h2>
+  <div class="puzzle-card compact">
+    <p>There's no going back.</p>
+    <p>Your 39-year-old puzzle-solving reputation is at stake. 😏</p>
+  </div>
+  <button id="tryAgainBtn" class="secondary">WAIT! LET ME TRY AGAIN</button>
+  <button id="saveMeBtn" class="giveup">YES. SAVE ME. 😂</button>
+</section>
 
-    <p class="sub">On a laptop or another device?<br>Scan this QR code with your phone.</p>
-    <button id="backHomeBtn" class="ghost">BACK TO DAYS</button>
-  </section>
+<section id="surrender" class="screen">
+  <button class="home-link" data-home>← HOME</button>
+  <div class="secret-mark">🏳</div>
+  <div class="day-eyebrow">SECRET REVEALED</div>
+  <h2>THE MYSTERY WINS THIS ONE</h2>
+  <p class="muted">The answer was…</p>
+  <div id="answerReveal" class="answer-reveal"></div>
+  <p class="muted">Don't worry. We won't tell anyone. 🤫</p>
+  <button id="surrenderSurpriseBtn" class="primary">OPEN TODAY'S SURPRISE</button>
+</section>
+
+<section id="success" class="screen">
+  <button class="home-link" data-home>← HOME</button>
+  <div class="secret-mark">✦</div>
+  <div class="day-eyebrow">SECRET UNLOCKED</div>
+  <h2>THE MYSTERY HAS BEEN SOLVED</h2>
+  <p id="successCopy" class="muted">Nicely done, Mika.</p>
+  <button id="successSurpriseBtn" class="primary">OPEN TODAY'S SURPRISE</button>
+</section>
+
+<section id="video" class="screen">
+  <button class="home-link" data-home>← HOME</button>
+  <div class="secret-mark">✦</div>
+  <div id="videoEyebrow" class="day-eyebrow"></div>
+  <h2>YOUR SURPRISE IS WAITING</h2>
+  <button id="watchBtn" class="primary">▶ WATCH TODAY'S VIDEO</button>
+  <div class="divider"><span></span><em>OR</em><span></span></div>
+  <div class="qr-wrap"><img id="qrImage" alt="QR code for today's video"></div>
+  <p class="muted small">On another device? Scan the code with your phone.</p>
+  <button class="home-button" data-home>HOME</button>
+</section>
+
 </main>
 <script src="app.js"></script>
 </body>

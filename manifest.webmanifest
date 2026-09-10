@@ -1,11 +1,11 @@
 {
-  "name": "Project 40",
-  "short_name": "Project 40",
+  "name": "Mika's 40 Secrets",
+  "short_name": "40 Secrets",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0c0f17",
-  "theme_color": "#0c0f17",
-  "description": "A 40-day birthday adventure for Mika.",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "description": "A forty-day mystery made for Mika.",
   "icons": [
     {
       "src": "icon-192.png",
