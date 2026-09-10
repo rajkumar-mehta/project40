@@ -62,11 +62,18 @@ function randomWrong(){
  if(!unusedMessages.length)unusedMessages=[...WRONG_MESSAGES];
  return unusedMessages.splice(Math.floor(Math.random()*unusedMessages.length),1)[0];
 }
+function dateValue(iso){
+ const [y,m,d]=iso.split("-").map(Number);
+ return Date.UTC(y,m-1,d);
+}
 function visibleDays(){
- return DAYS.filter(isVisible).sort((a,b)=>b.date.localeCompare(a.date)); // newest first
+ return DAYS
+   .filter(isVisible)
+   .slice()
+   .sort((a,b)=>dateValue(b.date)-dateValue(a.date)); // newest first, deterministic across browsers
 }
 function computeStats(){
- const ordered=DAYS.filter(isVisible).sort((a,b)=>a.date.localeCompare(b.date)); // chronological
+ const ordered=DAYS.filter(isVisible).slice().sort((a,b)=>dateValue(a.date)-dateValue(b.date)); // chronological
  let solved=0,flags=0,firstTry=0,current=0,best=0;
  for(const d of ordered){
    const r=getResult(d.day);
@@ -90,11 +97,43 @@ function renderScore(){
  $("streakCount").textContent=s.current;
  $("bestStreakCount").textContent=s.best;
 }
+
+function lockIcon(open=false){
+ const klass=open ? "state-icon solved-icon" : "state-icon unsolved-icon";
+ const path=open
+   ? `<path d="M8.4 10V7.3a3.6 3.6 0 0 1 6.7-1.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <rect x="6" y="10" width="12" height="10" rx="2.2" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="12" cy="15" r="1.2" fill="currentColor"/>`
+   : `<path d="M8.5 10V7.3a3.5 3.5 0 0 1 7 0V10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <rect x="6" y="10" width="12" height="10" rx="2.2" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="12" cy="15" r="1.2" fill="currentColor"/>`;
+ return `<svg class="${klass}" viewBox="0 0 24 24" aria-hidden="true">${path}</svg>`;
+}
+function flagIcon(){
+ return `<svg class="state-icon flag-icon" viewBox="0 0 24 24" aria-hidden="true">
+   <path d="M7 21V3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+   <path d="M8 4h9l-2.2 3L17 10H8z" fill="currentColor"/>
+ </svg>`;
+}
+
 function stateMarkup(d){
  const r=getResult(d.day);
- if(r?.outcome==="solved") return {lock:`<span class="lock solved">🔓</span>`,state:`<span class="solved">Mystery solved · ${r.attempts} attempt${r.attempts===1?"":"s"}</span>`};
- if(r?.outcome==="gave-up") return {lock:`<span class="lock solved">🔓</span>`,state:`<span class="flag">🏳 The Mystery won this one</span>`};
- return {lock:`<span class="lock unsolved">🔒</span>`,state:`Ready to unlock`};
+ if(r?.outcome==="solved"){
+   return {
+     icon:lockIcon(true),
+     state:`<span class="solved">MYSTERY SOLVED · ${r.attempts} ATTEMPT${r.attempts===1?"":"S"}</span>`
+   };
+ }
+ if(r?.outcome==="gave-up"){
+   return {
+     icon:flagIcon(),
+     state:`<span class="flag">THE MYSTERY WON THIS ONE</span>`
+   };
+ }
+ return {
+   icon:lockIcon(false),
+   state:`<span class="ready">READY TO UNLOCK</span>`
+ };
 }
 function renderGrid(){
  const grid=$("dayGrid");grid.innerHTML="";
@@ -104,7 +143,10 @@ function renderGrid(){
    const status=stateMarkup(d);
    const b=document.createElement("button");
    b.className="day-card entering";
-   b.innerHTML=`<div class="dayline"><div class="day">SECRET ${d.day}</div>${status.lock}</div><div class="date">${d.displayDate}</div><div class="state">${status.state}</div>`;
+   const todayChip=d.date===todayISO()?`<span class="today-chip">TODAY</span>`:"";
+   b.dataset.secret=String(d.day);
+   b.dataset.date=d.date;
+   b.innerHTML=`<div class="dayline"><div class="day">SECRET ${d.day}</div>${status.icon}</div><div class="date">${d.displayDate} ${todayChip}</div><div class="state">${status.state}</div>`;
    b.onclick=()=>openDay(d.day);
    grid.appendChild(b);
  });
@@ -166,5 +208,5 @@ document.querySelectorAll("[data-home]").forEach(b=>b.onclick=()=>{renderGrid();
 renderGrid();
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=7").catch(()=>{}));
 }

@@ -32,8 +32,8 @@ h1 span{font-style:italic;color:#c9bce4}h2{font-family:Georgia,"Times New Roman"
 .score-stats{border-top:1px solid rgba(255,255,255,.07);padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;color:var(--mist);font-size:12px}.score-stats b{color:var(--moon)}
 .section-heading{margin:10px 0 14px}.day-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .day-card{appearance:none;text-align:left;padding:17px;border-radius:15px;border:1px solid #2d394e;background:rgba(17,25,39,.9);color:var(--moon);cursor:pointer;min-height:108px;transition:transform .28s ease,border-color .2s ease,box-shadow .2s ease}
-.day-card:hover{border-color:#4f6284}.day-card .dayline{display:flex;align-items:center;justify-content:space-between;gap:12px}.day-card .day{font-family:Georgia,serif;font-size:21px}.day-card .lock{font-size:18px}.day-card .date{font-size:11px;color:var(--mist);margin-top:5px}.day-card .state{font-size:12px;margin-top:12px;color:#aebbd0}.day-card .solved{color:var(--success)}.day-card .flag{color:var(--warning)}
-.lock.unsolved{color:var(--red)}.lock.solved{color:var(--success)}
+.day-card:hover{border-color:#4f6284}.day-card .dayline{display:flex;align-items:center;justify-content:space-between;gap:12px}.day-card .day{font-family:Georgia,serif;font-size:21px}.state-icon{width:22px;height:22px;display:block;flex:0 0 auto}.unsolved-icon{color:#e0606b}.solved-icon{color:#63c99b}.flag-icon{color:#f2f4f7}.day-card .date{font-size:11px;color:var(--mist);margin-top:5px}.day-card .state{font-size:12px;margin-top:12px;color:#aebbd0}.day-card .solved{color:var(--success)}.day-card .flag{color:var(--warning)}
+.day-card .ready{color:#d9a0a7}.day-card .solved{color:var(--success);font-weight:700;letter-spacing:.25px}.day-card .flag{color:#d8c28e;font-weight:700;letter-spacing:.25px}
 .day-card.entering{animation:cardIn .34s ease}@keyframes cardIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 .empty-state{text-align:center;color:var(--mist);padding:28px 0}
 .test-tools{text-align:center;color:#687990;font-size:10px;margin-top:20px;line-height:1.6}.test-tools code{color:#8295b3;background:#101827;padding:2px 4px;border-radius:4px}
@@ -75,3 +75,14 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
  .masthead{padding-top:0}
  .welcome-card{padding:18px}
 }
+
+
+/* v0.7 status icon + browser consistency fixes */
+.day-card .state{font-size:11px;letter-spacing:.15px}
+.day-card .state-icon{transition:none!important;animation:none!important}
+.day-card .today-chip{
+ display:inline-block;margin-left:7px;padding:2px 6px;border:1px solid #526887;border-radius:999px;
+ color:#a9bce0;font-size:8px;font-weight:800;letter-spacing:1px;vertical-align:1px
+}
+.day-grid{grid-auto-flow:row!important}
+.day-card{order:initial!important}

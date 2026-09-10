@@ -1,39 +1,38 @@
-MIKA'S 40 SECRETS — v0.6
+MIKA'S 40 SECRETS — v0.7
 
-Implemented in this build
--------------------------
-1. Newest visible secret appears first.
-2. Future secrets are completely hidden until their assigned date.
-3. Missed secrets remain visible and playable.
-4. Red closed padlock = available but unsolved.
-5. Green open padlock = completed (solved or surrendered); surrender still shows the white flag state.
-6. Better riddle line breaks and balanced reading width.
-7. Removed autofocus / mobile keyboard jump.
-8. Added gentle bouncing chevron + "Continue to answer"; tap to smooth-scroll.
-9. Current Streak + Best Streak.
-10. Missed days do not break streak; surrender resets Current Streak.
-11. Responsive sizing for phone, tablet, laptop, desktop, portrait, landscape.
-12. Extra safeguards for phone browsers using "Desktop site" mode.
-13. Uses broadly supported HTML/CSS/JS for Chrome, Samsung Internet, Edge, Firefox, Safari.
-14. YouTube still opens separately so the game remains open.
-15. Existing 4-attempt, random wrong-message, auto-clear, surrender and HOME flows preserved.
+v0.7 fixes
+----------
+1. Newest secret ordering is now deterministic across browsers:
+   Sep 30 => 37, 38, 39, 40
+   Oct 2  => 35, 36, 37, 38, 39, 40
+2. Card state icons no longer use OS/browser-colored emoji.
+   Available/unsolved = RED closed padlock.
+   Solved = GREEN open padlock.
+   Surrendered = WHITE FLAG replacing the padlock completely.
+3. Solved status text remains at the bottom of the card and shows the attempt count.
+4. Surrendered cards show "THE MYSTERY WON THIS ONE" and a white flag at top-right.
+5. Lock/flag icons have no misleading animation.
+6. Added a small TODAY chip for the current simulated/real date.
+7. Stronger cache protection:
+   - versioned app.js/styles.css references
+   - service worker cache bumped to mikas-40-secrets-v07
+   - app shell/code use network-first/no-store behavior
+8. Existing v0.6 behavior retained:
+   future secrets hidden, missed secrets playable, no autofocus jump,
+   Continue-to-answer cue, streak counters, responsive/browser-agnostic layout.
 
-IMPORTANT — Cross-device sync
------------------------------
-Progress is STILL stored locally in the browser in v0.6.
-A true laptop ↔ phone sync needs a small cloud database/backend and cannot be safely faked in a static GitHub Pages build.
-So a score recorded on one browser/device will not yet appear on another.
-This is the remaining architecture item for a later build before production.
+IMPORTANT
+---------
+Cross-device game progress is still browser-local in this build.
+True phone/laptop progress sync still requires a cloud backend.
 
 TEST MODE
 ---------
-This build defaults to a simulated date of 2026-10-02 so Secrets 40–35 are visible.
-You can test date behavior using the URL:
-  ?testDate=2026-09-27   -> only Secret 40
-  ?testDate=2026-09-28   -> Secrets 39 and 40
-  ?testDate=2026-09-30   -> Secrets 37, 38, 39, 40
-  ?testDate=2026-10-02   -> Secrets 35 through 40
+Default simulated date: 2026-10-02
 
-Production will set TEST_MODE=false in app.js, which uses the device's actual local calendar date.
+Full test URLs after GitHub upload:
+https://rajkumar-mehta.github.io/project40/?v=7
+https://rajkumar-mehta.github.io/project40/?v=7&testDate=2026-09-30
+https://rajkumar-mehta.github.io/project40/?v=7&testDate=2026-10-02
 
-Upload ALL files to GitHub and let Pages redeploy.
+Upload all files to the repository root and let GitHub Pages redeploy.
