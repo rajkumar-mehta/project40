@@ -1,25 +1,34 @@
 
-const TEST_MODE = true; // v0.5: keep Days 40–35 open while RK tests.
+const TEST_MODE = true;
+const DEFAULT_TEST_DATE = "2026-10-02";
 const MAX_ATTEMPTS = 4;
 
 const DAYS = [
  {day:40,date:"2026-09-27",displayDate:"September 27, 2026",
-  question:"Forty days before you entered this world, your story had already begun.<br><br>Your mother could have been anywhere on Earth…<br><br>Can you name the city where she may have been physically present?",
+  lines:[
+   "Forty days before you entered this world,",
+   "your story had already begun.",
+   "",
+   "Your mother could have been anywhere on Earth…",
+   "",
+   "Can you name the city where she may have been",
+   "physically present?"
+  ],
   answerDisplay:"DUBAI",answers:["dubai"],hint:"Think of a city in the United Arab Emirates.",video:"https://youtu.be/z3DiPjZfbFY"},
  {day:39,date:"2026-09-28",displayDate:"September 28, 2026",
-  question:"I have cities, but no houses. I have mountains, but no trees. I have water, but no fish.<br><br>What am I?",
+  lines:["I have cities, but no houses.","I have mountains, but no trees.","I have water, but no fish.","","What am I?"],
   answerDisplay:"A MAP",answers:["map","a map"],hint:"You might use one before a hiking or travel adventure.",video:"https://www.youtube.com/results?search_query=top+hindi+songs+2026"},
  {day:38,date:"2026-09-29",displayDate:"September 29, 2026",
-  question:"The more of me you take, the more you leave behind.<br><br>What am I?",
+  lines:["The more of me you take,","the more you leave behind.","","What am I?"],
   answerDisplay:"FOOTSTEPS",answers:["footsteps","steps"],hint:"Think about what follows you on a hike.",video:"https://www.youtube.com/results?search_query=best+hindi+songs+2026"},
  {day:37,date:"2026-09-30",displayDate:"September 30, 2026",
-  question:"I travel around the world while staying in one corner.<br><br>What am I?",
+  lines:["I travel around the world","while staying in one corner.","","What am I?"],
   answerDisplay:"A STAMP",answers:["stamp","a stamp","postage stamp"],hint:"Travel, envelopes, and one small corner.",video:"https://www.youtube.com/results?search_query=2026+bollywood+hits"},
  {day:36,date:"2026-10-01",displayDate:"October 1, 2026",
-  question:"What gets wetter the more it dries?",
+  lines:["What gets wetter","the more it dries?"],
   answerDisplay:"A TOWEL",answers:["towel","a towel"],hint:"You might need one after a spa day.",video:"https://www.youtube.com/results?search_query=top+10+bollywood+songs+2026"},
  {day:35,date:"2026-10-02",displayDate:"October 2, 2026",
-  question:"What has many keys but can’t open a single lock?",
+  lines:["What has many keys","but can’t open a single lock?"],
   answerDisplay:"A PIANO",answers:["piano","a piano","keyboard"],hint:"These keys make music.",video:"https://www.youtube.com/results?search_query=hindi+romantic+songs+2026"}
 ];
 
@@ -36,35 +45,40 @@ let currentDay=DAYS[0], attemptsUsed=0, unusedMessages=[];
 
 const $=id=>document.getElementById(id);
 const screens=[...document.querySelectorAll(".screen")];
+const params=new URLSearchParams(location.search);
 
-function show(id){screens.forEach(s=>s.classList.toggle("active",s.id===id));window.scrollTo({top:0,behavior:"smooth"})}
+function todayISO(){
+ if(TEST_MODE) return params.get("testDate") || DEFAULT_TEST_DATE;
+ const d=new Date();
+ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function show(id){screens.forEach(s=>s.classList.toggle("active",s.id===id));window.scrollTo({top:0,left:0,behavior:"auto"})}
 function norm(v){return v.trim().toLowerCase().replace(/\s+/g," ")}
 function key(day){return `mika40_day_${day}`}
 function getResult(day){try{return JSON.parse(localStorage.getItem(key(day))||"null")}catch{return null}}
 function saveResult(day,result){localStorage.setItem(key(day),JSON.stringify(result))}
-function available(d){
- if(TEST_MODE) return true;
- const today=new Date(); today.setHours(23,59,59,999);
- const unlock=new Date(d.date+"T00:00:00");
- return today>=unlock;
-}
+function isVisible(d){return d.date<=todayISO()}
 function randomWrong(){
  if(!unusedMessages.length)unusedMessages=[...WRONG_MESSAGES];
  return unusedMessages.splice(Math.floor(Math.random()*unusedMessages.length),1)[0];
 }
+function visibleDays(){
+ return DAYS.filter(isVisible).sort((a,b)=>b.date.localeCompare(a.date)); // newest first
+}
 function computeStats(){
- const completed=DAYS.map(d=>({d,r:getResult(d.day)})).filter(x=>x.r);
- const solved=completed.filter(x=>x.r.outcome==="solved");
- const flags=completed.filter(x=>x.r.outcome==="gave-up");
- let firstTry=solved.filter(x=>x.r.attempts===1).length;
- let streak=0;
- for(const d of DAYS){
+ const ordered=DAYS.filter(isVisible).sort((a,b)=>a.date.localeCompare(b.date)); // chronological
+ let solved=0,flags=0,firstTry=0,current=0,best=0;
+ for(const d of ordered){
    const r=getResult(d.day);
-   if(!r) continue;
-   if(r.outcome==="solved") streak++;
-   else streak=0;
+   if(!r) continue; // missed day doesn't break streak
+   if(r.outcome==="solved"){
+     solved++; if(r.attempts===1) firstTry++;
+     current++; best=Math.max(best,current);
+   }else if(r.outcome==="gave-up"){
+     flags++; current=0;
+   }
  }
- return {solved:solved.length,flags:flags.length,firstTry,streak};
+ return {solved,flags,firstTry,current,best};
 }
 function renderScore(){
  const s=computeStats();
@@ -73,26 +87,32 @@ function renderScore(){
  $("solvedCount").textContent=s.solved;
  $("flagCount").textContent=s.flags;
  $("firstTryCount").textContent=s.firstTry;
- $("streakCount").textContent=s.streak;
+ $("streakCount").textContent=s.current;
+ $("bestStreakCount").textContent=s.best;
 }
-function stateText(d){
+function stateMarkup(d){
  const r=getResult(d.day);
- if(r?.outcome==="solved") return `<span class="solved">✦ Mystery solved · ${r.attempts} attempt${r.attempts===1?"":"s"}</span>`;
- if(r?.outcome==="gave-up") return `<span class="flag">🏳 The Mystery won this one</span>`;
- if(!available(d)) return `🔒 Not yet revealed`;
- return `Ready to unlock`;
+ if(r?.outcome==="solved") return {lock:`<span class="lock solved">🔓</span>`,state:`<span class="solved">Mystery solved · ${r.attempts} attempt${r.attempts===1?"":"s"}</span>`};
+ if(r?.outcome==="gave-up") return {lock:`<span class="lock solved">🔓</span>`,state:`<span class="flag">🏳 The Mystery won this one</span>`};
+ return {lock:`<span class="lock unsolved">🔒</span>`,state:`Ready to unlock`};
 }
 function renderGrid(){
  const grid=$("dayGrid");grid.innerHTML="";
- DAYS.forEach((d,i)=>{
-   const b=document.createElement("button");b.className="day-card";
-   if(i===0)b.classList.add("today");
-   b.disabled=!available(d);
-   b.innerHTML=`<div class="day">SECRET ${d.day}</div><div class="date">${d.displayDate}</div><div class="state">${stateText(d)}</div>`;
-   if(available(d))b.onclick=()=>openDay(d.day);
+ const vd=visibleDays();
+ $("emptyState").classList.toggle("hidden",vd.length>0);
+ vd.forEach((d,i)=>{
+   const status=stateMarkup(d);
+   const b=document.createElement("button");
+   b.className="day-card entering";
+   b.innerHTML=`<div class="dayline"><div class="day">SECRET ${d.day}</div>${status.lock}</div><div class="date">${d.displayDate}</div><div class="state">${status.state}</div>`;
+   b.onclick=()=>openDay(d.day);
    grid.appendChild(b);
  });
  renderScore();
+ $("simDateText").textContent=todayISO();
+}
+function renderQuestion(lines){
+ $("puzzleText").innerHTML=lines.map(line=>line===""?`<div class="gap"></div>`:`<span class="line">${line}</span>`).join("");
 }
 function resetPuzzle(){
  attemptsUsed=0;unusedMessages=[...WRONG_MESSAGES];
@@ -103,8 +123,9 @@ function resetPuzzle(){
 function openDay(n){
  currentDay=DAYS.find(d=>d.day===n);resetPuzzle();
  $("dayEyebrow").textContent=`SECRET ${currentDay.day} · ${currentDay.displayDate.toUpperCase()}`;
- $("puzzleText").innerHTML=currentDay.question;show("puzzle");
- setTimeout(()=>$("answerInput").focus(),180);
+ renderQuestion(currentDay.lines);
+ show("puzzle");
+ // v0.6: deliberately NO autofocus. Riddle stays in view on mobile.
 }
 function check(){
  const input=$("answerInput"), value=norm(input.value);
@@ -112,11 +133,11 @@ function check(){
  if(currentDay.answers.includes(value)){
    const tries=attemptsUsed+1;
    saveResult(currentDay.day,{outcome:"solved",attempts:tries,completedAt:new Date().toISOString()});
-   input.value="";$("feedback").textContent="Secret unlocked."; $("feedback").className="feedback good";$("attempts").textContent="";
+   input.value="";$("feedback").textContent="Secret unlocked.";$("feedback").className="feedback good";$("attempts").textContent="";
    setTimeout(()=>show("success"),220);return;
  }
  attemptsUsed++;
- input.value="";input.focus();
+ input.value="";
  const remaining=MAX_ATTEMPTS-attemptsUsed;
  $("feedback").textContent=randomWrong();$("feedback").className="feedback bad";
  $("attempts").textContent=remaining>0?`${remaining} attempt${remaining===1?"":"s"} remaining`:"Four attempts used.";
@@ -127,6 +148,7 @@ function check(){
 $("submitBtn").onclick=check;
 $("answerInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!$("submitBtn").disabled)check()});
 $("hintBtn").onclick=()=>{$("feedback").textContent=`Hint: ${currentDay.hint}`;$("feedback").className="feedback";};
+$("scrollCue").onclick=()=>$("answerArea").scrollIntoView({behavior:"smooth",block:"start"});
 $("giveUpBtn").onclick=()=>show("confirmGiveUp");
 $("tryAgainBtn").onclick=()=>{resetPuzzle();show("puzzle")};
 $("saveMeBtn").onclick=()=>{
@@ -139,13 +161,10 @@ function openSurprise(){
 }
 $("successSurpriseBtn").onclick=openSurprise;
 $("surrenderSurpriseBtn").onclick=openSurprise;
-
-// v0.5: preserve the game tab when the video opens.
 $("watchBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
-
 document.querySelectorAll("[data-home]").forEach(b=>b.onclick=()=>{renderGrid();show("home")});
 renderGrid();
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
 }

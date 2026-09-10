@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#090d16">
+<meta name="theme-color" content="#0d1422">
 <title>Mika's 40 Secrets</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="styles.css">
@@ -36,13 +36,20 @@
       <span>✦ Solved <b id="solvedCount">0</b></span>
       <span>🏳 White Flags <b id="flagCount">0</b></span>
       <span>◎ First-Try <b id="firstTryCount">0</b></span>
-      <span>🔥 Streak <b id="streakCount">0</b></span>
+      <span>🔥 Current <b id="streakCount">0</b></span>
+      <span>★ Best <b id="bestStreakCount">0</b></span>
     </div>
   </section>
 
   <div class="section-heading">YOUR SECRETS</div>
   <div id="dayGrid" class="day-grid"></div>
-  <p class="prototype-note">v0.5 testing mode · Secrets 40–35 are available.</p>
+  <p id="emptyState" class="empty-state hidden">Your first secret has not been revealed yet.</p>
+
+  <div class="test-tools">
+    <div>v0.6 TEST MODE</div>
+    <div>Simulated date: <b id="simDateText"></b></div>
+    <div class="test-hint">Try <code>?testDate=2026-09-30</code> or <code>?testDate=2026-10-02</code></div>
+  </div>
 </section>
 
 <section id="puzzle" class="screen">
@@ -52,20 +59,27 @@
 
   <div class="puzzle-card">
     <div class="card-label">TODAY'S SECRET</div>
-    <p id="puzzleText" class="question"></p>
+    <div id="puzzleText" class="question"></div>
   </div>
 
-  <input id="answerInput" type="text" placeholder="Type your answer" autocomplete="off">
-  <button id="submitBtn" class="primary">UNLOCK THE SECRET</button>
-  <button id="hintBtn" class="secondary">SHOW HINT</button>
+  <button id="scrollCue" class="scroll-cue" type="button" aria-label="Continue to answer">
+    <span>Continue to answer</span>
+    <span class="chevron">⌄</span>
+  </button>
 
-  <div id="statusPanel" class="status-panel">
-    <p id="feedback" class="feedback"></p>
-    <p id="attempts" class="attempts"></p>
+  <div id="answerArea" class="answer-area">
+    <input id="answerInput" type="text" placeholder="Type your answer" autocomplete="off">
+    <button id="submitBtn" class="primary">UNLOCK THE SECRET</button>
+    <button id="hintBtn" class="secondary">SHOW HINT</button>
+
+    <div id="statusPanel" class="status-panel">
+      <p id="feedback" class="feedback"></p>
+      <p id="attempts" class="attempts"></p>
+    </div>
+
+    <button id="giveUpBtn" class="giveup hidden">I GIVE UP — I'M SO OLD… I'M ABOUT TO TURN 40! 😂</button>
+    <button class="home-button" data-home>HOME</button>
   </div>
-
-  <button id="giveUpBtn" class="giveup hidden">I GIVE UP — I'M SO OLD… I'M ABOUT TO TURN 40! 😂</button>
-  <button class="home-button" data-home>HOME</button>
 </section>
 
 <section id="confirmGiveUp" class="screen">
@@ -97,7 +111,7 @@
   <div class="secret-mark">✦</div>
   <div class="day-eyebrow">SECRET UNLOCKED</div>
   <h2>THE MYSTERY HAS BEEN SOLVED</h2>
-  <p id="successCopy" class="muted">Nicely done, Mika.</p>
+  <p class="muted">Nicely done, Mika.</p>
   <button id="successSurpriseBtn" class="primary">OPEN TODAY'S SURPRISE</button>
 </section>
 
