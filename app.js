@@ -175,8 +175,9 @@ function check(){
  if(currentDay.answers.includes(value)){
    const tries=attemptsUsed+1;
    saveResult(currentDay.day,{outcome:"solved",attempts:tries,completedAt:new Date().toISOString()});
-   input.value="";$("feedback").textContent="Secret unlocked.";$("feedback").className="feedback good";$("attempts").textContent="";
-   setTimeout(()=>show("success"),220);return;
+   input.value="";
+   openSurprise();
+   return;
  }
  attemptsUsed++;
  input.value="";
@@ -198,15 +199,22 @@ $("saveMeBtn").onclick=()=>{
  $("answerReveal").textContent=currentDay.answerDisplay;show("surrender");
 };
 function openSurprise(){
+ const options=[
+   {heading:"ENJOY TODAY'S GIFT",button:"ENJOY TODAY'S GIFT"},
+   {heading:"OPEN TODAY'S SURPRISE",button:"OPEN TODAY'S SURPRISE"}
+ ];
+ const pick=options[Math.floor(Math.random()*options.length)];
+ $("giftHeading").textContent=pick.heading;
+ $("watchBtn").textContent=pick.button;
  $("qrImage").src=`https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${encodeURIComponent(currentDay.video)}`;
- $("videoEyebrow").textContent=`SECRET ${currentDay.day} UNLOCKED`;show("video");
+ $("videoEyebrow").textContent=`SECRET ${currentDay.day} UNLOCKED`;
+ show("video");
 }
-$("successSurpriseBtn").onclick=openSurprise;
 $("surrenderSurpriseBtn").onclick=openSurprise;
 $("watchBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
 document.querySelectorAll("[data-home]").forEach(b=>b.onclick=()=>{renderGrid();show("home")});
 renderGrid();
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=7").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=11").catch(()=>{}));
 }

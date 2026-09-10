@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0d1422">
 <title>Mika's 40 Secrets</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=11">
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
@@ -34,10 +34,10 @@
     </div>
     <div class="score-stats">
       <span>✦ Solved <b id="solvedCount">0</b></span>
-      <span>🏳 White Flags <b id="flagCount">0</b></span>
+      <span><span class="white-flag">⚑</span> White Flags <b id="flagCount">0</b></span>
       <span>◎ First-Try <b id="firstTryCount">0</b></span>
-      <span>🔥 Current <b id="streakCount">0</b></span>
-      <span>★ Best <b id="bestStreakCount">0</b></span>
+      <span>🔥 Current Streak <b id="streakCount">0</b></span>
+      <span>★ Best Streak <b id="bestStreakCount">0</b></span>
     </div>
   </section>
 
@@ -46,7 +46,7 @@
   <p id="emptyState" class="empty-state hidden">Your first secret has not been revealed yet.</p>
 
   <div class="test-tools">
-    <div>v0.7 TEST MODE</div>
+    <div>v1.1 TEST MODE</div>
     <div>Simulated date: <b id="simDateText"></b></div>
     <div class="test-hint">Try <code>?testDate=2026-09-30</code> or <code>?testDate=2026-10-02</code></div>
   </div>
@@ -106,21 +106,13 @@
   <button id="surrenderSurpriseBtn" class="primary">OPEN TODAY'S SURPRISE</button>
 </section>
 
-<section id="success" class="screen">
-  <button class="home-link" data-home>← HOME</button>
-  <div class="secret-mark">✦</div>
-  <div class="day-eyebrow">SECRET UNLOCKED</div>
-  <h2>THE MYSTERY HAS BEEN SOLVED</h2>
-  <p class="muted">Nicely done, Mika.</p>
-  <button id="successSurpriseBtn" class="primary">OPEN TODAY'S SURPRISE</button>
-</section>
 
 <section id="video" class="screen">
   <button class="home-link" data-home>← HOME</button>
-  <div class="secret-mark">✦</div>
+  <div class="gift-mark" aria-hidden="true">🎁</div>
   <div id="videoEyebrow" class="day-eyebrow"></div>
-  <h2>YOUR SURPRISE IS WAITING</h2>
-  <button id="watchBtn" class="primary">▶ WATCH TODAY'S VIDEO</button>
+  <h2 id="giftHeading">ENJOY TODAY'S GIFT</h2>
+  <button id="watchBtn" class="primary">OPEN TODAY'S SURPRISE</button>
   <div class="divider"><span></span><em>OR</em><span></span></div>
   <div class="qr-wrap"><img id="qrImage" alt="QR code for today's video"></div>
   <p class="muted small">On another device? Scan the code with your phone.</p>
@@ -128,6 +120,6 @@
 </section>
 
 </main>
-<script src="app.js?v=7"></script>
+<script src="app.js?v=11"></script>
 </body>
 </html>

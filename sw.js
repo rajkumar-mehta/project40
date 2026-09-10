@@ -1,5 +1,5 @@
-const CACHE='mikas-40-secrets-v07';
-const ASSETS=['./','./index.html','./styles.css?v=7','./app.js?v=7','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+const CACHE='mikas-40-secrets-v11';
+const ASSETS=['./','./index.html','./styles.css?v=11','./app.js?v=11','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
@@ -17,11 +17,9 @@ self.addEventListener('activate',event=>{
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET') return;
   const url=new URL(event.request.url);
-
-  // Always prefer the network for the app shell/code so a newly deployed build wins over stale caches.
   if(url.origin===self.location.origin &&
-     (url.pathname.endsWith('/') || url.pathname.endsWith('/index.html') ||
-      url.pathname.endsWith('/app.js') || url.pathname.endsWith('/styles.css'))){
+    (url.pathname.endsWith('/') || url.pathname.endsWith('/index.html') ||
+     url.pathname.endsWith('/app.js') || url.pathname.endsWith('/styles.css'))){
     event.respondWith(
       fetch(event.request,{cache:'no-store'}).then(response=>{
         const copy=response.clone();
@@ -31,7 +29,6 @@ self.addEventListener('fetch',event=>{
     );
     return;
   }
-
   event.respondWith(
     caches.match(event.request).then(cached=>cached || fetch(event.request).then(response=>{
       const copy=response.clone();

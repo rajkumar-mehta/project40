@@ -86,3 +86,53 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
 }
 .day-grid{grid-auto-flow:row!important}
 .day-card{order:initial!important}
+
+
+/* v1.1 dashboard freeze + scrolling cards */
+.white-flag{color:#fff;font-weight:900}
+.gift-mark{text-align:center;font-size:46px;line-height:1;margin:10px 0 14px}
+
+/* Keep the scoreboard and "YOUR SECRETS" heading fixed while the card list scrolls. */
+#home .score-card{
+ position:sticky;
+ top:10px;
+ z-index:20;
+ backdrop-filter:blur(10px);
+ -webkit-backdrop-filter:blur(10px);
+}
+#home .section-heading{
+ position:sticky;
+ top:calc(var(--score-sticky-height, 238px));
+ z-index:19;
+ margin:0;
+ padding:14px 0 10px;
+ background:linear-gradient(180deg,rgba(11,17,29,.98),rgba(11,17,29,.94));
+}
+#home .day-grid{
+ max-height:52vh;
+ overflow-y:auto;
+ overscroll-behavior:contain;
+ padding-right:4px;
+ scrollbar-width:thin;
+}
+#home .day-grid::-webkit-scrollbar{width:8px}
+#home .day-grid::-webkit-scrollbar-thumb{background:#2c3a50;border-radius:999px}
+#home .day-grid::-webkit-scrollbar-track{background:transparent}
+
+/* On smaller screens, keep the sticky header compact enough to leave useful room for cards. */
+@media(max-width:620px){
+ #home .score-card{top:6px;padding:16px;margin-bottom:8px}
+ #home .score-main{margin:10px 0}
+ #home .score-main strong{font-size:36px}
+ #home .score-stats{padding-top:10px;gap:6px 9px;font-size:10px}
+ #home .section-heading{top:194px;padding-top:10px}
+ #home .day-grid{max-height:48vh}
+}
+@media(min-width:621px){
+ #home .section-heading{top:236px}
+}
+
+/* Fallback when backdrop-filter is unsupported */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+ #home .score-card{background:#131c2a}
+}
