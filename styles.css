@@ -1379,3 +1379,48 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
 
 /* v2.6 popup instance is freshly created for every failed attempt. */
 .wrong-answer-popover{z-index:10000!important}
+
+
+/* =========================================================
+   ROUTE 4T v2.7 — FINAL QA hardening
+   ========================================================= */
+
+/* The banner asset itself is now clean (moon restored; four-word phrase removed).
+   Remove the v2.6 masking overlay entirely so it cannot cover the moon. */
+.project40-header::after{display:none!important}
+
+/* Modal shield blocks ghost taps from reaching HOME / puzzle controls while
+   the soft keyboard changes the visual viewport. */
+.wrong-answer-backdrop{
+  position:fixed!important;
+  inset:0!important;
+  z-index:9999!important;
+  display:none;
+  background:transparent!important;
+  pointer-events:auto!important;
+  touch-action:none!important;
+}
+.wrong-answer-backdrop.show{display:block!important}
+.wrong-answer-backdrop .wrong-answer-popover{z-index:10000!important}
+
+/* Message content may compress/scroll, but OK stays inside the visible viewport. */
+@media(max-width:920px){
+  .wrong-answer-popover{
+    display:none;
+    flex-direction:column!important;
+    overflow:hidden!important;
+    width:min(92vw,390px)!important;
+  }
+  .wrong-answer-popover.show{display:flex!important}
+  .wap-message{
+    flex:0 1 auto!important;
+    overflow:auto!important;
+    max-height:3.1em!important;
+  }
+  .wap-remaining{flex:0 0 auto!important}
+  .wap-ok{
+    flex:0 0 auto!important;
+    position:relative!important;
+    bottom:auto!important;
+  }
+}
