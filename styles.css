@@ -1329,3 +1329,53 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
  .wrong-answer-popover{width:min(92vw,390px)!important;padding:10px 13px 9px!important}
  .wap-message{font-size:15px!important;line-height:1.18!important}.wap-remaining{margin-top:4px!important;font-size:9.5px!important}.wap-ok{margin-top:7px!important;padding:9px 12px!important}
 }
+
+
+/* =========================================================
+   ROUTE 4T v2.6 — banner + popup reliability QA
+   ========================================================= */
+/* The approved artwork already contains Route 4T, MIKA'S JOURNEY,
+   with 40 EXITS and the intro copy. Hide the HTML copies so the
+   banner can never double-render those words. */
+.project40-header .project40-brand,
+.project40-header .journey-lockup,
+.project40-header .journey-intro{display:none!important}
+
+/* Show the complete approved scenic composition on every viewport.
+   `contain` is deliberate: it preserves BOTH the moon and the 40 road sign
+   instead of cropping either edge on portrait phones. */
+.project40-header{
+  min-height:0!important;
+  aspect-ratio:940/350!important;
+  padding:0!important;
+  border-radius:0 0 18px 18px!important;
+  background-color:#071326!important;
+  background-image:url('route4t-header.png')!important;
+  background-repeat:no-repeat!important;
+  background-position:center center!important;
+  background-size:100% 100%!important;
+}
+.project40-header::after{
+  /* Mask ONLY the embedded “Small Puzzles Brighter Days” lettering.
+     Keep the moon, road, sign and the rest of the approved scene visible. */
+  content:""!important;display:block!important;position:absolute!important;
+  left:0!important;bottom:0!important;width:20.5%!important;height:39%!important;
+  z-index:3!important;pointer-events:none!important;
+  background:linear-gradient(145deg,rgba(4,15,31,.96),rgba(5,19,37,.92) 54%,rgba(7,24,43,.72) 100%)!important;
+  border-radius:0 0 0 18px!important;
+}
+@media(max-width:620px) and (orientation:portrait){
+  .project40-header{aspect-ratio:940/350!important;background-size:100% 100%!important;background-position:center!important}
+}
+
+/* Preserve the already-approved mobile scoreboard label size. */
+@media(max-width:620px){
+  body.home-active #home .score-main .score-player small,
+  body.home-active #home .score-main .score-divider small{
+    font-size:10.5px!important;line-height:1.08!important;letter-spacing:1.05px!important;
+    min-height:13px!important;margin-bottom:5px!important;font-weight:800!important;
+  }
+}
+
+/* v2.6 popup instance is freshly created for every failed attempt. */
+.wrong-answer-popover{z-index:10000!important}

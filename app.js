@@ -738,22 +738,24 @@ function acknowledgeWrongPopup(p){
    requestAnimationFrame(()=>requestAnimationFrame(showSurrenderPopup));
  }
 }
-function ensureWrongPopup(){
- let p=$("wrongAnswerPopover"); if(p)return p;
- p=document.createElement("div"); p.id="wrongAnswerPopover"; p.className="wrong-answer-popover";
+function buildWrongPopup(){
+ // v2.6 reliability rule: every failed attempt gets a brand-new dialog node.
+ // This avoids stale display/classes/event state from a previous attempt.
+ const old=$("wrongAnswerPopover");
+ if(old) old.remove();
+ const p=document.createElement("div");
+ p.id="wrongAnswerPopover"; p.className="wrong-answer-popover";
  p.setAttribute("role","dialog"); p.setAttribute("aria-live","assertive"); p.setAttribute("aria-hidden","true");
  p.innerHTML='<div class="wap-message"></div><div class="wap-remaining"></div><button class="wap-ok" type="button">OK</button>';
  document.body.appendChild(p);
  const ok=p.querySelector(".wap-ok");
- // Keep answer focus on phones. Handle acknowledgement on pointerup because
- // Android browsers can suppress a synthetic click after preventDefault(pointerdown).
  ok.addEventListener("pointerdown",e=>{
    if(isLikelyPhone() && p.dataset.mode!=="surrender") e.preventDefault();
  });
  ok.addEventListener("pointerup",e=>{
    if(!isLikelyPhone()) return;
-   e.preventDefault();
-   wrongPopupSuppressClickUntil=Date.now()+180;
+   e.preventDefault(); e.stopPropagation();
+   wrongPopupSuppressClickUntil=Date.now()+250;
    acknowledgeWrongPopup(p);
  });
  ok.addEventListener("click",e=>{
@@ -762,43 +764,41 @@ function ensureWrongPopup(){
  });
  return p;
 }
+function ensureWrongPopup(){
+ return $("wrongAnswerPopover") || buildWrongPopup();
+}
 function showWrongPopup(message,remaining){
  if(!isLikelyPhone())return false;
- const p=ensureWrongPopup();
+ // Fresh DOM instance for EVERY attempt. The attempt cannot be submitted again
+ // until this exact instance is acknowledged because wrongPopupAwaitingAck=true.
+ const p=buildWrongPopup();
  wrongPopupAwaitingAck=true;
- // Force a complete hide/update/show cycle on every attempt so a prior popup
- // can never leave the second-attempt message in a stale display state.
- p.classList.remove("show");
- p.setAttribute("aria-hidden","true");
  p.dataset.mode="wrong";
  p.dataset.attempt=String(MAX_ATTEMPTS-remaining);
  p.dataset.after=remaining===0?"surrender":"";
  p.querySelector(".wap-message").textContent=message;
  p.querySelector(".wap-remaining").textContent=remaining===0?"Three attempts used.":(remaining===1?"1 attempt remaining":`${remaining} attempts remaining`);
  p.querySelector(".wap-ok").textContent="OK";
- void p.offsetWidth;
  p.classList.add("show");
  p.setAttribute("aria-hidden","false");
  positionKeyboardUI();
- requestAnimationFrame(positionKeyboardUI);
+ requestAnimationFrame(()=>{positionKeyboardUI(); requestAnimationFrame(positionKeyboardUI);});
  return true;
 }
 function showSurrenderPopup(){
  if(!isLikelyPhone())return false;
- const p=ensureWrongPopup();
+ const p=buildWrongPopup();
  wrongPopupAwaitingAck=true;
- p.classList.remove("show");
  p.dataset.mode="surrender";
  p.dataset.attempt="";
  p.dataset.after="";
  p.querySelector(".wap-message").textContent="I GIVE UP — I'M SO OLD… I'M ABOUT TO TURN 40! 😂";
  p.querySelector(".wap-remaining").textContent="The mystery wins this round.";
  p.querySelector(".wap-ok").textContent="I GIVE UP 😂";
- void p.offsetWidth;
  p.classList.add("show");
  p.setAttribute("aria-hidden","false");
  positionKeyboardUI();
- requestAnimationFrame(positionKeyboardUI);
+ requestAnimationFrame(()=>{positionKeyboardUI(); requestAnimationFrame(positionKeyboardUI);});
  return true;
 }
 
