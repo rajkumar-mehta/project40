@@ -6,20 +6,25 @@
 <meta name="theme-color" content="#0d1422">
 <title>MIKA'S JOURNEY TO 40</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=18">
+<link rel="stylesheet" href="styles.css?v=110">
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
 <main class="app-shell">
 
 <section id="home" class="screen active">
-  <header class="masthead">
-    <div class="sigil">✦</div>
+  <header class="masthead project40-header">
+    <div class="project40-brand" aria-label="Project 40">
+      <span class="brand-sparkle sparkle-left" aria-hidden="true">✦</span>
+      <h1 class="project40-script">Project <span>40</span></h1>
+      <span class="brand-sparkle sparkle-right" aria-hidden="true">✧</span>
+      <span class="brand-sparkle sparkle-mini" aria-hidden="true">✦</span>
+    </div>
+    <div class="project40-subtitle">MIKA’S JOURNEY</div>
     <div class="journey-intro">
       A 40-DAY JOURNEY HAS BEGUN. ONE MYSTERY AWAITS EACH DAY.<br>
       SOLVE THE MYSTERY, UNLOCK EXITS, GRAB SURPRISE GIFTS.
     </div>
-    <h1>MIKA'S JOURNEY<br><span class="title-second-line">WITH <em>40</em> EXITS</span></h1>
   </header>
 
   <section class="score-card" aria-label="Scoreboard">
@@ -43,7 +48,7 @@
   <p id="emptyState" class="empty-state hidden">Your first mystery has not been revealed yet.</p>
 
   <div class="test-tools">
-    <div>v1.8 TEST MODE</div>
+    <div>v1.10 TEST MODE</div>
     <div>Simulated date: <b id="simDateText"></b></div>
     <div class="test-hint">Try <code>?testDate=0930</code>, <code>?testDate=1012</code>, or <code>?testDate=1106</code></div>
     <button id="resetTestBtn" class="reset-test" type="button">RESET TEST PROGRESS</button>
@@ -139,6 +144,6 @@
 </section>
 
 </main>
-<script src="app.js?v=18"></script>
+<script src="app.js?v=110"></script>
 </body>
 </html>

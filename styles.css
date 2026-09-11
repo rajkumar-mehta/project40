@@ -654,3 +654,141 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
   50%{transform:translateY(-58vh) rotate(5deg)}
   100%{transform:translateY(-118vh) rotate(-3deg);opacity:.72}
 }
+
+
+/* v1.10 — Project 40 header + mobile UX hardening */
+
+/* Signature Project 40 header from the unshipped v1.9 concept */
+.project40-header{
+  position:relative;
+  text-align:center;
+  padding:2px 0 12px;
+}
+.project40-brand{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:min(92vw,430px);
+  padding:0 42px;
+}
+.project40-script{
+  margin:0!important;
+  font-family:"Segoe Script","Snell Roundhand","Apple Chancery","Brush Script MT",cursive!important;
+  font-size:clamp(42px,6.4vw,64px)!important;
+  font-weight:600!important;
+  line-height:1.02!important;
+  letter-spacing:-1.7px!important;
+  background:linear-gradient(105deg,#f2b7d2 8%,#f5cad8 38%,#efd29d 72%,#f4dfb2 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent!important;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 12px rgba(229,178,205,.14));
+}
+.project40-script span{
+  color:inherit!important;
+  font-style:normal!important;
+  -webkit-text-fill-color:transparent;
+}
+.project40-subtitle{
+  margin:3px 0 7px;
+  color:#c8d2e9;
+  font-size:10px;
+  font-weight:700;
+  line-height:1;
+  letter-spacing:.34em;
+  text-indent:.34em;
+}
+.brand-sparkle{
+  position:absolute;
+  color:#efd7a3;
+  text-shadow:0 0 10px rgba(239,215,163,.48);
+  pointer-events:none;
+}
+.sparkle-left{left:22px;top:15px;font-size:16px;transform:rotate(-10deg)}
+.sparkle-right{right:19px;top:4px;font-size:20px;transform:rotate(12deg)}
+.sparkle-mini{right:39px;bottom:4px;font-size:8px;color:#e8bfd3}
+.project40-header .journey-intro{
+  margin:9px auto 0;
+  max-width:760px;
+  font-size:clamp(8.5px,1.05vw,10.5px);
+  line-height:1.5;
+  letter-spacing:.095em;
+  color:#8fa4cf;
+}
+
+/* Reveal answer must NEVER overflow the viewport */
+#revealAnswer,
+.reveal-answer{
+  display:block;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  text-align:center;
+  overflow-wrap:anywhere;
+  word-break:normal;
+  hyphens:auto;
+  white-space:normal!important;
+  line-height:1.05;
+  padding-inline:8px;
+}
+
+/* Phone-specific tightening */
+@media(max-width:620px){
+  body.home-active #home .project40-header,
+  body.home-active.home-grid-scrolled #home .project40-header{
+    padding:0 0 6px!important;
+  }
+  body.home-active #home .project40-brand{
+    min-width:min(94vw,360px);
+    padding:0 34px;
+  }
+  body.home-active #home .project40-script{
+    font-size:clamp(36px,11.2vw,47px)!important;
+    line-height:.98!important;
+    letter-spacing:-1.5px!important;
+  }
+  body.home-active #home .project40-subtitle{
+    margin:1px 0 5px;
+    font-size:8px;
+    letter-spacing:.31em;
+    text-indent:.31em;
+  }
+  body.home-active #home .project40-header .journey-intro{
+    margin:6px auto 0;
+    padding:0 7px;
+    font-size:7.6px;
+    line-height:1.35;
+    letter-spacing:.065em;
+  }
+  body.home-active #home .sparkle-left{left:18px;top:10px;font-size:13px}
+  body.home-active #home .sparkle-right{right:17px;top:1px;font-size:16px}
+  body.home-active #home .sparkle-mini{right:33px;bottom:2px;font-size:7px}
+
+  #revealAnswer,
+  .reveal-answer{
+    font-size:clamp(34px,10vw,64px)!important;
+    padding-inline:14px;
+  }
+
+  /* Keep wrong-answer feedback area stable so keyboard re-focus doesn't cause extra jumps */
+  #feedback,
+  .feedback,
+  .answer-feedback{
+    min-height:56px;
+  }
+}
+
+/* Landscape phones are still PHONES: hide QR/redundant scan UI there too */
+@media(max-width:920px) and (orientation:landscape) and (max-height:620px){
+  body.home-active #home .project40-header{padding-bottom:3px!important}
+  body.home-active #home .project40-brand{min-width:300px;padding:0 30px}
+  body.home-active #home .project40-script{font-size:31px!important;line-height:.95!important}
+  body.home-active #home .project40-subtitle{font-size:6.8px;margin:0 0 2px;letter-spacing:.28em}
+  body.home-active #home .project40-header .journey-intro{margin:3px auto 0;font-size:6.4px;line-height:1.2}
+  body.home-active #home .sparkle-left{left:16px;top:6px;font-size:10px}
+  body.home-active #home .sparkle-right{right:16px;top:0;font-size:12px}
+  body.home-active #home .sparkle-mini{right:28px;bottom:0;font-size:6px}
+}

@@ -1,7 +1,7 @@
 
 const TEST_MODE = true;
 const DEFAULT_TEST_DATE = "2026-11-06";
-const MAX_ATTEMPTS = 4;
+const MAX_ATTEMPTS=3;
 
 const DAYS = [
  {
@@ -664,7 +664,60 @@ const WRONG_MESSAGES=[
 
 let currentDay=DAYS[0], attemptsUsed=0, unusedMessages=[];
 
+
 const $=id=>document.getElementById(id);
+
+function isLikelyPhone(){
+  const ua=navigator.userAgent||"";
+  const uaPhone=/Android.*Mobile|iPhone|iPod|Windows Phone|Mobile Safari/i.test(ua);
+  const smallTouch=window.matchMedia && window.matchMedia("(pointer: coarse)").matches
+    && Math.min(window.screen.width||9999,window.screen.height||9999)<=820;
+  return uaPhone || smallTouch;
+}
+
+function fitRevealAnswer(text){
+  const el=$("revealAnswer");
+  if(!el) return;
+  const len=(text||"").trim().length;
+  let size;
+  if(len<=8) size="clamp(48px,14vw,86px)";
+  else if(len<=14) size="clamp(40px,11vw,72px)";
+  else if(len<=22) size="clamp(31px,8.6vw,58px)";
+  else size="clamp(25px,7vw,46px)";
+  el.style.fontSize=size;
+  el.style.maxWidth="100%";
+  el.style.whiteSpace="normal";
+  el.style.overflowWrap="anywhere";
+}
+
+function hidePhoneQr(){
+  const phone=isLikelyPhone();
+  document.documentElement.classList.toggle("phone-device",phone);
+  document.querySelectorAll(
+    '.qr-wrap,.qr-section,.qr-block,.qr-area,.qr-container,.qr-card,'+
+    '#qrWrap,#qrSection,#qrBlock,#giftQr,#birthdayQr,'+
+    '[data-qr],[class*="qr-section"],[class*="qr-wrap"],[class*="qr-container"]'
+  ).forEach(el=>{
+    if(phone) el.style.display="none";
+    else el.style.removeProperty("display");
+  });
+}
+
+function refocusAnswerInput(){
+  const input=$("answerInput");
+  if(!input || input.disabled) return;
+  // PreventScroll keeps the mobile viewport stable while the keyboard remains/reappears.
+  requestAnimationFrame(()=>{
+    try{
+      input.focus({preventScroll:true});
+      const n=input.value.length;
+      input.setSelectionRange(n,n);
+    }catch(e){
+      input.focus();
+    }
+  });
+}
+
 const screens=[...document.querySelectorAll(".screen")];
 const params=new URLSearchParams(location.search);
 
@@ -822,7 +875,7 @@ function renderQuestion(lines){
 }
 function resetPuzzle(){
  attemptsUsed=0;unusedMessages=[...WRONG_MESSAGES];
- $("answerInput").value="";$("answerInput").disabled=false;
+ $("answerInput").value=""; refocusAnswerInput();$("answerInput").disabled=false;
  $("feedback").textContent="";$("attempts").textContent="";
  $("giveUpBtn").classList.add("hidden");$("submitBtn").disabled=false;
 }
@@ -951,6 +1004,7 @@ function launchBirthdayCelebration(){
  window.setTimeout(()=>{ if(layer) layer.innerHTML=""; },reduced?9500:8200);
 }
 function openBirthdayFinale(){
+ setTimeout(hidePhoneQr,0);
  $("birthdayQrImage").src=`https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${encodeURIComponent(currentDay.video)}`;
  show("finale");
  window.setTimeout(launchBirthdayCelebration,260);
@@ -959,7 +1013,10 @@ function openBirthdayFinale(){
 $("surrenderSurpriseBtn").onclick=()=>currentDay.day===0?openBirthdayFinale():openSurprise(false);
 $("watchBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
 $("birthdaySurpriseBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
-document.querySelectorAll("[data-home]").forEach(b=>b.onclick=()=>{renderGrid();show("home")});
+document.querySelectorAll("[data-home]").forEach(b=>b.onclick=()=>{renderGrid();
+hidePhoneQr();
+window.addEventListener("resize",hidePhoneQr,{passive:true});
+window.addEventListener("orientationchange",()=>setTimeout(hidePhoneQr,120),{passive:true});show("home")});
 document.body.classList.add("home-active");
 renderGrid();
 
@@ -976,5 +1033,5 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=18").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=110").catch(()=>{}));
 }
