@@ -732,3 +732,185 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
  body.home-active #home .project40-header .journey-intro{font-size:7.5px;line-height:1.22;margin-top:4px}
 }
 @media(min-width:921px){.wrong-answer-popover{display:none!important}}
+
+
+/* =========================================================
+   PROJECT 40 v2.1
+   - selected subtitle Option 5
+   - mobile single-scroll sticky scoreboard
+   - intentional mobile intro wrapping
+   - compact desktop gift CTA
+   ========================================================= */
+
+/* Option 5: cinematic subtitle */
+.option5-lockup .project40-subtitle{
+  color:#f0e5cf!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:12px!important;
+  font-weight:600!important;
+  letter-spacing:.34em!important;
+  text-indent:.34em!important;
+}
+.option5-lockup .project40-subline{
+  margin-top:5px!important;
+  line-height:1.05!important;
+}
+.option5-lockup .subline-with{
+  color:#b78ad6;
+  font-family:"Segoe Script","Snell Roundhand","Brush Script MT",cursive;
+  font-style:italic;
+  font-weight:500;
+  font-size:17px;
+}
+.option5-lockup .subline-exits{
+  color:#e6c56d;
+  font-family:Georgia,"Times New Roman",serif;
+  font-style:normal;
+  font-weight:700;
+  font-size:16px;
+  letter-spacing:.08em;
+}
+
+.intro-mobile{display:none}
+
+/* Laptop/desktop: primary gift button fits its wording instead of spanning the page */
+@media(min-width:621px){
+  #video .primary,
+  #finale .primary{
+    width:auto!important;
+    max-width:none!important;
+    display:inline-flex!important;
+    align-items:center;
+    justify-content:center;
+    padding-left:30px!important;
+    padding-right:30px!important;
+    min-width:0!important;
+  }
+  #video .actions,
+  #finale .actions{
+    text-align:center;
+  }
+}
+
+/* PHONE: one natural page scrollbar.
+   Branding/intro scroll away; scoreboard + YOUR EXITS become sticky only after reaching top. */
+@media(max-width:620px){
+  html,
+  body,
+  body.home-active{
+    height:auto!important;
+    min-height:100%!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    overscroll-behavior-y:auto!important;
+  }
+
+  body.home-active .app-shell{
+    height:auto!important;
+    min-height:100dvh!important;
+    overflow:visible!important;
+    display:block!important;
+    padding:
+      max(8px,env(safe-area-inset-top))
+      10px
+      max(12px,env(safe-area-inset-bottom))!important;
+  }
+
+  body.home-active #home.active{
+    height:auto!important;
+    min-height:100dvh!important;
+    display:block!important;
+    overflow:visible!important;
+  }
+
+  /* Branding and intro are normal content: they scroll away. */
+  body.home-active #home .project40-header,
+  body.home-active.home-grid-scrolled #home .project40-header{
+    position:relative!important;
+    top:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    opacity:1!important;
+    transform:none!important;
+    pointer-events:auto!important;
+  }
+
+  body.home-active #home .option5-lockup .project40-subtitle{
+    font-size:9.2px!important;
+    letter-spacing:.30em!important;
+    text-indent:.30em!important;
+  }
+  body.home-active #home .option5-lockup .subline-with{
+    font-size:14px!important;
+  }
+  body.home-active #home .option5-lockup .subline-exits{
+    font-size:13px!important;
+  }
+
+  /* Intentional mobile line breaks for intro copy. */
+  .intro-desktop{display:none!important}
+  .intro-mobile{
+    display:block!important;
+  }
+  .intro-mobile > span{
+    display:block;
+    white-space:nowrap;
+  }
+  body.home-active #home .project40-header .journey-intro{
+    font-size:9.5px!important;
+    line-height:1.42!important;
+    letter-spacing:.025em!important;
+    padding:0 2px!important;
+  }
+
+  /* Single-scroll sticky frame: scoreboard sticks once it reaches top. */
+  body.home-active #home .score-card{
+    position:sticky!important;
+    top:max(8px,env(safe-area-inset-top))!important;
+    z-index:60!important;
+    margin:3px 0 0!important;
+    background:#131c2a!important;
+  }
+
+  /* YOUR EXITS sits directly under the sticky scoreboard. */
+  body.home-active #home .section-heading{
+    position:sticky!important;
+    top:var(--mobile-score-bottom, 150px)!important;
+    z-index:59!important;
+    margin:0!important;
+    padding:7px 0 8px!important;
+    background:#0b111d!important;
+  }
+
+  /* IMPORTANT: no nested scrolling / second scrollbar. */
+  body.home-active #home .day-grid,
+  #home .day-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    height:auto!important;
+    max-height:none!important;
+    min-height:0!important;
+    overflow:visible!important;
+    padding:1px 1px max(16px,env(safe-area-inset-bottom))!important;
+  }
+
+  body.home-active #home .test-tools{
+    position:relative!important;
+    bottom:auto!important;
+  }
+}
+
+/* On very narrow phones, allow only the third intro line to wrap gracefully if absolutely necessary. */
+@media(max-width:365px){
+  .intro-mobile > span{white-space:normal}
+}
+
+/* Keep mobile CTA touch-friendly; override desktop content-width behavior. */
+@media(max-width:620px){
+  #video .primary,
+  #finale .primary{
+    width:100%!important;
+    display:flex!important;
+  }
+}

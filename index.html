@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0d1422">
 <title>MIKA'S JOURNEY TO 40</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=20">
+<link rel="stylesheet" href="styles.css?v=21">
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
@@ -20,13 +20,19 @@
       <span class="brand-sparkle sparkle-right" aria-hidden="true">✧</span>
       <span class="brand-sparkle sparkle-mini" aria-hidden="true">✦</span>
     </div>
-    <div class="journey-lockup">
+    <div class="journey-lockup option5-lockup">
       <div class="project40-subtitle">MIKA’S JOURNEY</div>
-      <div class="project40-subline">with 40 EXITS</div>
+      <div class="project40-subline"><span class="subline-with">with</span> <span class="subline-exits">40 EXITS</span></div>
     </div>
     <div class="journey-intro">
-      A 40-DAY JOURNEY HAS BEGUN. ONE MYSTERY AWAITS EACH DAY.<br>
-      SOLVE THE MYSTERY, UNLOCK EXITS, GRAB SURPRISE GIFTS.
+      <span class="intro-desktop">A 40-DAY JOURNEY HAS BEGUN. ONE MYSTERY AWAITS EACH DAY.<br>
+      SOLVE THE MYSTERY, UNLOCK EXITS, GRAB SURPRISE GIFTS.</span>
+      <span class="intro-mobile">
+        <span>A 40-DAY JOURNEY HAS BEGUN.</span>
+        <span>ONE MYSTERY AWAITS EACH DAY.</span>
+        <span>SOLVE THE MYSTERY, UNLOCK EXITS,</span>
+        <span>GRAB SURPRISE GIFTS.</span>
+      </span>
     </div>
   </header>
 
@@ -51,7 +57,7 @@
   <p id="emptyState" class="empty-state hidden">Your first mystery has not been revealed yet.</p>
 
   <div class="test-tools">
-    <div>v2.0 TEST MODE</div>
+    <div>v2.1 TEST MODE</div>
     <div>Simulated date: <b id="simDateText"></b></div>
     <div class="test-hint">Try <code>?testDate=0930</code>, <code>?testDate=1012</code>, or <code>?testDate=1106</code></div>
     <button id="resetTestBtn" class="reset-test" type="button">RESET TEST PROGRESS</button>
@@ -147,6 +153,6 @@
 </section>
 
 </main>
-<script src="app.js?v=20"></script>
+<script src="app.js?v=21"></script>
 </body>
 </html>

@@ -1046,7 +1046,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=20").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=21").catch(()=>{}));
 }
 
 function syncDesktopFrame(){
@@ -1058,3 +1058,17 @@ function syncDesktopFrame(){
 }
 window.addEventListener("resize",syncDesktopFrame,{passive:true});
 requestAnimationFrame(syncDesktopFrame);
+
+
+function syncMobileStickyFrame(){
+  if(window.innerWidth>620) return;
+  const score=document.querySelector("#home .score-card");
+  if(!score) return;
+  const safeTop=8;
+  const bottom=safeTop+score.offsetHeight;
+  document.documentElement.style.setProperty("--mobile-score-bottom", bottom+"px");
+}
+window.addEventListener("resize",syncMobileStickyFrame,{passive:true});
+window.addEventListener("orientationchange",()=>setTimeout(syncMobileStickyFrame,150),{passive:true});
+requestAnimationFrame(syncMobileStickyFrame);
+setTimeout(syncMobileStickyFrame,250);
