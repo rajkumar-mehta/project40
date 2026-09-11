@@ -1221,3 +1221,70 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
  .wrong-answer-popover{bottom:auto!important;max-height:calc(var(--visual-height,100dvh) - 16px);overflow:auto;padding:12px 14px 10px!important}
  .wap-message{font-size:16px!important;line-height:1.22!important}.wap-remaining{margin-top:5px!important;font-size:10px!important}.wap-ok{margin-top:8px!important;padding:10px 14px!important}
 }
+
+/* =========================================================
+   PROJECT 40 v2.4 — MAIN CHAT QA hardening
+   ========================================================= */
+
+/* Header descender safety: keep the "j" in Project fully clear of MIKA'S JOURNEY. */
+.project40-brand{padding-bottom:9px!important}
+.project40-handwritten{line-height:1.08!important}
+.journey-lockup{margin-top:13px!important}
+
+/* Laptop scoreboard labels: larger and easier to read, same three-column alignment. */
+@media(min-width:621px){
+  .score-main .score-player small,
+  .score-main .score-divider small{
+    font-size:12px!important;
+    line-height:1.05!important;
+    letter-spacing:1.35px!important;
+    min-height:16px!important;
+    margin-bottom:6px!important;
+  }
+}
+
+/* Locked EXIT card design: ONLY change the EXIT word from gold/yellow to white. */
+.day-card .exit-word{color:#f5f7f8!important}
+
+/* Wrong-answer popup: distinct lavender family, separate from answer blue and SAVE ME. */
+.wrong-answer-popover[data-mode="wrong"]{
+  background:#403653!important;
+  border-color:#cdb9e8!important;
+  box-shadow:0 12px 38px rgba(0,0,0,.55),0 0 0 1px rgba(205,185,232,.08) inset!important;
+}
+.wrong-answer-popover[data-mode="wrong"] .wap-message{color:#fffafc!important}
+.wrong-answer-popover[data-mode="wrong"] .wap-remaining{color:#eadff6!important}
+.wrong-answer-popover[data-mode="wrong"] .wap-ok{
+  background:#b79ad8!important;
+  border-color:#d9c7ed!important;
+  color:#1b1422!important;
+}
+
+/* CTA centering hardening across laptop + phone. */
+#video #watchBtn,#finale #birthdaySurpriseBtn{
+  margin-left:auto!important;margin-right:auto!important;
+  align-self:center!important;left:auto!important;right:auto!important;transform:none!important;
+}
+
+/* Portrait-only deterministic score freeze. JS adds this class exactly when the
+   scoreboard reaches the top. Landscape is intentionally untouched. */
+@media(max-width:620px) and (orientation:portrait){
+  body.home-active.portrait-score-fixed #home .score-card{
+    position:fixed!important;
+    top:max(8px,env(safe-area-inset-top))!important;
+    left:var(--portrait-score-left,10px)!important;
+    width:var(--portrait-score-width,calc(100vw - 20px))!important;
+    margin:0!important;
+    z-index:80!important;
+    background:#131c2a!important;
+  }
+  body.home-active.portrait-score-fixed #home .section-heading{
+    margin-top:var(--portrait-score-space,0px)!important;
+  }
+  /* Do not stack YOUR EXITS as a second sticky layer in portrait. */
+  body.home-active #home .section-heading{
+    position:relative!important;
+    top:auto!important;
+    z-index:1!important;
+  }
+}

@@ -663,6 +663,7 @@ const WRONG_MESSAGES=[
 ];
 
 let currentDay=DAYS[0], attemptsUsed=0, unusedMessages=[];
+let wrongPopupAwaitingAck=false, wrongPopupSuppressClickUntil=0;
 
 const $=id=>document.getElementById(id);
 
@@ -722,50 +723,80 @@ function refocusAnswer(adjust=true){
    if(adjust){setTimeout(keepAnswerVisible,180);setTimeout(keepAnswerVisible,420)}
  });
 }
+function acknowledgeWrongPopup(p){
+ if(!p || !p.classList.contains("show")) return;
+ wrongPopupAwaitingAck=false;
+ if(p.dataset.mode==="surrender"){
+   p.classList.remove("show");
+   show("confirmGiveUp");
+   return;
+ }
+ const showSurrender=p.dataset.after==="surrender";
+ p.classList.remove("show");
+ p.setAttribute("aria-hidden","true");
+ if(showSurrender){
+   requestAnimationFrame(()=>requestAnimationFrame(showSurrenderPopup));
+ }
+}
 function ensureWrongPopup(){
  let p=$("wrongAnswerPopover"); if(p)return p;
  p=document.createElement("div"); p.id="wrongAnswerPopover"; p.className="wrong-answer-popover";
+ p.setAttribute("role","dialog"); p.setAttribute("aria-live","assertive"); p.setAttribute("aria-hidden","true");
  p.innerHTML='<div class="wap-message"></div><div class="wap-remaining"></div><button class="wap-ok" type="button">OK</button>';
  document.body.appendChild(p);
  const ok=p.querySelector(".wap-ok");
- // On phones, do not let the popup button steal focus from the answer input.
- // This keeps the soft keyboard open and prevents the viewport from jumping.
+ // Keep answer focus on phones. Handle acknowledgement on pointerup because
+ // Android browsers can suppress a synthetic click after preventDefault(pointerdown).
  ok.addEventListener("pointerdown",e=>{
    if(isLikelyPhone() && p.dataset.mode!=="surrender") e.preventDefault();
  });
- ok.onclick=()=>{
-   if(p.dataset.mode==="surrender"){
-     p.classList.remove("show");
-     show("confirmGiveUp");
-     return;
-   }
-   const showSurrender=p.dataset.after==="surrender";
-   p.classList.remove("show");
-   if(showSurrender){
-     requestAnimationFrame(showSurrenderPopup);
-   }
- };
+ ok.addEventListener("pointerup",e=>{
+   if(!isLikelyPhone()) return;
+   e.preventDefault();
+   wrongPopupSuppressClickUntil=Date.now()+650;
+   acknowledgeWrongPopup(p);
+ });
+ ok.addEventListener("click",e=>{
+   if(Date.now()<wrongPopupSuppressClickUntil){e.preventDefault();return;}
+   acknowledgeWrongPopup(p);
+ });
  return p;
 }
 function showWrongPopup(message,remaining){
  if(!isLikelyPhone())return false;
- const p=ensureWrongPopup(); positionKeyboardUI();
+ const p=ensureWrongPopup();
+ wrongPopupAwaitingAck=true;
+ // Force a complete hide/update/show cycle on every attempt so a prior popup
+ // can never leave the second-attempt message in a stale display state.
+ p.classList.remove("show");
+ p.setAttribute("aria-hidden","true");
  p.dataset.mode="wrong";
  p.dataset.after=remaining===0?"surrender":"";
  p.querySelector(".wap-message").textContent=message;
  p.querySelector(".wap-remaining").textContent=remaining===0?"Three attempts used.":(remaining===1?"1 attempt remaining":`${remaining} attempts remaining`);
  p.querySelector(".wap-ok").textContent="OK";
- p.classList.add("show"); requestAnimationFrame(positionKeyboardUI); return true;
+ void p.offsetWidth;
+ p.classList.add("show");
+ p.setAttribute("aria-hidden","false");
+ positionKeyboardUI();
+ requestAnimationFrame(positionKeyboardUI);
+ return true;
 }
 function showSurrenderPopup(){
  if(!isLikelyPhone())return false;
- const p=ensureWrongPopup(); positionKeyboardUI();
+ const p=ensureWrongPopup();
+ wrongPopupAwaitingAck=true;
+ p.classList.remove("show");
  p.dataset.mode="surrender";
  p.dataset.after="";
  p.querySelector(".wap-message").textContent="I GIVE UP — I'M SO OLD… I'M ABOUT TO TURN 40! 😂";
  p.querySelector(".wap-remaining").textContent="The mystery wins this round.";
  p.querySelector(".wap-ok").textContent="I GIVE UP 😂";
- p.classList.add("show"); requestAnimationFrame(positionKeyboardUI);
+ void p.offsetWidth;
+ p.classList.add("show");
+ p.setAttribute("aria-hidden","false");
+ positionKeyboardUI();
+ requestAnimationFrame(positionKeyboardUI);
  return true;
 }
 
@@ -789,9 +820,15 @@ function show(id){
  screens.forEach(s=>s.classList.toggle("active",s.id===id));
  document.body.classList.toggle("home-active",id==="home");
  if(id!=="puzzle") document.body.classList.remove("answer-entry-active");
- if(id!=="home") document.body.classList.remove("home-grid-scrolled");
+ if(id!=="home"){
+   document.body.classList.remove("home-grid-scrolled","portrait-score-fixed");
+   portraitScoreTop=0;
+ }
  window.scrollTo({top:0,left:0,behavior:"auto"});
- setTimeout(hidePhoneQr,0);
+ setTimeout(()=>{
+   hidePhoneQr();
+   if(id==="home"){document.body.classList.remove("portrait-score-fixed");portraitScoreTop=0;measurePortraitScore();syncPortraitScoreFreeze();}
+ },0);
 }
 function norm(v){return v.trim().toLowerCase().replace(/\s+/g," ")}
 function key(day){return `mika40_day_${day}`}
@@ -860,6 +897,42 @@ function bindMobileHomeScroll(){
  mobileHomeScrollBound=true;
 }
 
+let portraitScoreBound=false, portraitScoreTop=0;
+function measurePortraitScore(){
+ const score=document.querySelector("#home .score-card");
+ if(!score) return;
+ const portrait=window.matchMedia("(max-width: 620px) and (orientation: portrait)").matches;
+ if(!portrait || !document.body.classList.contains("home-active")){
+   document.body.classList.remove("portrait-score-fixed");
+   return;
+ }
+ // Measure in normal flow only. Once fixed, preserve the previously measured threshold.
+ if(!document.body.classList.contains("portrait-score-fixed")){
+   portraitScoreTop=score.getBoundingClientRect().top+window.scrollY;
+ }
+ const r=score.getBoundingClientRect();
+ document.documentElement.style.setProperty("--portrait-score-left",r.left+"px");
+ document.documentElement.style.setProperty("--portrait-score-width",r.width+"px");
+ document.documentElement.style.setProperty("--portrait-score-space",(r.height+6)+"px");
+}
+function syncPortraitScoreFreeze(){
+ const portrait=window.matchMedia("(max-width: 620px) and (orientation: portrait)").matches;
+ if(!portrait || !document.body.classList.contains("home-active")){
+   document.body.classList.remove("portrait-score-fixed");
+   return;
+ }
+ const topPad=8;
+ if(!portraitScoreTop) measurePortraitScore();
+ document.body.classList.toggle("portrait-score-fixed",window.scrollY>=Math.max(0,portraitScoreTop-topPad));
+}
+function bindPortraitScoreFreeze(){
+ if(portraitScoreBound) return;
+ window.addEventListener("scroll",syncPortraitScoreFreeze,{passive:true});
+ window.addEventListener("resize",()=>{document.body.classList.remove("portrait-score-fixed");portraitScoreTop=0;requestAnimationFrame(()=>{measurePortraitScore();syncPortraitScoreFreeze();});},{passive:true});
+ window.addEventListener("orientationchange",()=>setTimeout(()=>{document.body.classList.remove("portrait-score-fixed");portraitScoreTop=0;measurePortraitScore();syncPortraitScoreFreeze();},140),{passive:true});
+ portraitScoreBound=true;
+}
+
 function lockIcon(open=false){
  const klass=open ? "state-icon solved-icon" : "state-icon unsolved-icon";
  const path=open
@@ -921,17 +994,19 @@ function renderGrid(){
  renderScore();
  $("simDateText").textContent=todayISO();
  bindMobileHomeScroll();
- requestAnimationFrame(syncMobileHomeChrome);
+ bindPortraitScoreFreeze();
+ requestAnimationFrame(()=>{measurePortraitScore();syncPortraitScoreFreeze();syncMobileHomeChrome();});
 }
 function renderQuestion(lines){
  $("puzzleText").innerHTML=lines.map(line=>line===""?`<div class="gap"></div>`:`<span class="line">${line}</span>`).join("");
 }
 function resetPuzzle(){
  attemptsUsed=0;unusedMessages=[...WRONG_MESSAGES];
+ wrongPopupAwaitingAck=false;
  $("answerInput").value="";$("answerInput").disabled=false;
  $("feedback").textContent="";$("attempts").textContent="";
  $("giveUpBtn").classList.add("hidden");$("submitBtn").disabled=false;
- const popup=$("wrongAnswerPopover"); if(popup) popup.classList.remove("show");
+ const popup=$("wrongAnswerPopover"); if(popup){popup.classList.remove("show");popup.setAttribute("aria-hidden","true");}
 }
 function openDay(n){
  currentDay=DAYS.find(d=>d.day===n);
@@ -955,6 +1030,7 @@ function openDay(n){
  show("puzzle");
 }
 function check(){
+ if(wrongPopupAwaitingAck) return;
  const input=$("answerInput"), value=norm(input.value);
  if(!value)return;
  if(currentDay.answers.includes(value)){
@@ -1135,7 +1211,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=23").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=24").catch(()=>{}));
 }
 
 function syncDesktopFrame(){
