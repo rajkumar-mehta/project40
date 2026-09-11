@@ -693,6 +693,17 @@ function positionKeyboardUI(){
    document.documentElement.style.setProperty("--visual-top",vv.offsetTop+"px");
    document.documentElement.style.setProperty("--visual-height",vv.height+"px");
  }
+ const p=$("wrongAnswerPopover");
+ if(p && p.classList.contains("show") && isLikelyPhone()){
+   requestAnimationFrame(()=>{
+     const viewportTop=vv?vv.offsetTop:0;
+     const viewportHeight=vv?vv.height:window.innerHeight;
+     const h=p.offsetHeight;
+     const top=Math.max(viewportTop+8, viewportTop+viewportHeight-h-10);
+     p.style.top=top+"px";
+     p.style.bottom="auto";
+   });
+ }
 }
 function keepAnswerVisible(){
  if(!isLikelyPhone()) return;
@@ -744,7 +755,7 @@ function showWrongPopup(message,remaining){
  p.querySelector(".wap-message").textContent=message;
  p.querySelector(".wap-remaining").textContent=remaining===0?"Three attempts used.":(remaining===1?"1 attempt remaining":`${remaining} attempts remaining`);
  p.querySelector(".wap-ok").textContent="OK";
- p.classList.add("show"); return true;
+ p.classList.add("show"); requestAnimationFrame(positionKeyboardUI); return true;
 }
 function showSurrenderPopup(){
  if(!isLikelyPhone())return false;
@@ -754,7 +765,7 @@ function showSurrenderPopup(){
  p.querySelector(".wap-message").textContent="I GIVE UP — I'M SO OLD… I'M ABOUT TO TURN 40! 😂";
  p.querySelector(".wap-remaining").textContent="The mystery wins this round.";
  p.querySelector(".wap-ok").textContent="I GIVE UP 😂";
- p.classList.add("show");
+ p.classList.add("show"); requestAnimationFrame(positionKeyboardUI);
  return true;
 }
 
@@ -1124,7 +1135,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=22").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=23").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

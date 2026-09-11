@@ -1162,3 +1162,62 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
     font-size:12px!important;
   }
 }
+
+/* =========================================================
+   PROJECT 40 v2.3 — MAIN CHAT QA fixes
+   ========================================================= */
+
+/* Locked EXIT design: Option A black/neon card + A3 modern digits. */
+.day-card{
+  border:1px solid #20d98b!important;
+  background:linear-gradient(180deg,#101720 0%,#090e15 100%)!important;
+  box-shadow:inset 0 0 0 1px rgba(32,217,139,.12),0 9px 22px rgba(0,0,0,.22)!important;
+}
+.day-card:hover{border-color:#35efa0!important;box-shadow:inset 0 0 0 1px rgba(53,239,160,.16),0 11px 25px rgba(0,0,0,.27)!important}
+.day-card .exit-word{color:#e7c75f!important;font-family:Georgia,"Times New Roman",serif!important;font-weight:700!important}
+.day-card .exit-number{
+  min-width:38px!important;height:36px!important;padding:0 7px!important;
+  border:2px solid #20d98b!important;border-radius:5px!important;color:#f5f7f8!important;
+  font-family:Arial,"Helvetica Neue",sans-serif!important;font-size:23px!important;font-weight:800!important;
+  line-height:36px!important;text-align:center!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  font-variant-numeric:tabular-nums lining-nums!important;text-shadow:none!important;
+}
+.day-card .date{color:#f0f2f3!important}.day-card .state{color:#dfe7e3!important}
+.day-card .ready{color:#20d98b!important}.day-card .solved{color:#20d98b!important}.day-card .flag{color:#e7c75f!important}
+.day-card .today-chip{border-color:#20d98b!important;color:#e7c75f!important;background:#111820!important}
+
+/* Locked scoreboard treatment: airport split-flap style ONLY on the large score digits. */
+.score-main .score-player strong{
+  position:relative;display:inline-flex!important;align-items:center;justify-content:center;
+  min-width:54px;height:58px;padding:0 8px;border:1px solid #394453;border-radius:5px;
+  background:linear-gradient(to bottom,#111820 0%,#111820 49%,#070b10 50%,#0d131b 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 5px 12px rgba(0,0,0,.28);
+  color:#f3f0e7!important;font-family:"Arial Narrow",Arial,"Helvetica Neue",sans-serif!important;
+  font-size:42px!important;font-weight:800!important;line-height:1!important;font-variant-numeric:tabular-nums lining-nums;
+  text-shadow:0 1px 0 #000;
+}
+.score-main .score-player strong::after{content:"";position:absolute;left:3px;right:3px;top:50%;height:1px;background:rgba(0,0,0,.9);box-shadow:0 1px 0 rgba(255,255,255,.055);pointer-events:none}
+
+/* CTA alignment: deterministic centering on laptop and phone. */
+#video .actions,#finale .actions{display:flex!important;flex-direction:column!important;align-items:center!important}
+#video #watchBtn,#finale #birthdaySurpriseBtn{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;margin:10px auto 0!important;box-sizing:border-box!important}
+@media(min-width:621px){#video #watchBtn,#finale #birthdaySurpriseBtn{width:max-content!important;max-width:100%!important;min-width:260px!important}}
+@media(max-width:620px){#video #watchBtn,#finale #birthdaySurpriseBtn{width:calc(100% - 24px)!important;max-width:440px!important}}
+
+/* PORTRAIT HOME: natural single page scroll. Branding scrolls away; scoreboard alone sticks.
+   This overrides v2.2's accidental whole-screen frozen frame. */
+@media(max-width:620px) and (orientation:portrait){
+  html,body,body.home-active{height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior-y:auto!important}
+  body.home-active .app-shell{height:auto!important;min-height:100dvh!important;overflow:visible!important;display:block!important;padding:max(8px,env(safe-area-inset-top)) 10px max(12px,env(safe-area-inset-bottom))!important}
+  body.home-active #home.active{height:auto!important;min-height:100dvh!important;display:block!important;overflow:visible!important}
+  body.home-active #home .project40-header,body.home-active.home-grid-scrolled #home .project40-header{position:relative!important;top:auto!important;max-height:none!important;overflow:visible!important;opacity:1!important;transform:none!important;pointer-events:auto!important}
+  body.home-active #home .score-card{position:sticky!important;top:max(8px,env(safe-area-inset-top))!important;z-index:60!important;margin:3px 0 0!important;background:#131c2a!important}
+  body.home-active #home .section-heading{position:sticky!important;top:var(--mobile-score-bottom,150px)!important;z-index:59!important;margin:0!important;padding:7px 0 8px!important;background:#0b111d!important}
+  body.home-active #home .day-grid,#home .day-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:1px 1px max(16px,env(safe-area-inset-bottom))!important}
+}
+
+/* Compact modal so message + OK always fit inside the visible keyboard-adjusted viewport. */
+@media(max-width:920px){
+ .wrong-answer-popover{bottom:auto!important;max-height:calc(var(--visual-height,100dvh) - 16px);overflow:auto;padding:12px 14px 10px!important}
+ .wap-message{font-size:16px!important;line-height:1.22!important}.wap-remaining{margin-top:5px!important;font-size:10px!important}.wap-ok{margin-top:8px!important;padding:10px 14px!important}
+}
