@@ -656,139 +656,79 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
 }
 
 
-/* v1.10 — Project 40 header + mobile UX hardening */
+/* =========================================================
+   PROJECT 40 v2.0 — approved UX pass
+   ========================================================= */
+.project40-header{text-align:center;padding:2px 0 14px}
+.project40-brand{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:min(92vw,430px);padding:0 42px}
+.project40-handwritten{
+ margin:0!important;font-family:"Segoe Print","Bradley Hand","Segoe Script","Brush Script MT",cursive!important;
+ font-size:clamp(42px,6.2vw,62px)!important;font-weight:500!important;line-height:1!important;letter-spacing:-2px!important;
+ background:linear-gradient(105deg,#eab8d1 4%,#e6c4dc 42%,#e9cf9b 77%,#f0dba9 100%);
+ -webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-fill-color:transparent;
+ filter:drop-shadow(0 2px 12px rgba(225,181,208,.13))
+}
+.project40-handwritten span{color:inherit!important;font-style:normal!important;-webkit-text-fill-color:transparent}
+.brand-sparkle{position:absolute;color:#efd7a3;text-shadow:0 0 10px rgba(239,215,163,.48);pointer-events:none}
+.sparkle-left{left:23px;top:15px;font-size:15px}.sparkle-right{right:19px;top:3px;font-size:19px}.sparkle-mini{right:39px;bottom:3px;font-size:8px;color:#e8bfd3}
+.journey-lockup{margin-top:17px}
+.project40-subtitle{color:#d3dbed;font-size:11px;font-weight:750;line-height:1.1;letter-spacing:.32em;text-indent:.32em}
+.project40-subline{margin-top:4px;color:#77609f;font-family:Georgia,"Times New Roman",serif;font-size:15px;line-height:1.1;font-style:italic;font-weight:600}
+.project40-header .journey-intro{margin:14px auto 0;max-width:760px;padding:0 8px;color:#a9b9d6;font-size:12px;font-weight:650;line-height:1.55;letter-spacing:.06em}
 
-/* Signature Project 40 header from the unshipped v1.9 concept */
-.project40-header{
-  position:relative;
-  text-align:center;
-  padding:2px 0 12px;
-}
-.project40-brand{
-  position:relative;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:min(92vw,430px);
-  padding:0 42px;
-}
-.project40-script{
-  margin:0!important;
-  font-family:"Segoe Script","Snell Roundhand","Apple Chancery","Brush Script MT",cursive!important;
-  font-size:clamp(42px,6.4vw,64px)!important;
-  font-weight:600!important;
-  line-height:1.02!important;
-  letter-spacing:-1.7px!important;
-  background:linear-gradient(105deg,#f2b7d2 8%,#f5cad8 38%,#efd29d 72%,#f4dfb2 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent!important;
-  -webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 2px 12px rgba(229,178,205,.14));
-}
-.project40-script span{
-  color:inherit!important;
-  font-style:normal!important;
-  -webkit-text-fill-color:transparent;
-}
-.project40-subtitle{
-  margin:3px 0 7px;
-  color:#c8d2e9;
-  font-size:10px;
-  font-weight:700;
-  line-height:1;
-  letter-spacing:.34em;
-  text-indent:.34em;
-}
-.brand-sparkle{
-  position:absolute;
-  color:#efd7a3;
-  text-shadow:0 0 10px rgba(239,215,163,.48);
-  pointer-events:none;
-}
-.sparkle-left{left:22px;top:15px;font-size:16px;transform:rotate(-10deg)}
-.sparkle-right{right:19px;top:4px;font-size:20px;transform:rotate(12deg)}
-.sparkle-mini{right:39px;bottom:4px;font-size:8px;color:#e8bfd3}
-.project40-header .journey-intro{
-  margin:9px auto 0;
-  max-width:760px;
-  font-size:clamp(8.5px,1.05vw,10.5px);
-  line-height:1.5;
-  letter-spacing:.095em;
-  color:#8fa4cf;
+/* Opaque frozen frame on desktop: EXIT cards cannot be seen through it */
+#home .score-card{background:#131c2a!important;z-index:50!important;box-shadow:0 12px 20px rgba(5,9,17,.72)}
+#home .section-heading{background:#0b111d!important;z-index:49}
+@media(min-width:621px){
+ #home .score-card{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ #home .section-heading{position:sticky!important;top:var(--score-frame-bottom,180px)!important;padding:9px 0!important;margin:0!important;box-shadow:0 8px 12px rgba(5,9,17,.65)}
 }
 
-/* Reveal answer must NEVER overflow the viewport */
-#revealAnswer,
-.reveal-answer{
-  display:block;
-  width:100%;
-  max-width:100%;
-  min-width:0;
-  box-sizing:border-box;
-  text-align:center;
-  overflow-wrap:anywhere;
-  word-break:normal;
-  hyphens:auto;
-  white-space:normal!important;
-  line-height:1.05;
-  padding-inline:8px;
+/* Long revealed answers never overflow */
+#answerReveal{display:block;width:100%;max-width:100%;box-sizing:border-box;padding-inline:12px;white-space:normal!important;overflow-wrap:anywhere;word-break:normal;line-height:1.04}
+
+/* Laptop QR is intentionally secondary */
+@media(min-width:921px){
+ .qr-wrap{width:132px!important;padding:8px!important;margin:12px auto!important;border-radius:10px!important}
+ .qr-wrap img{width:100%!important;height:auto!important}
 }
 
-/* Phone-specific tightening */
+/* Wrong-answer phone popup, anchored above the keyboard */
+.wrong-answer-popover{
+ position:fixed;left:50%;bottom:calc(var(--keyboard-offset,0px) + 16px);transform:translateX(-50%);
+ width:min(90vw,390px);z-index:10000;display:none;box-sizing:border-box;padding:16px 16px 13px;
+ border:1px solid rgba(181,197,230,.28);border-radius:16px;background:rgba(17,27,45,.99);
+ box-shadow:0 12px 38px rgba(0,0,0,.55);text-align:center;color:#eef2fb
+}
+.wrong-answer-popover.show{display:block}
+.wap-message{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.32}
+.wap-remaining{margin-top:7px;color:#b8c5e2;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.wap-ok{width:100%;margin-top:12px;padding:11px 16px;border:1px solid rgba(190,205,236,.3);border-radius:12px;background:#5d78a7;color:#fff;font:700 14px/1 system-ui,sans-serif;letter-spacing:.08em}
+
+/* Mobile = fixed app frame; ONLY EXIT cards scroll */
 @media(max-width:620px){
-  body.home-active #home .project40-header,
-  body.home-active.home-grid-scrolled #home .project40-header{
-    padding:0 0 6px!important;
-  }
-  body.home-active #home .project40-brand{
-    min-width:min(94vw,360px);
-    padding:0 34px;
-  }
-  body.home-active #home .project40-script{
-    font-size:clamp(36px,11.2vw,47px)!important;
-    line-height:.98!important;
-    letter-spacing:-1.5px!important;
-  }
-  body.home-active #home .project40-subtitle{
-    margin:1px 0 5px;
-    font-size:8px;
-    letter-spacing:.31em;
-    text-indent:.31em;
-  }
-  body.home-active #home .project40-header .journey-intro{
-    margin:6px auto 0;
-    padding:0 7px;
-    font-size:7.6px;
-    line-height:1.35;
-    letter-spacing:.065em;
-  }
-  body.home-active #home .sparkle-left{left:18px;top:10px;font-size:13px}
-  body.home-active #home .sparkle-right{right:17px;top:1px;font-size:16px}
-  body.home-active #home .sparkle-mini{right:33px;bottom:2px;font-size:7px}
-
-  #revealAnswer,
-  .reveal-answer{
-    font-size:clamp(34px,10vw,64px)!important;
-    padding-inline:14px;
-  }
-
-  /* Keep wrong-answer feedback area stable so keyboard re-focus doesn't cause extra jumps */
-  #feedback,
-  .feedback,
-  .answer-feedback{
-    min-height:56px;
-  }
+ html,body.home-active{height:100%!important;height:100dvh!important;overflow:hidden!important;overscroll-behavior:none!important}
+ body.home-active .app-shell{width:100%!important;max-width:520px;height:100vh!important;height:100dvh!important;min-height:0!important;overflow:hidden!important;display:block!important;padding:max(8px,env(safe-area-inset-top)) 10px max(7px,env(safe-area-inset-bottom))!important}
+ body.home-active #home.active{height:100%!important;min-height:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+ body.home-active #home .project40-header,body.home-active.home-grid-scrolled #home .project40-header{flex:0 0 auto;max-height:none!important;overflow:visible!important;opacity:1!important;transform:none!important;padding:0 0 7px!important}
+ body.home-active #home .project40-brand{min-width:min(94vw,360px);padding:0 34px}
+ body.home-active #home .project40-handwritten{font-size:clamp(36px,11vw,46px)!important;line-height:.98!important}
+ body.home-active #home .journey-lockup{margin-top:14px}
+ body.home-active #home .project40-subtitle{font-size:8.8px;letter-spacing:.30em;text-indent:.30em}
+ body.home-active #home .project40-subline{font-size:13px;margin-top:3px}
+ body.home-active #home .project40-header .journey-intro{margin:10px auto 0;font-size:10px;line-height:1.42;letter-spacing:.04em}
+ body.home-active #home .score-card{position:relative!important;top:auto!important;flex:0 0 auto!important;margin:3px 0 4px!important;padding:8px 10px 7px!important;background:#131c2a!important}
+ body.home-active #home .section-heading{position:relative!important;top:auto!important;flex:0 0 auto!important;margin:0!important;padding:6px 0 7px!important;background:#0b111d!important}
+ body.home-active #home .day-grid,#home .day-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain!important;touch-action:pan-y;padding:1px 1px max(14px,env(safe-area-inset-bottom))!important}
+ body.home-active #home .test-tools{flex:0 0 auto;margin:3px 0 0!important;font-size:8px}
+ #video .divider,#video .qr-wrap,#video .qr-wrap + .muted.small,#finale .divider,#finale .qr-wrap,#finale .qr-wrap + .muted.small{display:none!important}
 }
 
-/* Landscape phones are still PHONES: hide QR/redundant scan UI there too */
+/* Phone landscape is still phone: no QR */
 @media(max-width:920px) and (orientation:landscape) and (max-height:620px){
-  body.home-active #home .project40-header{padding-bottom:3px!important}
-  body.home-active #home .project40-brand{min-width:300px;padding:0 30px}
-  body.home-active #home .project40-script{font-size:31px!important;line-height:.95!important}
-  body.home-active #home .project40-subtitle{font-size:6.8px;margin:0 0 2px;letter-spacing:.28em}
-  body.home-active #home .project40-header .journey-intro{margin:3px auto 0;font-size:6.4px;line-height:1.2}
-  body.home-active #home .sparkle-left{left:16px;top:6px;font-size:10px}
-  body.home-active #home .sparkle-right{right:16px;top:0;font-size:12px}
-  body.home-active #home .sparkle-mini{right:28px;bottom:0;font-size:6px}
+ #video .divider,#video .qr-wrap,#video .qr-wrap + .muted.small,#finale .divider,#finale .qr-wrap,#finale .qr-wrap + .muted.small{display:none!important}
+ body.home-active #home .project40-handwritten{font-size:30px!important}
+ body.home-active #home .journey-lockup{margin-top:5px}
+ body.home-active #home .project40-header .journey-intro{font-size:7.5px;line-height:1.22;margin-top:4px}
 }
+@media(min-width:921px){.wrong-answer-popover{display:none!important}}
