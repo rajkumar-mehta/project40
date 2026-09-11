@@ -687,7 +687,12 @@ function keyboardOffset(){
  return vv?Math.max(0,window.innerHeight-vv.height-vv.offsetTop):0;
 }
 function positionKeyboardUI(){
+ const vv=window.visualViewport;
  document.documentElement.style.setProperty("--keyboard-offset",keyboardOffset()+"px");
+ if(vv){
+   document.documentElement.style.setProperty("--visual-top",vv.offsetTop+"px");
+   document.documentElement.style.setProperty("--visual-height",vv.height+"px");
+ }
 }
 function keepAnswerVisible(){
  if(!isLikelyPhone()) return;
@@ -711,15 +716,46 @@ function ensureWrongPopup(){
  p=document.createElement("div"); p.id="wrongAnswerPopover"; p.className="wrong-answer-popover";
  p.innerHTML='<div class="wap-message"></div><div class="wap-remaining"></div><button class="wap-ok" type="button">OK</button>';
  document.body.appendChild(p);
- p.querySelector(".wap-ok").onclick=()=>{p.classList.remove("show");refocusAnswer(true)};
+ const ok=p.querySelector(".wap-ok");
+ // On phones, do not let the popup button steal focus from the answer input.
+ // This keeps the soft keyboard open and prevents the viewport from jumping.
+ ok.addEventListener("pointerdown",e=>{
+   if(isLikelyPhone() && p.dataset.mode!=="surrender") e.preventDefault();
+ });
+ ok.onclick=()=>{
+   if(p.dataset.mode==="surrender"){
+     p.classList.remove("show");
+     show("confirmGiveUp");
+     return;
+   }
+   const showSurrender=p.dataset.after==="surrender";
+   p.classList.remove("show");
+   if(showSurrender){
+     requestAnimationFrame(showSurrenderPopup);
+   }
+ };
  return p;
 }
 function showWrongPopup(message,remaining){
  if(!isLikelyPhone())return false;
  const p=ensureWrongPopup(); positionKeyboardUI();
+ p.dataset.mode="wrong";
+ p.dataset.after=remaining===0?"surrender":"";
  p.querySelector(".wap-message").textContent=message;
- p.querySelector(".wap-remaining").textContent=remaining===1?"1 attempt remaining":`${remaining} attempts remaining`;
+ p.querySelector(".wap-remaining").textContent=remaining===0?"Three attempts used.":(remaining===1?"1 attempt remaining":`${remaining} attempts remaining`);
+ p.querySelector(".wap-ok").textContent="OK";
  p.classList.add("show"); return true;
+}
+function showSurrenderPopup(){
+ if(!isLikelyPhone())return false;
+ const p=ensureWrongPopup(); positionKeyboardUI();
+ p.dataset.mode="surrender";
+ p.dataset.after="";
+ p.querySelector(".wap-message").textContent="I GIVE UP — I'M SO OLD… I'M ABOUT TO TURN 40! 😂";
+ p.querySelector(".wap-remaining").textContent="The mystery wins this round.";
+ p.querySelector(".wap-ok").textContent="I GIVE UP 😂";
+ p.classList.add("show");
+ return true;
 }
 
 const screens=[...document.querySelectorAll(".screen")];
@@ -741,6 +777,7 @@ function todayISO(){
 function show(id){
  screens.forEach(s=>s.classList.toggle("active",s.id===id));
  document.body.classList.toggle("home-active",id==="home");
+ if(id!=="puzzle") document.body.classList.remove("answer-entry-active");
  if(id!=="home") document.body.classList.remove("home-grid-scrolled");
  window.scrollTo({top:0,left:0,behavior:"auto"});
  setTimeout(hidePhoneQr,0);
@@ -866,7 +903,7 @@ function renderGrid(){
    const todayChip=d.date===todayISO()?`<span class="today-chip">TODAY</span>`:"";
    b.dataset.secret=String(d.day);
    b.dataset.date=d.date;
-   b.innerHTML=`<div class="dayline"><div class="day">EXIT ${d.day}</div>${status.icon}</div><div class="date">${d.displayDate} ${todayChip}</div><div class="state">${status.state}</div>`;
+   b.innerHTML=`<div class="dayline"><div class="day"><span class="exit-word">EXIT</span><span class="exit-number">${d.day}</span></div>${status.icon}</div><div class="date">${d.displayDate} ${todayChip}</div><div class="state">${status.state}</div>`;
    b.onclick=()=>openDay(d.day);
    grid.appendChild(b);
  });
@@ -883,6 +920,7 @@ function resetPuzzle(){
  $("answerInput").value="";$("answerInput").disabled=false;
  $("feedback").textContent="";$("attempts").textContent="";
  $("giveUpBtn").classList.add("hidden");$("submitBtn").disabled=false;
+ const popup=$("wrongAnswerPopover"); if(popup) popup.classList.remove("show");
 }
 function openDay(n){
  currentDay=DAYS.find(d=>d.day===n);
@@ -923,15 +961,55 @@ function check(){
  $("feedback").textContent=isLikelyPhone()?"":wrongMessage;$("feedback").className="feedback bad";
  $("attempts").textContent=isLikelyPhone()?"":(remaining>0?`${remaining} attempt${remaining===1?"":"s"} remaining`:"Three attempts used.");
  if(remaining===0){
-   $("submitBtn").disabled=true;input.disabled=true;$("giveUpBtn").classList.remove("hidden");
-   if(isLikelyPhone()) showWrongPopup(wrongMessage,0);
+   $("submitBtn").disabled=true;
+   if(isLikelyPhone()){
+     // Keep the focused input alive so Android/iOS do not close and reopen
+     // the keyboard while the third-failure and surrender popups are shown.
+     $("giveUpBtn").classList.add("hidden");
+     showWrongPopup(wrongMessage,0);
+   }else{
+     input.disabled=true;
+     $("giveUpBtn").classList.remove("hidden");
+   }
  }else{
    if(!showWrongPopup(wrongMessage,remaining)) refocusAnswer(false);
  }
 }
-$("submitBtn").onclick=check;
+const submitButton=$("submitBtn");
+let suppressSubmitClickUntil=0;
+submitButton.addEventListener("pointerdown",e=>{
+  const input=$("answerInput");
+  if(isLikelyPhone() && document.activeElement===input && e.pointerType!=="mouse"){
+    // Prevent focus moving from the input to the button. We execute the submit
+    // on pointerup instead so the soft keyboard remains continuously open.
+    e.preventDefault();
+    submitButton.dataset.keepFocusTap="1";
+  }
+});
+submitButton.addEventListener("pointerup",e=>{
+  if(submitButton.dataset.keepFocusTap==="1"){
+    delete submitButton.dataset.keepFocusTap;
+    e.preventDefault();
+    suppressSubmitClickUntil=Date.now()+500;
+    if(!submitButton.disabled) check();
+  }
+});
+submitButton.onclick=()=>{
+  if(Date.now()<suppressSubmitClickUntil) return;
+  check();
+};
 $("answerInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!$("submitBtn").disabled)check()});
-$("answerInput").addEventListener("focus",()=>{if(isLikelyPhone()){setTimeout(keepAnswerVisible,180);setTimeout(keepAnswerVisible,420)}});
+$("answerInput").addEventListener("focus",()=>{
+  if(isLikelyPhone()){
+    document.body.classList.add("answer-entry-active");
+    setTimeout(keepAnswerVisible,180);setTimeout(keepAnswerVisible,420);
+  }
+});
+$("answerInput").addEventListener("blur",()=>{
+  setTimeout(()=>{
+    if(document.activeElement!==$("answerInput")) document.body.classList.remove("answer-entry-active");
+  },80);
+});
 if(window.visualViewport){
  window.visualViewport.addEventListener("resize",positionKeyboardUI,{passive:true});
  window.visualViewport.addEventListener("scroll",positionKeyboardUI,{passive:true});
@@ -1046,7 +1124,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=21").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=22").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

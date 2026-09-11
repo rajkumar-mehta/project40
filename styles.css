@@ -914,3 +914,251 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
     display:flex!important;
   }
 }
+
+/* =========================================================
+   PROJECT 40 v2.2
+   Testing fixes from canonical MAIN CHAT
+   ========================================================= */
+
+/* Scoreboard: labels belong directly above their score; VS aligns with dash. */
+.score-main{
+  align-items:flex-start!important;
+}
+.score-main .score-player,
+.score-main .score-divider{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+}
+.score-main .score-player small,
+.score-main .score-divider small{
+  display:block;
+  min-height:14px;
+  margin:0 0 5px;
+  color:#c6cfdd;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:9px;
+  font-style:normal;
+  font-weight:800;
+  letter-spacing:1.2px;
+  line-height:1;
+  white-space:nowrap;
+}
+.score-main .score-divider{
+  min-width:42px;
+  color:#52627d;
+}
+.score-main .score-divider span{
+  display:block;
+  font-size:28px;
+  line-height:1;
+}
+
+/* EXIT cards: highway-sign treatment with Option 7's warm serif EXIT label
+   and a clearly boxed route/exit number so EXIT 0 can never read as EXIT O. */
+.day-card{
+  border:1px solid rgba(235,239,224,.74)!important;
+  background:linear-gradient(180deg,#07523f 0%,#063f33 100%)!important;
+  box-shadow:
+    inset 0 0 0 3px rgba(255,255,255,.08),
+    inset 0 0 0 5px rgba(236,240,225,.12),
+    0 10px 24px rgba(0,0,0,.18)!important;
+}
+.day-card:hover{
+  border-color:#f2e9c5!important;
+  box-shadow:
+    inset 0 0 0 3px rgba(255,255,255,.10),
+    inset 0 0 0 5px rgba(236,240,225,.15),
+    0 12px 28px rgba(0,0,0,.24)!important;
+}
+.day-card .dayline{align-items:center!important}
+.day-card .day{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-family:Georgia,"Times New Roman",serif!important;
+  line-height:1;
+}
+.day-card .exit-word{
+  color:#e6c56d;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:.02em;
+}
+.day-card .exit-number{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:38px;
+  height:34px;
+  padding:0 8px;
+  border:2px solid #f2efe5;
+  border-radius:7px;
+  color:#fffdf4;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:23px;
+  font-weight:700;
+  line-height:1;
+  text-shadow:0 1px 1px rgba(0,0,0,.35);
+}
+.day-card .date{color:#d8e3dc!important}
+.day-card .state{color:#e6ece8!important}
+.day-card .ready{color:#ffd0d5!important}
+.day-card .solved{color:#a9f0cf!important}
+.day-card .flag{color:#f0dca7!important}
+.day-card .today-chip{border-color:#9bb9d8!important;color:#cfe1ff!important;background:rgba(11,17,29,.24)}
+
+/* Desktop/laptop primary surprise CTA: true horizontal centering. */
+@media(min-width:621px){
+  #video #watchBtn,
+  #finale #birthdaySurpriseBtn{
+    margin:10px auto 0!important;
+  }
+}
+
+/* PHONE PORTRAIT: freeze the complete Project 40 header + scoreboard + YOUR EXITS.
+   The EXIT list is the only scrolling region. This intentionally does NOT touch
+   the already-approved mobile landscape home behavior. */
+@media(max-width:620px) and (orientation:portrait){
+  html,
+  body.home-active{
+    height:100%!important;
+    height:100dvh!important;
+    overflow:hidden!important;
+    overscroll-behavior:none!important;
+  }
+  body.home-active .app-shell{
+    width:100%!important;
+    max-width:520px!important;
+    height:100vh!important;
+    height:100dvh!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    display:block!important;
+    padding:max(8px,env(safe-area-inset-top)) 10px max(7px,env(safe-area-inset-bottom))!important;
+  }
+  body.home-active #home.active{
+    height:100%!important;
+    min-height:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    overflow:hidden!important;
+  }
+  body.home-active #home .project40-header,
+  body.home-active.home-grid-scrolled #home .project40-header{
+    position:relative!important;
+    top:auto!important;
+    flex:0 0 auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    opacity:1!important;
+    transform:none!important;
+    pointer-events:auto!important;
+    padding:0 0 7px!important;
+  }
+  body.home-active #home .score-card{
+    position:relative!important;
+    top:auto!important;
+    flex:0 0 auto!important;
+    margin:3px 0 4px!important;
+    padding:8px 10px 7px!important;
+    background:#131c2a!important;
+  }
+  body.home-active #home .section-heading{
+    position:relative!important;
+    top:auto!important;
+    flex:0 0 auto!important;
+    margin:0!important;
+    padding:6px 0 7px!important;
+    background:#0b111d!important;
+  }
+  body.home-active #home .day-grid,
+  #home .day-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    flex:1 1 auto!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-y:contain!important;
+    touch-action:pan-y;
+    padding:1px 1px max(14px,env(safe-area-inset-bottom))!important;
+  }
+  body.home-active #home .test-tools{
+    flex:0 0 auto;
+    margin:3px 0 0!important;
+    font-size:8px;
+  }
+
+  /* Mobile finale CTA alignment: independent of text length / device width. */
+  #finale #birthdaySurpriseBtn,
+  #video #watchBtn{
+    width:calc(100% - 12px)!important;
+    max-width:480px!important;
+    margin:10px auto 0!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+  }
+}
+
+/* Wrong-answer/surrender popups stay above the soft keyboard. */
+.wrong-answer-popover[data-mode="surrender"]{
+  border-color:rgba(217,143,158,.42);
+}
+.wrong-answer-popover[data-mode="surrender"] .wap-ok{
+  background:#6d4851;
+  border-color:#93606d;
+}
+
+/* Mobile landscape puzzle entry: when the keyboard is open, temporarily collapse
+   nonessential puzzle chrome so the textbox and UNLOCK button remain usable.
+   Home/scoreboard landscape layout is untouched. */
+@media(max-width:920px) and (orientation:landscape) and (max-height:620px){
+  body.answer-entry-active .app-shell{
+    padding:4px 12px!important;
+  }
+  body.answer-entry-active #puzzle .home-link,
+  body.answer-entry-active #puzzle .day-eyebrow,
+  body.answer-entry-active #puzzle .secret-mark,
+  body.answer-entry-active #puzzle .puzzle-card,
+  body.answer-entry-active #puzzle .scroll-cue,
+  body.answer-entry-active #puzzle #hintBtn,
+  body.answer-entry-active #puzzle .status-panel,
+  body.answer-entry-active #puzzle .home-button,
+  body.answer-entry-active #puzzle #giveUpBtn{
+    display:none!important;
+  }
+  body.answer-entry-active #puzzle.active{
+    display:block!important;
+    min-height:var(--visual-height,100dvh)!important;
+  }
+  body.answer-entry-active #answerArea{
+    position:fixed!important;
+    z-index:9000!important;
+    left:50%!important;
+    top:calc(var(--visual-top, 0px) + 4px)!important;
+    transform:translateX(-50%)!important;
+    width:min(94vw,680px)!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  body.answer-entry-active #answerInput{
+    margin:0 0 4px!important;
+    padding:8px 12px!important;
+    min-height:36px!important;
+    font-size:16px!important;
+  }
+  body.answer-entry-active #submitBtn{
+    margin:0!important;
+    padding:8px 12px!important;
+    min-height:34px!important;
+    font-size:12px!important;
+  }
+}
