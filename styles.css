@@ -1288,3 +1288,44 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
     z-index:1!important;
   }
 }
+
+/* =========================================================
+   ROUTE 4T v2.5 — approved MAIN CHAT visual + QA pass
+   ========================================================= */
+/* Scenic header from approved Route 4T visual target. */
+.project40-header{
+  position:relative; isolation:isolate; overflow:hidden;
+  padding:18px 12px 16px!important; border-radius:0 0 18px 18px;
+  background:
+    linear-gradient(180deg,rgba(4,12,27,.10),rgba(5,13,28,.34) 56%,rgba(8,17,31,.92)),
+    url('route4t-header.png') center 16%/cover no-repeat!important;
+  box-shadow:inset 0 -1px 0 rgba(255,255,255,.06);
+}
+.project40-header::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(5,13,27,.16),transparent 28%,transparent 72%,rgba(5,13,27,.14));pointer-events:none}
+.project40-brand{padding:0 42px 18px!important;overflow:visible!important}
+.project40-handwritten{line-height:1.22!important;padding:0 0 .16em!important;overflow:visible!important}
+.journey-lockup{margin-top:4px!important;position:relative;z-index:2}
+.project40-subtitle{text-shadow:0 2px 8px #06101f}
+.project40-subline .subline-with{color:#f0cf61!important}.project40-subline .subline-exits{color:#ffd85b!important}
+.project40-header .journey-intro{color:#e4ebf6!important;text-shadow:0 2px 8px #06101f;background:rgba(5,13,27,.36);border-radius:10px;padding:5px 10px!important;width:max-content;max-width:96%}
+
+/* Mobile scoreboard labels: intentionally readable, not micro type. */
+@media(max-width:620px){
+  body.home-active #home .score-main .score-player small,
+  body.home-active #home .score-main .score-divider small{
+    font-size:10.5px!important;line-height:1.08!important;letter-spacing:1.05px!important;
+    min-height:13px!important;margin-bottom:5px!important;font-weight:800!important;
+  }
+}
+
+/* Wrong answer attempt palette: 1 yellow, 2 lavender, 3 green. */
+.wrong-answer-popover[data-attempt="1"]{background:#5a4b23!important;border-color:#f4d978!important}
+.wrong-answer-popover[data-attempt="1"] .wap-message{color:#fff8d9!important}.wrong-answer-popover[data-attempt="1"] .wap-remaining{color:#f7e9a8!important}.wrong-answer-popover[data-attempt="1"] .wap-ok{background:#e8c95e!important;border-color:#f6df87!important;color:#241e0b!important}
+.wrong-answer-popover[data-attempt="2"]{background:#403653!important;border-color:#cdb9e8!important}.wrong-answer-popover[data-attempt="2"] .wap-message{color:#fffafc!important}.wrong-answer-popover[data-attempt="2"] .wap-remaining{color:#eadff6!important}.wrong-answer-popover[data-attempt="2"] .wap-ok{background:#b79ad8!important;border-color:#d9c7ed!important;color:#1b1422!important}
+.wrong-answer-popover[data-attempt="3"]{background:#294b3d!important;border-color:#9ed7b9!important}.wrong-answer-popover[data-attempt="3"] .wap-message{color:#f1fff7!important}.wrong-answer-popover[data-attempt="3"] .wap-remaining{color:#ccebd9!important}.wrong-answer-popover[data-attempt="3"] .wap-ok{background:#91cfad!important;border-color:#b8e4cb!important;color:#10261a!important}
+
+/* Ensure modal remains compact above phone keyboard. */
+@media(max-width:620px){
+ .wrong-answer-popover{width:min(92vw,390px)!important;padding:10px 13px 9px!important}
+ .wap-message{font-size:15px!important;line-height:1.18!important}.wap-remaining{margin-top:4px!important;font-size:9.5px!important}.wap-ok{margin-top:7px!important;padding:9px 12px!important}
+}

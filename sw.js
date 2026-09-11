@@ -1,4 +1,4 @@
-const CACHE='mikas-40-exits-v24';
+const CACHE='mikas-40-exits-v25';
 const ASSETS=['./','./index.html','./styles.css?v=24','./app.js?v=24','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install',event=>{

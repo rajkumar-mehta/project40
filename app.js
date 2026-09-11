@@ -655,11 +655,11 @@ const DAYS = [
 
 const WRONG_MESSAGES=[
  "Not quite, birthday girl 😏",
- "Hmm… that one didn’t unlock anything.",
- "Nice try, Mika. The mystery survives.",
- "Nope! Your 39-year-old brain still has work to do.",
- "Almost… or maybe not even close 😂",
- "The vault remains locked."
+ "Hmm… that didn’t unlock it.",
+ "Nice try, Mika. Mystery survives.",
+ "Nope — try that 39-year-old brain again 😄",
+ "Almost… maybe 😂",
+ "The vault stays locked."
 ];
 
 let currentDay=DAYS[0], attemptsUsed=0, unusedMessages=[];
@@ -753,7 +753,7 @@ function ensureWrongPopup(){
  ok.addEventListener("pointerup",e=>{
    if(!isLikelyPhone()) return;
    e.preventDefault();
-   wrongPopupSuppressClickUntil=Date.now()+650;
+   wrongPopupSuppressClickUntil=Date.now()+180;
    acknowledgeWrongPopup(p);
  });
  ok.addEventListener("click",e=>{
@@ -771,6 +771,7 @@ function showWrongPopup(message,remaining){
  p.classList.remove("show");
  p.setAttribute("aria-hidden","true");
  p.dataset.mode="wrong";
+ p.dataset.attempt=String(MAX_ATTEMPTS-remaining);
  p.dataset.after=remaining===0?"surrender":"";
  p.querySelector(".wap-message").textContent=message;
  p.querySelector(".wap-remaining").textContent=remaining===0?"Three attempts used.":(remaining===1?"1 attempt remaining":`${remaining} attempts remaining`);
@@ -788,6 +789,7 @@ function showSurrenderPopup(){
  wrongPopupAwaitingAck=true;
  p.classList.remove("show");
  p.dataset.mode="surrender";
+ p.dataset.attempt="";
  p.dataset.after="";
  p.querySelector(".wap-message").textContent="I GIVE UP — I'M SO OLD… I'M ABOUT TO TURN 40! 😂";
  p.querySelector(".wap-remaining").textContent="The mystery wins this round.";
