@@ -1,12 +1,3 @@
-# ROUTE 4T / PROJECT 40 — BUILD HISTORY
-
-## v2.17
-- Built directly from the stable v2.16/v2.7 popup baseline.
-- Surgical Android/Chrome fix for the first (Yellow) wrong-answer popup after the user manually scrolls while the soft keyboard remains open.
-- Only when attempt 1 is active, the keyboard is clearly open, and VisualViewport reports a transient positive offsetTop, popup positioning ignores that offset so it cannot be double-applied and pushed behind the keyboard.
-- Purple/Green popup positioning, anti-flicker behavior, keyboard behavior, input locking, surrender flow, banner/scoreboard sticky behavior, and all locked visuals are unchanged.
-- Cache-busted assets/service worker to v217.
-
 # Route 4T / Project 40 — Build History
 
 ## v2.16

@@ -702,18 +702,8 @@ function positionKeyboardUI(){
  const p=$("wrongAnswerPopover");
  if(p && p.classList.contains("show") && isLikelyPhone()){
    requestAnimationFrame(()=>{
-     const rawViewportTop=vv?vv.offsetTop:0;
+     const viewportTop=vv?vv.offsetTop:0;
      const viewportHeight=vv?vv.height:window.innerHeight;
-     // v2.17 surgical first-attempt guard:
-     // On Android Chrome, the FIRST keyboard session can report a positive
-     // VisualViewport.offsetTop after Mika manually scrolls with the keyboard
-     // still open. The popup is already position:fixed, so applying that
-     // transient offset again can push only the first (Yellow) popup behind
-     // the keyboard. Preserve the stable v2.16/v2.7 positioning everywhere
-     // else; clamp only attempt 1 while the soft keyboard is clearly open.
-     const keyboardIsOpen=!!vv && (window.innerHeight-vv.height)>120;
-     const firstWrongAfterKeyboardScroll=keyboardIsOpen && p.dataset.mode==="wrong" && p.dataset.attempt==="1" && rawViewportTop>4;
-     const viewportTop=firstWrongAfterKeyboardScroll?0:rawViewportTop;
      const safeGap=10;
      const maxH=Math.max(104,viewportHeight-(safeGap*2));
      p.style.maxHeight=maxH+"px";
