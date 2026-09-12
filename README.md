@@ -1,18 +1,40 @@
 # Route 4T / Project 40
 
-Single consolidated development README. Historical per-build README files were merged starting with v2.12.
+## Current build: v2.14
 
-## v2.12
+This build is rebuilt directly from the stable v2.7 code baseline. Functional popup positioning is the v2.7 implementation; the only popup changes are a surgical anti-flicker presentation patch and blocking answer edits until the visible error popup is acknowledged.
 
-- Reworked mobile wrong-answer modal positioning using `visualViewport.pageTop/pageLeft` document coordinates rather than a fixed top-of-layout-viewport position.
-- Error modal is centered inside the currently visible browser area, so the keyboard cannot hide the message or OK button.
-- Viewport updates are debounced to avoid the earlier flicker while Android/SwiftKey settles.
-- Answer editing remains blocked until OK is acknowledged, while the keyboard can stay open.
-- Preserves the locked Yellow → Lavender → Green sequence, banner/scoreboard freezing, banner crop, and EXIT-card design.
-- Service-worker/cache version bumped to v212.
+### v2.14 notes
+- Preserves the v2.7 popup positioning and keyboard behavior.
+- Hides the popup only during the original short v2.7 placement-settling window, then reveals it once in its final position.
+- Ignores tiny (<3px) visualViewport jitter to prevent micro-jumping/flicker.
+- Prevents typing/paste/drop into the answer field while an error popup awaits OK, without disabling the field or dismissing the keyboard.
+- Preserves Yellow → Lavender → Green attempt colors and all locked banner/scoreboard/EXIT-card behavior.
+- All historical README files are merged below.
 
-## v2.0
+## Historical build notes
 
+### README.txt
+
+Project 40 v2.4 — canonical MAIN CHAT build
+
+Built from v2.3 with v2.3 QA feedback applied.
+
+Changes:
+- Preserved locked black/neon EXIT card design and A3 modern exit-number digits.
+- Changed only the EXIT word on cards from gold/yellow to white.
+- Preserved airport split-flap styling only for scoreboard score digits.
+- Added header spacing so the descender of the j in Project no longer overlaps MIKA'S JOURNEY on laptop or mobile.
+- Increased laptop MIKA / VS. / THE MYSTERY scoreboard label size while preserving alignment.
+- Hardened portrait-only scoreboard freeze without changing mobile landscape behavior.
+- Kept successful keyboard-open wrong-answer UX; fixed intermittent missing second-attempt popup with deterministic acknowledgement/state handling.
+- Wrong-answer popup recolored to a distinct pastel-lavender family; SAVE ME styling remains unchanged.
+- Hardened laptop/mobile surprise CTA centering.
+- Cache/service worker bumped to v24.
+
+### README_v20.txt
+
+PROJECT 40 v2.0
 Built directly from canonical v1.8.
 
 Merged approved changes:
@@ -32,7 +54,9 @@ Merged approved changes:
 Full test URL:
 https://rajkumar-mehta.github.io/project40/?v=20&testDate=1106
 
-## v2.1
+### README_v21.txt
+
+PROJECT 40 — v2.1
 
 Built from v2.0 after mobile/laptop testing.
 
@@ -65,7 +89,9 @@ Fixes in this build:
 TEST:
 https://rajkumar-mehta.github.io/project40/?v=21&testDate=1106
 
-## v2.2
+### README_v22.txt
+
+PROJECT 40 — v2.2
 
 Built from canonical v2.1 after laptop + mobile testing feedback in MAIN CHAT.
 
@@ -104,8 +130,9 @@ TEST EXAMPLES:
 ?v=22&testDate=1106
 ?v=22&testDate=0930
 
-## v2.3
+### README_v23.txt
 
+PROJECT 40 v2.3
 Canonical source: v2.2, incorporating MAIN CHAT QA feedback.
 
 Changes:
@@ -119,7 +146,9 @@ Changes:
 - Popup refreshed on every failed attempt; third failure transitions to surrender popup while keeping keyboard focus behavior.
 - Cache/service-worker version bumped to v23.
 
-## v2.4
+### README_v24.txt
+
+Project 40 v2.4 — canonical MAIN CHAT build
 
 Built from v2.3 with v2.3 QA feedback applied.
 
@@ -135,7 +164,9 @@ Changes:
 - Hardened laptop/mobile surprise CTA centering.
 - Cache/service worker bumped to v24.
 
-## v2.5
+### README_v25.txt
+
+Project 40 / Route 4T v2.5
 
 Changes from v2.4:
 - Locked Route 4T scenic header visual applied (moon, mountains, winding two-lane road, double-yellow line, road sign).
@@ -149,7 +180,9 @@ Changes from v2.4:
 - Portrait score-only freeze retained; landscape rules untouched.
 - Cache bumped to v25.
 
-## v2.6
+### README_v26.txt
+
+Route 4T / Project 40 v2.6
 
 Changes from v2.5:
 - Removed duplicate HTML title/subtitle/intro overlay from scenic Route 4T banner.
@@ -161,7 +194,9 @@ Changes from v2.5:
 - Preserves keyboard-open/no-jump behavior and shortened wrong-answer messages.
 - Cache/service-worker version bumped to v26.
 
-## v2.7
+### README_v27.txt
+
+ROUTE 4T / PROJECT 40 — v2.7
 
 Changes from v2.6:
 - Restored the moon in the Route 4T banner.
@@ -175,40 +210,3 @@ Changes from v2.6:
 - Repositioned popups against VisualViewport so the OK button remains above the soft keyboard.
 - Added repeated viewport-positioning checks during keyboard transitions.
 - Service-worker/cache bumped to v27.
-
-## v2.8
-
-Focused mobile popup stability build.
-
-Changes from v2.7:
-- Removed repeated live repositioning of wrong-answer/surrender popups while Android/SwiftKey visualViewport settles.
-- Popup is measured invisibly and revealed only once at its final coordinate above the keyboard.
-- Once placed, visualViewport resize/scroll noise can no longer move the visible popup, eliminating flicker.
-- Popup animations/transitions explicitly disabled.
-- Preserves keyboard-open flow, modal shield, puzzle state protection, Yellow → Lavender → Green sequence, banner/scoreboard freezing, banner crop, and locked EXIT-card styling.
-- Service-worker/cache bumped to v28.
-
-## v2.9
-
-Mobile error-modal containment fix:
-- Popup backdrop is sized to the browser visualViewport, not the document/page.
-- Error popup is flex-anchored inside the visible viewport above the soft keyboard.
-- OK button remains inside the modal and visible.
-- Keyboard open/close updates the viewport container without moving the modal into page flow.
-- Preserves Yellow > Lavender > Green sequence and all locked banner/scoreboard behavior.
-
-## v2.10
-
-Mobile popup input-lock fix:
-- While a wrong-answer or surrender popup is visible, the answer field remains focused so the keyboard can stay open, but all typing/paste/drop/composition edits are blocked.
-- The field unlocks only after the popup OK button is acknowledged.
-- Includes an input-event fallback for mobile IMEs that bypass beforeinput.
-- Preserves v2.9 visual-viewport popup containment and all locked banner/scoreboard behavior.
-
-## v2.11
-
-Mobile error-popup fail-safe fix:
-- Popup is anchored near the top of the visible browser area instead of the keyboard/page bottom.
-- OK remains visible whether the keyboard is open or closed.
-- Answer editing remains blocked until OK is acknowledged.
-- Existing banner/scoreboard sticky behavior and Yellow/Lavender/Green sequence are preserved.

@@ -1425,161 +1425,16 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
   }
 }
 
-
 /* =========================================================
-   ROUTE 4T v2.8 — stable no-flicker mobile error modal
-   ========================================================= */
+   ROUTE 4T v2.14 — v2.7 stable-baseline anti-flicker patch
+   =========================================================
+   IMPORTANT: Popup positioning remains the v2.7 implementation.
+   Only visual transitions are disabled; JS reveals the modal after
+   the original v2.7 placement sequence settles. */
 @media(max-width:920px){
-  .wrong-answer-popover{
-    animation:none!important;
-    transition:none!important;
-    will-change:auto!important;
-  }
-  .wrong-answer-popover.show{
-    animation:none!important;
-    transition:none!important;
-  }
-}
-
-
-/* =========================================================
-   ROUTE 4T v2.9 — visual-viewport modal containment
-   ========================================================= */
-@media(max-width:920px){
-  .wrong-answer-backdrop{
-    inset:auto!important;
-    display:none!important;
-    align-items:flex-end!important;
-    justify-content:center!important;
-    box-sizing:border-box!important;
-    padding:12px 10px!important;
-    overflow:hidden!important;
-    overscroll-behavior:none!important;
-  }
-  .wrong-answer-backdrop.show{display:flex!important}
   .wrong-answer-popover,
   .wrong-answer-popover.show{
-    position:relative!important;
-    left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
-    transform:none!important;
-    margin:0!important;
-    width:min(92%,390px)!important;
-    max-width:390px!important;
-    max-height:calc(100% - 2px)!important;
-    overflow:hidden!important;
-    flex-direction:column!important;
-  }
-  .wrong-answer-popover.show{display:flex!important}
-  .wap-message{overflow:auto!important;min-height:0!important}
-  .wap-ok{flex:0 0 auto!important}
-}
-
-
-/* =========================================================
-   ROUTE 4T v2.10 — lock answer entry until popup acknowledgement
-   ========================================================= */
-@media(max-width:920px){
-  #answerInput.modal-input-locked{
-    pointer-events:none!important;
-    caret-color:transparent!important;
-    user-select:none!important;
-  }
-}
-
-/* =========================================================
-   ROUTE 4T v2.11 — fail-safe mobile acknowledgement modal
-   ========================================================= */
-@media(max-width:920px){
-  /* Full-screen transparent shield; it no longer carries modal positioning. */
-  .wrong-answer-backdrop,
-  .wrong-answer-backdrop.show{
-    position:fixed!important;
-    inset:0!important;
-    width:100vw!important;
-    height:100vh!important;
-    padding:0!important;
-    display:block!important;
-    overflow:hidden!important;
-    background:transparent!important;
-  }
-  /* Anchor the popup to the TOP of the visible page, never to keyboard/page bottom. */
-  .wrong-answer-popover,
-  .wrong-answer-popover.show{
-    position:fixed!important;
-    left:50%!important;
-    right:auto!important;
-    top:12px!important;
-    bottom:auto!important;
-    transform:translateX(-50%)!important;
-    margin:0!important;
-    width:min(92vw,390px)!important;
-    max-height:min(260px,calc(100dvh - 24px))!important;
-    display:flex!important;
-    flex-direction:column!important;
-    overflow:hidden!important;
-    z-index:10001!important;
-  }
-  .wrong-answer-popover .wap-message{
-    flex:0 1 auto!important;
-    max-height:3em!important;
-    overflow:auto!important;
-  }
-  .wrong-answer-popover .wap-remaining,
-  .wrong-answer-popover .wap-ok{flex:0 0 auto!important}
-  /* Keep editing blocked in JS, but don't make the field permanently untouchable. */
-  #answerInput.modal-input-locked{
-    pointer-events:auto!important;
-    caret-color:transparent!important;
-  }
-}
-
-
-/* =========================================================
-   ROUTE 4T v2.12 — visual-viewport document-coordinate modal
-   ========================================================= */
-@media(max-width:920px){
-  /* JS sizes/positions this shield to the *actual visible* browser viewport.
-     Absolute document coordinates are intentional: on Android Chrome they track
-     visualViewport.pageTop/pageLeft even while the keyboard pans the page. */
-  .wrong-answer-backdrop,
-  .wrong-answer-backdrop.show{
-    position:absolute!important;
-    inset:auto!important;
-    padding:0!important;
-    margin:0!important;
-    display:block!important;
-    overflow:hidden!important;
-    overscroll-behavior:none!important;
-    background:transparent!important;
-    z-index:9999!important;
-  }
-  .wrong-answer-popover,
-  .wrong-answer-popover.show{
-    position:absolute!important;
-    left:50%!important;
-    right:auto!important;
-    bottom:auto!important;
-    margin:0!important;
-    transform:translateX(-50%)!important;
-    width:min(92%,390px)!important;
-    max-width:390px!important;
-    display:flex!important;
-    flex-direction:column!important;
-    overflow:hidden!important;
     animation:none!important;
     transition:none!important;
-    z-index:10001!important;
-  }
-  .wrong-answer-popover .wap-message{
-    flex:0 1 auto!important;
-    max-height:3em!important;
-    overflow:auto!important;
-  }
-  .wrong-answer-popover .wap-remaining,
-  .wrong-answer-popover .wap-ok{flex:0 0 auto!important}
-  #answerInput.modal-input-locked{
-    pointer-events:auto!important;
-    caret-color:transparent!important;
-    user-select:none!important;
   }
 }
