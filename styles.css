@@ -1532,3 +1532,54 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
     caret-color:transparent!important;
   }
 }
+
+
+/* =========================================================
+   ROUTE 4T v2.12 — visual-viewport document-coordinate modal
+   ========================================================= */
+@media(max-width:920px){
+  /* JS sizes/positions this shield to the *actual visible* browser viewport.
+     Absolute document coordinates are intentional: on Android Chrome they track
+     visualViewport.pageTop/pageLeft even while the keyboard pans the page. */
+  .wrong-answer-backdrop,
+  .wrong-answer-backdrop.show{
+    position:absolute!important;
+    inset:auto!important;
+    padding:0!important;
+    margin:0!important;
+    display:block!important;
+    overflow:hidden!important;
+    overscroll-behavior:none!important;
+    background:transparent!important;
+    z-index:9999!important;
+  }
+  .wrong-answer-popover,
+  .wrong-answer-popover.show{
+    position:absolute!important;
+    left:50%!important;
+    right:auto!important;
+    bottom:auto!important;
+    margin:0!important;
+    transform:translateX(-50%)!important;
+    width:min(92%,390px)!important;
+    max-width:390px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    overflow:hidden!important;
+    animation:none!important;
+    transition:none!important;
+    z-index:10001!important;
+  }
+  .wrong-answer-popover .wap-message{
+    flex:0 1 auto!important;
+    max-height:3em!important;
+    overflow:auto!important;
+  }
+  .wrong-answer-popover .wap-remaining,
+  .wrong-answer-popover .wap-ok{flex:0 0 auto!important}
+  #answerInput.modal-input-locked{
+    pointer-events:auto!important;
+    caret-color:transparent!important;
+    user-select:none!important;
+  }
+}

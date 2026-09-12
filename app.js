@@ -688,25 +688,39 @@ function keyboardOffset(){
  return vv?Math.max(0,window.innerHeight-vv.height-vv.offsetTop):0;
 }
 let popupPlacementRAF=0;
+let popupViewportTimer=0;
 function positionWrongPopup(){
  const backdrop=$("wrongAnswerBackdrop"), p=$("wrongAnswerPopover");
  if(!backdrop || !p || !backdrop.classList.contains("show") || !isLikelyPhone()) return;
  const vv=window.visualViewport;
+ // v2.12: place the modal in DOCUMENT coordinates that correspond to the
+ // current visual viewport. This avoids the Android/Chrome fixed-position trap
+ // where top:12px can mean the hidden layout-viewport top while the keyboard
+ // has panned the actually visible viewport farther down the page.
+ const pageLeft=vv?vv.pageLeft:window.scrollX;
+ const pageTop=vv?vv.pageTop:window.scrollY;
+ const visibleWidth=vv?vv.width:window.innerWidth;
  const visibleHeight=vv?vv.height:window.innerHeight;
- // v2.11: never chase the keyboard bottom. Keep the acknowledgement modal
- // anchored near the TOP of the visible browser content, where the keyboard
- // cannot cover it. The backdrop stays full-screen only as an interaction shield.
- backdrop.style.left="0px";
- backdrop.style.top="0px";
- backdrop.style.width="100vw";
- backdrop.style.height="100vh";
- p.style.position="fixed";
+
+ backdrop.style.position="absolute";
+ backdrop.style.left=Math.round(pageLeft)+"px";
+ backdrop.style.top=Math.round(pageTop)+"px";
+ backdrop.style.width=Math.round(visibleWidth)+"px";
+ backdrop.style.height=Math.round(visibleHeight)+"px";
+
+ // Measure first, then vertically center inside the currently visible area.
+ // Keep a safety gap on all sides and cap height so OK can never fall behind
+ // the soft keyboard.
+ p.style.position="absolute";
  p.style.left="50%";
  p.style.right="auto";
  p.style.top="12px";
  p.style.bottom="auto";
  p.style.transform="translateX(-50%)";
- p.style.maxHeight=Math.max(150,Math.min(260,Math.floor(visibleHeight-24)))+"px";
+ p.style.maxHeight=Math.max(140,Math.min(260,Math.floor(visibleHeight-24)))+"px";
+ const h=Math.min(p.offsetHeight||180,Math.max(140,visibleHeight-24));
+ const top=Math.max(12,Math.floor((visibleHeight-h)/2));
+ p.style.top=top+"px";
 }
 function positionKeyboardUI(){
  const vv=window.visualViewport;
@@ -717,8 +731,13 @@ function positionKeyboardUI(){
  }
  const backdrop=$("wrongAnswerBackdrop");
  if(backdrop && backdrop.classList.contains("show") && isLikelyPhone()){
-   cancelAnimationFrame(popupPlacementRAF);
-   popupPlacementRAF=requestAnimationFrame(positionWrongPopup);
+   // Debounce viewport churn from Android/SwiftKey. One settled reposition keeps
+   // the modal visible without the v2.7/v2.8 flicker.
+   clearTimeout(popupViewportTimer);
+   popupViewportTimer=setTimeout(()=>{
+     cancelAnimationFrame(popupPlacementRAF);
+     popupPlacementRAF=requestAnimationFrame(positionWrongPopup);
+   },70);
  }
 }
 function keepAnswerVisible(){
@@ -819,6 +838,7 @@ function showWrongPopup(message,remaining){
  if(backdrop){backdrop.classList.add("show");backdrop.setAttribute("aria-hidden","false");}
  p.classList.add("show");
  p.setAttribute("aria-hidden","false");
+ positionWrongPopup();
  positionKeyboardUI();
  return true;
 }
@@ -839,6 +859,7 @@ function showSurrenderPopup(){
  if(backdrop){backdrop.classList.add("show");backdrop.setAttribute("aria-hidden","false");}
  p.classList.add("show");
  p.setAttribute("aria-hidden","false");
+ positionWrongPopup();
  positionKeyboardUI();
  return true;
 }
@@ -1299,7 +1320,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=27").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=212").catch(()=>{}));
 }
 
 function syncDesktopFrame(){
