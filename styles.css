@@ -1440,3 +1440,48 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
     transition:none!important;
   }
 }
+
+
+/* =========================================================
+   ROUTE 4T v2.9 — visual-viewport modal containment
+   ========================================================= */
+@media(max-width:920px){
+  .wrong-answer-backdrop{
+    inset:auto!important;
+    display:none!important;
+    align-items:flex-end!important;
+    justify-content:center!important;
+    box-sizing:border-box!important;
+    padding:12px 10px!important;
+    overflow:hidden!important;
+    overscroll-behavior:none!important;
+  }
+  .wrong-answer-backdrop.show{display:flex!important}
+  .wrong-answer-popover,
+  .wrong-answer-popover.show{
+    position:relative!important;
+    left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+    transform:none!important;
+    margin:0!important;
+    width:min(92%,390px)!important;
+    max-width:390px!important;
+    max-height:calc(100% - 2px)!important;
+    overflow:hidden!important;
+    flex-direction:column!important;
+  }
+  .wrong-answer-popover.show{display:flex!important}
+  .wap-message{overflow:auto!important;min-height:0!important}
+  .wap-ok{flex:0 0 auto!important}
+}
+
+
+/* =========================================================
+   ROUTE 4T v2.10 — lock answer entry until popup acknowledgement
+   ========================================================= */
+@media(max-width:920px){
+  #answerInput.modal-input-locked{
+    pointer-events:none!important;
+    caret-color:transparent!important;
+    user-select:none!important;
+  }
+}

@@ -1,5 +1,5 @@
-const CACHE='mikas-40-exits-v28';
-const ASSETS=['./','./index.html','./styles.css?v=28','./app.js?v=28','./manifest.webmanifest','./icon-192.png','./icon-512.png','./route4t-header.png'];
+const CACHE='mikas-40-exits-v210';
+const ASSETS=['./','./index.html','./styles.css?v=210','./app.js?v=210','./manifest.webmanifest','./icon-192.png','./icon-512.png','./route4t-header.png'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();

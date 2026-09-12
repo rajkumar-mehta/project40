@@ -688,24 +688,19 @@ function keyboardOffset(){
  return vv?Math.max(0,window.innerHeight-vv.height-vv.offsetTop):0;
 }
 let popupPlacementRAF=0;
-function placeWrongPopupOnce(){
- const p=$("wrongAnswerPopover");
- if(!p || !p.classList.contains("show") || !isLikelyPhone()) return;
+function positionWrongPopup(){
+ const backdrop=$("wrongAnswerBackdrop"), p=$("wrongAnswerPopover");
+ if(!backdrop || !p || !backdrop.classList.contains("show") || !isLikelyPhone()) return;
  const vv=window.visualViewport;
- const viewportTop=vv?vv.offsetTop:0;
- const viewportHeight=vv?vv.height:window.innerHeight;
- const safeGap=10;
- const maxH=Math.max(104,viewportHeight-(safeGap*2));
- p.style.maxHeight=maxH+"px";
- p.style.bottom="auto";
- // Measure while hidden, then reveal at the final coordinate in one paint.
- p.style.visibility="hidden";
- p.style.top="0px";
- const h=Math.min(p.getBoundingClientRect().height,maxH);
- const top=Math.max(viewportTop+safeGap,viewportTop+viewportHeight-h-safeGap);
- p.style.top=Math.round(top)+"px";
- p.style.visibility="visible";
- p.dataset.placed="1";
+ const left=vv?vv.offsetLeft:0, top=vv?vv.offsetTop:0;
+ const width=vv?vv.width:window.innerWidth, height=vv?vv.height:window.innerHeight;
+ // The backdrop itself becomes the visual viewport. The modal is then flex-aligned
+ // inside that rectangle, so it can never be below the keyboard or page bottom.
+ backdrop.style.left=Math.round(left)+"px";
+ backdrop.style.top=Math.round(top)+"px";
+ backdrop.style.width=Math.round(width)+"px";
+ backdrop.style.height=Math.round(height)+"px";
+ p.style.maxHeight=Math.max(120,Math.floor(height-24))+"px";
 }
 function positionKeyboardUI(){
  const vv=window.visualViewport;
@@ -714,14 +709,10 @@ function positionKeyboardUI(){
    document.documentElement.style.setProperty("--visual-top",vv.offsetTop+"px");
    document.documentElement.style.setProperty("--visual-height",vv.height+"px");
  }
- // v2.8: do NOT continuously reposition an already-visible modal. Android's
- // visualViewport emits several tiny resize/scroll updates while SwiftKey settles;
- // repeatedly writing top/maxHeight made the modal visibly flicker. Place once
- // when shown and leave it stable until the user acknowledges it.
- const p=$("wrongAnswerPopover");
- if(p && p.classList.contains("show") && isLikelyPhone() && p.dataset.placed!=="1"){
+ const backdrop=$("wrongAnswerBackdrop");
+ if(backdrop && backdrop.classList.contains("show") && isLikelyPhone()){
    cancelAnimationFrame(popupPlacementRAF);
-   popupPlacementRAF=requestAnimationFrame(placeWrongPopupOnce);
+   popupPlacementRAF=requestAnimationFrame(positionWrongPopup);
  }
 }
 function keepAnswerVisible(){
@@ -744,6 +735,8 @@ function refocusAnswer(adjust=true){
 function acknowledgeWrongPopup(p){
  if(!p || !p.classList.contains("show")) return;
  wrongPopupAwaitingAck=false;
+ const activeInput=$("answerInput");
+ if(activeInput){ activeInput.removeAttribute("aria-disabled"); activeInput.classList.remove("modal-input-locked"); }
  const backdrop=$("wrongAnswerBackdrop");
  if(p.dataset.mode==="surrender"){
    p.classList.remove("show");
@@ -772,7 +765,6 @@ function buildWrongPopup(){
 
  const p=document.createElement("div");
  p.id="wrongAnswerPopover"; p.className="wrong-answer-popover";
- p.dataset.placed="0";
  p.setAttribute("role","dialog"); p.setAttribute("aria-live","assertive"); p.setAttribute("aria-hidden","true");
  p.innerHTML='<div class="wap-message"></div><div class="wap-remaining"></div><button class="wap-ok" type="button">OK</button>';
 
@@ -808,6 +800,8 @@ function showWrongPopup(message,remaining){
  // until this exact instance is acknowledged because wrongPopupAwaitingAck=true.
  const p=buildWrongPopup();
  wrongPopupAwaitingAck=true;
+ const activeInput=$("answerInput");
+ if(activeInput){ activeInput.value=""; activeInput.setAttribute("aria-disabled","true"); activeInput.classList.add("modal-input-locked"); }
  p.dataset.mode="wrong";
  p.dataset.attempt=String(MAX_ATTEMPTS-remaining);
  p.dataset.after=remaining===0?"surrender":"";
@@ -826,6 +820,8 @@ function showSurrenderPopup(){
  if(!isLikelyPhone())return false;
  const p=buildWrongPopup();
  wrongPopupAwaitingAck=true;
+ const activeInput=$("answerInput");
+ if(activeInput){ activeInput.value=""; activeInput.setAttribute("aria-disabled","true"); activeInput.classList.add("modal-input-locked"); }
  p.dataset.mode="surrender";
  p.dataset.attempt="";
  p.dataset.after="";
@@ -1044,7 +1040,7 @@ function renderQuestion(lines){
 function resetPuzzle(){
  attemptsUsed=0;unusedMessages=[...WRONG_MESSAGES];
  wrongPopupAwaitingAck=false;
- $("answerInput").value="";$("answerInput").disabled=false;
+ $("answerInput").value="";$("answerInput").disabled=false;$("answerInput").removeAttribute("aria-disabled");$("answerInput").classList.remove("modal-input-locked");
  $("feedback").textContent="";$("attempts").textContent="";
  $("giveUpBtn").classList.add("hidden");$("submitBtn").disabled=false;
  const popup=$("wrongAnswerPopover"); if(popup) popup.remove(); const backdrop=$("wrongAnswerBackdrop"); if(backdrop) backdrop.remove();
@@ -1126,7 +1122,49 @@ submitButton.onclick=()=>{
   if(Date.now()<suppressSubmitClickUntil) return;
   check();
 };
-$("answerInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!$("submitBtn").disabled)check()});
+// While an error/surrender modal is awaiting acknowledgement, keep the input
+// focused so the soft keyboard stays open, but make the field logically locked.
+// Do NOT use disabled/readOnly here because Android may dismiss the keyboard.
+const answerInput=$("answerInput");
+answerInput.addEventListener("beforeinput",e=>{
+  if(wrongPopupAwaitingAck){
+    e.preventDefault();
+    e.stopPropagation();
+  }
+});
+answerInput.addEventListener("compositionstart",e=>{
+  if(wrongPopupAwaitingAck){
+    e.preventDefault();
+    e.stopPropagation();
+  }
+});
+answerInput.addEventListener("paste",e=>{
+  if(wrongPopupAwaitingAck){
+    e.preventDefault();
+    e.stopPropagation();
+  }
+});
+answerInput.addEventListener("drop",e=>{
+  if(wrongPopupAwaitingAck){
+    e.preventDefault();
+    e.stopPropagation();
+  }
+});
+answerInput.addEventListener("input",()=>{
+  // Fallback for mobile IMEs that occasionally bypass beforeinput.
+  if(wrongPopupAwaitingAck && answerInput.value!==""){
+    answerInput.value="";
+  }
+});
+answerInput.addEventListener("keydown",e=>{
+  if(wrongPopupAwaitingAck){
+    // Allow only non-editing navigation/modifier keys; block text entry and Enter.
+    const allowed=["Shift","Control","Alt","Meta","CapsLock","Tab","ArrowLeft","ArrowRight","ArrowUp","ArrowDown"];
+    if(!allowed.includes(e.key)){e.preventDefault();e.stopPropagation();}
+    return;
+  }
+  if(e.key==="Enter"&&!$("submitBtn").disabled)check();
+});
 $("answerInput").addEventListener("focus",()=>{
   if(isLikelyPhone()){
     document.body.classList.add("answer-entry-active");
