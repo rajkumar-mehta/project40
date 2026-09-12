@@ -654,15 +654,19 @@ const DAYS = [
 ];
 
 const WRONG_MESSAGES=[
- "Not quite, birthday girl 😏",
- "Still locked. Try again.",
- "Nice try, Mika 😄",
- "Nope — give it another go.",
- "Almost! Try once more 😂",
- "The vault stays locked."
+ "Not quite 😏 Two guesses left.",
+ "Still locked 🔒 One guess left.",
+ "Nope 😂 The mystery wins this round."
 ];
 
-let currentDay=DAYS[0], attemptsUsed=0, unusedMessages=[];
+const ANSWER_PLACEHOLDERS=[
+ "3 GUESSES — ENTER YOUR ANSWER",
+ "2 GUESSES LEFT — TRY AGAIN",
+ "1 GUESS LEFT — MAKE IT COUNT",
+ ""
+];
+
+let currentDay=DAYS[0], attemptsUsed=0;
 let wrongPopupAwaitingAck=false, wrongPopupSuppressClickUntil=0, wrongPopupReadyAt=0;
 
 const $=id=>document.getElementById(id);
@@ -804,7 +808,9 @@ function showWrongPopup(message,remaining){
  p.dataset.attempt=String(MAX_ATTEMPTS-remaining);
  p.dataset.after=remaining===0?"surrender":"";
  p.querySelector(".wap-message").textContent=message;
- p.querySelector(".wap-remaining").textContent=remaining===0?"Three attempts used.":(remaining===1?"1 attempt remaining":`${remaining} attempts remaining`);
+ // The fixed attempt-specific sentence already carries the countdown. Keep the
+ // second line empty so the mobile popup stays short and never repeats itself.
+ p.querySelector(".wap-remaining").textContent="";
  p.querySelector(".wap-ok").textContent="OK";
  wrongPopupReadyAt=Date.now()+400;
  const backdrop=$("wrongAnswerBackdrop");
@@ -898,9 +904,13 @@ function key(day){return `mika40_day_${day}`}
 function getResult(day){try{return JSON.parse(localStorage.getItem(key(day))||"null")}catch{return null}}
 function saveResult(day,result){localStorage.setItem(key(day),JSON.stringify(result))}
 function isVisible(d){return d.date<=todayISO()}
-function randomWrong(){
- if(!unusedMessages.length)unusedMessages=[...WRONG_MESSAGES];
- return unusedMessages.splice(Math.floor(Math.random()*unusedMessages.length),1)[0];
+function wrongMessageForAttempt(attemptNumber){
+ return WRONG_MESSAGES[Math.max(0,Math.min(WRONG_MESSAGES.length-1,attemptNumber-1))];
+}
+function syncAnswerPlaceholder(){
+ const input=$("answerInput");
+ if(!input) return;
+ input.placeholder=ANSWER_PLACEHOLDERS[Math.max(0,Math.min(ANSWER_PLACEHOLDERS.length-1,attemptsUsed))];
 }
 function dateValue(iso){
  const [y,m,d]=iso.split("-").map(Number);
@@ -1064,9 +1074,10 @@ function renderQuestion(lines){
  $("puzzleText").innerHTML=lines.map(line=>line===""?`<div class="gap"></div>`:`<span class="line">${line}</span>`).join("");
 }
 function resetPuzzle(){
- attemptsUsed=0;unusedMessages=[...WRONG_MESSAGES];
+ attemptsUsed=0;
  wrongPopupAwaitingAck=false;
  $("answerInput").value="";$("answerInput").disabled=false;
+ syncAnswerPlaceholder();
  $("feedback").textContent="";$("attempts").textContent="";
  $("giveUpBtn").classList.add("hidden");$("submitBtn").disabled=false;
  const popup=$("wrongAnswerPopover"); if(popup) popup.remove(); const backdrop=$("wrongAnswerBackdrop"); if(backdrop) backdrop.remove();
@@ -1107,7 +1118,8 @@ function check(){
  attemptsUsed++;
  input.value="";
  const remaining=MAX_ATTEMPTS-attemptsUsed;
- const wrongMessage=randomWrong();
+ const wrongMessage=wrongMessageForAttempt(attemptsUsed);
+ syncAnswerPlaceholder();
  $("feedback").textContent=isLikelyPhone()?"":wrongMessage;$("feedback").className="feedback bad";
  $("attempts").textContent=isLikelyPhone()?"":(remaining>0?`${remaining} attempt${remaining===1?"":"s"} remaining`:"Three attempts used.");
  if(remaining===0){

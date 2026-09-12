@@ -1,3 +1,18 @@
+# Route 4T / Project 40 — Build History
+
+## v2.15
+- Built directly from the stable v2.14/v2.7 popup baseline; no popup positioning or keyboard behavior changes.
+- Replaced randomized wrong-answer copy with fixed attempt-specific messages (single popup line; no duplicate remaining-attempt line):
+  - Attempt 1 / Yellow: `Not quite 😏 Two guesses left.`
+  - Attempt 2 / Purple: `Still locked 🔒 One guess left.`
+  - Attempt 3 / Green: `Nope 😂 The mystery wins this round.`
+- Added countdown placeholders:
+  - Before attempt 1: `3 GUESSES — ENTER YOUR ANSWER`
+  - Before attempt 2: `2 GUESSES LEFT — TRY AGAIN`
+  - Before attempt 3: `1 GUESS LEFT — MAKE IT COUNT`
+  - After the final failed guess: blank; the surrender flow follows the Green popup.
+- Cache-busted assets/service worker to v215.
+
 # Route 4T / Project 40
 
 ## Current build: v2.14
