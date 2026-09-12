@@ -1,5 +1,13 @@
 # Route 4T / Project 40 — Build History
 
+## v2.16
+- Built from the stable v2.15/v2.7 popup baseline.
+- Fixed intermittent surrender confirmation skipping on mobile by adding a 550 ms tap-through guard after the surrender popup is acknowledged.
+- WAIT! LET ME TRY AGAIN and YES. SAVE ME. remain disabled until the originating mobile tap sequence is complete.
+- Added a timestamp guard in both confirmation handlers as a second line of defense against synthesized/ghost clicks.
+- No changes to wrong-answer popup positioning, keyboard behavior, banner/scoreboard freezing, EXIT styling, or the fixed Yellow → Purple → Green messages.
+- Cache-busted assets/service worker to v216.
+
 ## v2.15
 - Built directly from the stable v2.14/v2.7 popup baseline; no popup positioning or keyboard behavior changes.
 - Replaced randomized wrong-answer copy with fixed attempt-specific messages (single popup line; no duplicate remaining-attempt line):

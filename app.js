@@ -668,6 +668,7 @@ const ANSWER_PLACEHOLDERS=[
 
 let currentDay=DAYS[0], attemptsUsed=0;
 let wrongPopupAwaitingAck=false, wrongPopupSuppressClickUntil=0, wrongPopupReadyAt=0;
+let confirmGiveUpReadyAt=0, confirmGiveUpUnlockTimer=0;
 
 const $=id=>document.getElementById(id);
 
@@ -738,6 +739,24 @@ function refocusAnswer(adjust=true){
    if(adjust){setTimeout(keepAnswerVisible,180);setTimeout(keepAnswerVisible,420)}
  });
 }
+function openConfirmGiveUpGuarded(){
+ // Mobile Chrome can synthesize a follow-up click after the pointerup that
+ // dismisses the surrender popup. If the confirm screen is already live, that
+ // ghost click can hit WAIT or SAVE ME and make the screen appear to skip.
+ // Keep both controls inert until the originating tap sequence is safely over.
+ const tryAgain=$("tryAgainBtn"), saveMe=$("saveMeBtn");
+ clearTimeout(confirmGiveUpUnlockTimer);
+ confirmGiveUpReadyAt=Date.now()+550;
+ if(tryAgain) tryAgain.disabled=true;
+ if(saveMe) saveMe.disabled=true;
+ show("confirmGiveUp");
+ confirmGiveUpUnlockTimer=setTimeout(()=>{
+   if($("confirmGiveUp")?.classList.contains("active")){
+     if(tryAgain) tryAgain.disabled=false;
+     if(saveMe) saveMe.disabled=false;
+   }
+ },560);
+}
 function acknowledgeWrongPopup(p){
  if(!p || !p.classList.contains("show")) return;
  wrongPopupAwaitingAck=false;
@@ -745,7 +764,7 @@ function acknowledgeWrongPopup(p){
  if(p.dataset.mode==="surrender"){
    p.classList.remove("show");
    if(backdrop) backdrop.remove();
-   show("confirmGiveUp");
+   openConfirmGiveUpGuarded();
    return;
  }
  const showSurrender=p.dataset.after==="surrender";
@@ -1194,8 +1213,12 @@ hidePhoneQr();
 $("hintBtn").onclick=()=>{$("feedback").textContent=`Hint: ${currentDay.hint}`;$("feedback").className="feedback";};
 $("scrollCue").onclick=()=>$("answerArea").scrollIntoView({behavior:"smooth",block:"start"});
 $("giveUpBtn").onclick=()=>show("confirmGiveUp");
-$("tryAgainBtn").onclick=()=>{resetPuzzle();show("puzzle")};
-$("saveMeBtn").onclick=()=>{
+$("tryAgainBtn").onclick=e=>{
+ if(Date.now()<confirmGiveUpReadyAt){e.preventDefault();e.stopPropagation();return;}
+ resetPuzzle();show("puzzle");
+};
+$("saveMeBtn").onclick=e=>{
+ if(Date.now()<confirmGiveUpReadyAt){e.preventDefault();e.stopPropagation();return;}
  saveResult(currentDay.day,{outcome:"gave-up",attempts:MAX_ATTEMPTS,completedAt:new Date().toISOString()});
  $("answerReveal").textContent=currentDay.answerDisplay;fitRevealAnswer(currentDay.answerDisplay);show("surrender");
 };
