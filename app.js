@@ -687,6 +687,26 @@ function keyboardOffset(){
  const vv=window.visualViewport;
  return vv?Math.max(0,window.innerHeight-vv.height-vv.offsetTop):0;
 }
+let popupPlacementRAF=0;
+function placeWrongPopupOnce(){
+ const p=$("wrongAnswerPopover");
+ if(!p || !p.classList.contains("show") || !isLikelyPhone()) return;
+ const vv=window.visualViewport;
+ const viewportTop=vv?vv.offsetTop:0;
+ const viewportHeight=vv?vv.height:window.innerHeight;
+ const safeGap=10;
+ const maxH=Math.max(104,viewportHeight-(safeGap*2));
+ p.style.maxHeight=maxH+"px";
+ p.style.bottom="auto";
+ // Measure while hidden, then reveal at the final coordinate in one paint.
+ p.style.visibility="hidden";
+ p.style.top="0px";
+ const h=Math.min(p.getBoundingClientRect().height,maxH);
+ const top=Math.max(viewportTop+safeGap,viewportTop+viewportHeight-h-safeGap);
+ p.style.top=Math.round(top)+"px";
+ p.style.visibility="visible";
+ p.dataset.placed="1";
+}
 function positionKeyboardUI(){
  const vv=window.visualViewport;
  document.documentElement.style.setProperty("--keyboard-offset",keyboardOffset()+"px");
@@ -694,22 +714,14 @@ function positionKeyboardUI(){
    document.documentElement.style.setProperty("--visual-top",vv.offsetTop+"px");
    document.documentElement.style.setProperty("--visual-height",vv.height+"px");
  }
+ // v2.8: do NOT continuously reposition an already-visible modal. Android's
+ // visualViewport emits several tiny resize/scroll updates while SwiftKey settles;
+ // repeatedly writing top/maxHeight made the modal visibly flicker. Place once
+ // when shown and leave it stable until the user acknowledges it.
  const p=$("wrongAnswerPopover");
- if(p && p.classList.contains("show") && isLikelyPhone()){
-   requestAnimationFrame(()=>{
-     const viewportTop=vv?vv.offsetTop:0;
-     const viewportHeight=vv?vv.height:window.innerHeight;
-     const safeGap=10;
-     const maxH=Math.max(104,viewportHeight-(safeGap*2));
-     p.style.maxHeight=maxH+"px";
-     p.style.bottom="auto";
-     p.style.top=(viewportTop+safeGap)+"px";
-     requestAnimationFrame(()=>{
-       const h=Math.min(p.offsetHeight,maxH);
-       const top=Math.max(viewportTop+safeGap,viewportTop+viewportHeight-h-safeGap);
-       p.style.top=top+"px";
-     });
-   });
+ if(p && p.classList.contains("show") && isLikelyPhone() && p.dataset.placed!=="1"){
+   cancelAnimationFrame(popupPlacementRAF);
+   popupPlacementRAF=requestAnimationFrame(placeWrongPopupOnce);
  }
 }
 function keepAnswerVisible(){
@@ -760,6 +772,7 @@ function buildWrongPopup(){
 
  const p=document.createElement("div");
  p.id="wrongAnswerPopover"; p.className="wrong-answer-popover";
+ p.dataset.placed="0";
  p.setAttribute("role","dialog"); p.setAttribute("aria-live","assertive"); p.setAttribute("aria-hidden","true");
  p.innerHTML='<div class="wap-message"></div><div class="wap-remaining"></div><button class="wap-ok" type="button">OK</button>';
 
@@ -807,9 +820,6 @@ function showWrongPopup(message,remaining){
  p.classList.add("show");
  p.setAttribute("aria-hidden","false");
  positionKeyboardUI();
- requestAnimationFrame(()=>{positionKeyboardUI(); requestAnimationFrame(positionKeyboardUI);});
- setTimeout(positionKeyboardUI,80);
- setTimeout(positionKeyboardUI,220);
  return true;
 }
 function showSurrenderPopup(){
@@ -828,9 +838,6 @@ function showSurrenderPopup(){
  p.classList.add("show");
  p.setAttribute("aria-hidden","false");
  positionKeyboardUI();
- requestAnimationFrame(()=>{positionKeyboardUI(); requestAnimationFrame(positionKeyboardUI);});
- setTimeout(positionKeyboardUI,80);
- setTimeout(positionKeyboardUI,220);
  return true;
 }
 

@@ -1424,3 +1424,19 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
     bottom:auto!important;
   }
 }
+
+
+/* =========================================================
+   ROUTE 4T v2.8 — stable no-flicker mobile error modal
+   ========================================================= */
+@media(max-width:920px){
+  .wrong-answer-popover{
+    animation:none!important;
+    transition:none!important;
+    will-change:auto!important;
+  }
+  .wrong-answer-popover.show{
+    animation:none!important;
+    transition:none!important;
+  }
+}
