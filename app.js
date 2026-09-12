@@ -692,15 +692,21 @@ function positionWrongPopup(){
  const backdrop=$("wrongAnswerBackdrop"), p=$("wrongAnswerPopover");
  if(!backdrop || !p || !backdrop.classList.contains("show") || !isLikelyPhone()) return;
  const vv=window.visualViewport;
- const left=vv?vv.offsetLeft:0, top=vv?vv.offsetTop:0;
- const width=vv?vv.width:window.innerWidth, height=vv?vv.height:window.innerHeight;
- // The backdrop itself becomes the visual viewport. The modal is then flex-aligned
- // inside that rectangle, so it can never be below the keyboard or page bottom.
- backdrop.style.left=Math.round(left)+"px";
- backdrop.style.top=Math.round(top)+"px";
- backdrop.style.width=Math.round(width)+"px";
- backdrop.style.height=Math.round(height)+"px";
- p.style.maxHeight=Math.max(120,Math.floor(height-24))+"px";
+ const visibleHeight=vv?vv.height:window.innerHeight;
+ // v2.11: never chase the keyboard bottom. Keep the acknowledgement modal
+ // anchored near the TOP of the visible browser content, where the keyboard
+ // cannot cover it. The backdrop stays full-screen only as an interaction shield.
+ backdrop.style.left="0px";
+ backdrop.style.top="0px";
+ backdrop.style.width="100vw";
+ backdrop.style.height="100vh";
+ p.style.position="fixed";
+ p.style.left="50%";
+ p.style.right="auto";
+ p.style.top="12px";
+ p.style.bottom="auto";
+ p.style.transform="translateX(-50%)";
+ p.style.maxHeight=Math.max(150,Math.min(260,Math.floor(visibleHeight-24)))+"px";
 }
 function positionKeyboardUI(){
  const vv=window.visualViewport;
