@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0d1422">
 <title>ROUTE 4T · MIKA'S JOURNEY</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=216">
+<link rel="stylesheet" href="styles.css?v=218">
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
@@ -56,7 +56,7 @@
   <p id="emptyState" class="empty-state hidden">Your first mystery has not been revealed yet.</p>
 
   <div class="test-tools">
-    <div>v2.16 TEST MODE</div>
+    <div>v2.18 TEST MODE</div>
     <div>Simulated date: <b id="simDateText"></b></div>
     <div class="test-hint">Try <code>?testDate=0930</code>, <code>?testDate=1012</code>, or <code>?testDate=1106</code></div>
     <button id="resetTestBtn" class="reset-test" type="button">RESET TEST PROGRESS</button>
@@ -125,6 +125,7 @@
   <h2 id="solvedHeading">✓ YOU SOLVED IT!</h2>
 <p id="solvedSubheading" class="muted">Another step closer to 40…</p>
   <h2 id="giftHeading">ENJOY TODAY'S GIFT</h2>
+  <p id="giftFrom" class="gift-from"></p>
   <button id="watchBtn" class="primary">OPEN TODAY'S SURPRISE</button>
   <div class="divider"><span></span><em>OR</em><span></span></div>
   <div class="qr-wrap"><img id="qrImage" alt="QR code for today's video"></div>
@@ -138,11 +139,12 @@
   <div id="celebrationLayer" class="celebration-layer" aria-hidden="true"></div>
   <div class="finale-content">
     <div class="finale-cake" aria-hidden="true">🎂</div>
-    <div class="day-eyebrow">EXIT 0 · THE FINAL DESTINATION</div>
+    <div class="day-eyebrow">EXIT 40 · THE FINAL DESTINATION</div>
     <h2 class="birthday-title">🎉 HAPPY BIRTHDAY, MIKA! 🎉</h2>
     <p class="birthday-subtitle">You made it to 40.</p>
     <p class="muted">Forty days. Forty moments. One unforgettable journey.</p>
     <div class="gift-mark finale-gift" aria-hidden="true">🎁</div>
+    <p id="birthdayGiftFrom" class="gift-from"></p>
     <button id="birthdaySurpriseBtn" class="primary">OPEN YOUR BIRTHDAY SURPRISE</button>
     <div class="divider"><span></span><em>OR</em><span></span></div>
     <div class="qr-wrap"><img id="birthdayQrImage" alt="QR code for your birthday surprise"></div>
@@ -152,6 +154,6 @@
 </section>
 
 </main>
-<script src="app.js?v=216"></script>
+<script src="app.js?v=218"></script>
 </body>
 </html>

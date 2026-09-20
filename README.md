@@ -1,3 +1,27 @@
+# Route 4T / Project 40
+
+## Current build: v2.18
+
+Built directly from the stable v2.16 baseline. The v2.16 wrong-answer popup, keyboard, surrender, sticky banner, sticky scoreboard, and EXIT-card behavior are intentionally unchanged.
+
+### v2.18 changes
+- Reversed the journey numbering to EXIT 1 → EXIT 40.
+- EXIT 1 starts September 28, 2026; one new EXIT unlocks each day.
+- EXIT 40 is November 6, 2026 and has a production unlock time of 12:01 AM local time.
+- Preserved the special DUBAI riddle as EXIT 1 and the birthday riddle as EXIT 40.
+- Imported Columns A–E from `YT URL.xlsx`; Columns F–J are intentionally ignored.
+- Added Column D attribution to the reward screen: `A special birthday message from <Person / Group> 🎉`.
+- Added the completed Column E YouTube links. TBD links are safely disabled and display `VIDEO COMING SOON` rather than opening an invalid URL.
+- Audited and hardened the Exit 40 mobile birthday celebration: viewport-bound effect layer, fuller confetti/balloon population, reliable restart/cleanup, dedicated non-conflicting keyframes, and no dependency on the hidden mobile QR position.
+- Cache-busted app assets/service worker to v218.
+
+### QA helpers
+- Default test mode simulates November 6 so all exits can be exercised.
+- `?testDate=1106&testTime=0000` keeps EXIT 40 hidden.
+- `?testDate=1106&testTime=0001` reveals EXIT 40.
+
+---
+
 # Route 4T / Project 40 — Build History
 
 ## v2.16

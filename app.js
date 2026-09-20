@@ -2,12 +2,13 @@
 const TEST_MODE = true;
 const DEFAULT_TEST_DATE = "2026-11-06";
 const MAX_ATTEMPTS = 3;
+const FINAL_EXIT = 40;
 
 const DAYS = [
  {
-  "day": 40,
-  "date": "2026-09-27",
-  "displayDate": "September 27, 2026",
+  "day": 1,
+  "date": "2026-09-28",
+  "displayDate": "September 28, 2026",
   "lines": [
    "Forty days before you entered this world,",
    "your story had already begun.",
@@ -22,29 +23,12 @@ const DAYS = [
    "dubai"
   ],
   "hint": "Think of a city in the United Arab Emirates.",
-  "video": "https://youtu.be/z3DiPjZfbFY"
+  "video": "https://youtu.be/K4pBJcpQbfQ",
+  "relation": "Cousin",
+  "wishFrom": "Purvi & Kruti Family"
  },
  {
-  "day": 39,
-  "date": "2026-09-28",
-  "displayDate": "September 28, 2026",
-  "lines": [
-   "I have cities, but no houses.",
-   "I have mountains, but no trees.",
-   "I have water, but no fish.",
-   "",
-   "What am I?"
-  ],
-  "answerDisplay": "A MAP",
-  "answers": [
-   "map",
-   "a map"
-  ],
-  "hint": "You might use one before a hiking or travel adventure.",
-  "video": "https://www.youtube.com/results?search_query=top+hindi+songs+2026"
- },
- {
-  "day": 38,
+  "day": 2,
   "date": "2026-09-29",
   "displayDate": "September 29, 2026",
   "lines": [
@@ -59,10 +43,12 @@ const DAYS = [
    "steps"
   ],
   "hint": "Think about what follows you on a hike.",
-  "video": "https://www.youtube.com/results?search_query=best+hindi+songs+2026"
+  "video": "https://youtu.be/btRYOcFNmwo",
+  "relation": "Friend + Neighbor",
+  "wishFrom": "Kamalbhai & Krupali"
  },
  {
-  "day": 37,
+  "day": 3,
   "date": "2026-09-30",
   "displayDate": "September 30, 2026",
   "lines": [
@@ -78,10 +64,12 @@ const DAYS = [
    "postage stamp"
   ],
   "hint": "Travel, envelopes, and one small corner.",
-  "video": "https://www.youtube.com/results?search_query=2026+bollywood+hits"
+  "video": "https://youtu.be/vAzVv0Oc8Zg",
+  "relation": "Friend + Neighbor",
+  "wishFrom": "Beenaben"
  },
  {
-  "day": 36,
+  "day": 4,
   "date": "2026-10-01",
   "displayDate": "October 1, 2026",
   "lines": [
@@ -94,10 +82,12 @@ const DAYS = [
    "a towel"
   ],
   "hint": "You might need one after a spa day.",
-  "video": "https://www.youtube.com/results?search_query=top+10+bollywood+songs+2026"
+  "video": "https://youtu.be/zxKw6SfIT9M",
+  "relation": "Friend + Neighbor",
+  "wishFrom": "Vimalbhai & Pallaviben"
  },
  {
-  "day": 35,
+  "day": 5,
   "date": "2026-10-02",
   "displayDate": "October 2, 2026",
   "lines": [
@@ -111,10 +101,12 @@ const DAYS = [
    "keyboard"
   ],
   "hint": "These keys make music.",
-  "video": "https://www.youtube.com/results?search_query=hindi+romantic+songs+2026"
+  "video": "https://youtu.be/48vUVl99XqE",
+  "relation": "Friend",
+  "wishFrom": "Mihir & Unnati"
  },
  {
-  "day": 34,
+  "day": 6,
   "date": "2026-10-03",
   "displayDate": "October 3, 2026",
   "lines": [
@@ -126,10 +118,12 @@ const DAYS = [
    "a clock"
   ],
   "hint": "It tells time.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+34"
+  "video": "https://youtu.be/kja1pBH3b2Y",
+  "relation": "Friend",
+  "wishFrom": "Bharat Patel"
  },
  {
-  "day": 33,
+  "day": 7,
   "date": "2026-10-04",
   "displayDate": "October 4, 2026",
   "lines": [
@@ -141,10 +135,12 @@ const DAYS = [
    "a bottle"
   ],
   "hint": "You might drink from it.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+33"
+  "video": "https://youtu.be/SQAlRaVT3Vs",
+  "relation": "Friend",
+  "wishFrom": "Rajat & Ami"
  },
  {
-  "day": 32,
+  "day": 8,
   "date": "2026-10-05",
   "displayDate": "October 5, 2026",
   "lines": [
@@ -156,10 +152,12 @@ const DAYS = [
    "a needle"
   ],
   "hint": "Think sewing.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+32"
+  "video": "https://youtu.be/bQa0x3hiDr0",
+  "relation": "Friend",
+  "wishFrom": "Chirag, Arlett & Rhea"
  },
  {
-  "day": 31,
+  "day": 9,
   "date": "2026-10-06",
   "displayDate": "October 6, 2026",
   "lines": [
@@ -171,10 +169,12 @@ const DAYS = [
    "a comb"
   ],
   "hint": "Used for hair.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+31"
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "Hiral Patel & Akash"
  },
  {
-  "day": 30,
+  "day": 10,
   "date": "2026-10-07",
   "displayDate": "October 7, 2026",
   "lines": [
@@ -186,10 +186,12 @@ const DAYS = [
    "your age"
   ],
   "hint": "Birthday-related.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+30"
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "ShAmeet"
  },
  {
-  "day": 29,
+  "day": 11,
   "date": "2026-10-08",
   "displayDate": "October 8, 2026",
   "lines": [
@@ -200,10 +202,12 @@ const DAYS = [
    "light"
   ],
   "hint": "Flip a switch.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+29"
+  "video": "https://youtube.com/shorts/yUn1u7CIYNc?feature=share",
+  "relation": "Uncle, Aunty & Family",
+  "wishFrom": "Mahendrabhai"
  },
  {
-  "day": 28,
+  "day": 12,
   "date": "2026-10-09",
   "displayDate": "October 9, 2026",
   "lines": [
@@ -215,10 +219,12 @@ const DAYS = [
    "a book"
   ],
   "hint": "Pages hold it.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+28"
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "Payal"
  },
  {
-  "day": 27,
+  "day": 13,
   "date": "2026-10-10",
   "displayDate": "October 10, 2026",
   "lines": [
@@ -231,10 +237,12 @@ const DAYS = [
    "river"
   ],
   "hint": "Think of a river.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+27"
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "Jayashree"
  },
  {
-  "day": 26,
+  "day": 14,
   "date": "2026-10-11",
   "displayDate": "October 11, 2026",
   "lines": [
@@ -246,10 +254,12 @@ const DAYS = [
    "a clock"
   ],
   "hint": "It keeps time.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+26"
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "Shweta Jha"
  },
  {
-  "day": 25,
+  "day": 15,
   "date": "2026-10-12",
   "displayDate": "October 12, 2026",
   "lines": [
@@ -261,10 +271,12 @@ const DAYS = [
    "a cold"
   ],
   "hint": "Usually unwanted.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+25"
+  "video": "https://youtu.be/aq81_wqX7QI",
+  "relation": "Cousin",
+  "wishFrom": "Umang & Hiral Family"
  },
  {
-  "day": 24,
+  "day": 16,
   "date": "2026-10-13",
   "displayDate": "October 13, 2026",
   "lines": [
@@ -276,10 +288,12 @@ const DAYS = [
    "a glove"
   ],
   "hint": "Wear it on your hand.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+24"
+  "video": "https://youtu.be/_c1vlWvXKes",
+  "relation": "Friend",
+  "wishFrom": "Rushabh, Palak, Arav & Rian"
  },
  {
-  "day": 23,
+  "day": 17,
   "date": "2026-10-14",
   "displayDate": "October 14, 2026",
   "lines": [
@@ -291,10 +305,12 @@ const DAYS = [
    "a hole"
   ],
   "hint": "Digging makes it larger.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+23"
+  "video": "https://youtu.be/EOwkfgBSgbk",
+  "relation": "Friend",
+  "wishFrom": "Preet & Finny"
  },
  {
-  "day": 22,
+  "day": 18,
   "date": "2026-10-15",
   "displayDate": "October 15, 2026",
   "lines": [
@@ -306,10 +322,12 @@ const DAYS = [
    "your name"
   ],
   "hint": "People say it to get your attention.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+22"
+  "video": "https://youtube.com/shorts/VhqYw6WyuIk?feature=share",
+  "relation": "Friend",
+  "wishFrom": "Meenu"
  },
  {
-  "day": 21,
+  "day": 19,
   "date": "2026-10-16",
   "displayDate": "October 16, 2026",
   "lines": [
@@ -321,7 +339,9 @@ const DAYS = [
    "a potato"
   ],
   "hint": "A vegetable with 'eyes'.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+21"
+  "video": "https://youtu.be/Jre-U5hMtqg",
+  "relation": "Friend",
+  "wishFrom": "Leah & Shree"
  },
  {
   "day": 20,
@@ -337,10 +357,12 @@ const DAYS = [
    "a phone"
   ],
   "hint": "It can ring.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+20"
+  "video": "https://youtu.be/L5XfPm2tlOM",
+  "relation": "Friend",
+  "wishFrom": "Jagruti"
  },
  {
-  "day": 19,
+  "day": 21,
   "date": "2026-10-18",
   "displayDate": "October 18, 2026",
   "lines": [
@@ -352,10 +374,12 @@ const DAYS = [
    "a mushroom"
   ],
   "hint": "A wordplay answer.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+19"
+  "video": "https://youtu.be/PrJZoyts7e0",
+  "relation": "Friend",
+  "wishFrom": "Divya & Pankaj"
  },
  {
-  "day": 18,
+  "day": 22,
   "date": "2026-10-19",
   "displayDate": "October 19, 2026",
   "lines": [
@@ -367,10 +391,12 @@ const DAYS = [
    "a stamp"
   ],
   "hint": "It sits on mail.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+18"
+  "video": "https://youtu.be/LkJNKFt4leM",
+  "relation": "Friend",
+  "wishFrom": "Rushiraj, Veer, Heer, Moulika & Pranali"
  },
  {
-  "day": 17,
+  "day": 23,
   "date": "2026-10-20",
   "displayDate": "October 20, 2026",
   "lines": [
@@ -382,10 +408,12 @@ const DAYS = [
    "a coin"
   ],
   "hint": "Flip it.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+17"
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "Misri - Payal"
  },
  {
-  "day": 16,
+  "day": 24,
   "date": "2026-10-21",
   "displayDate": "October 21, 2026",
   "lines": [
@@ -397,10 +425,12 @@ const DAYS = [
    "a garbage truck"
   ],
   "hint": "The 'flies' are not the vehicle.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+16"
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "Misri - Jayshree"
  },
  {
-  "day": 15,
+  "day": 25,
   "date": "2026-10-22",
   "displayDate": "October 22, 2026",
   "lines": [
@@ -412,10 +442,12 @@ const DAYS = [
    "a river"
   ],
   "hint": "It flows.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+15"
+  "video": "https://youtu.be/7Qai7Mav74c",
+  "relation": "Cousin",
+  "wishFrom": "Jayanti Bapa Family"
  },
  {
-  "day": 14,
+  "day": 26,
   "date": "2026-10-23",
   "displayDate": "October 23, 2026",
   "lines": [
@@ -427,10 +459,12 @@ const DAYS = [
    "a bank"
   ],
   "hint": "Think business, not trees.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+14"
+  "video": "https://youtube.com/shorts/dMGs_tKZvNg?feature=share",
+  "relation": "Cousin",
+  "wishFrom": "Harsh & Zalak"
  },
  {
-  "day": 13,
+  "day": 27,
   "date": "2026-10-24",
   "displayDate": "October 24, 2026",
   "lines": [
@@ -442,10 +476,12 @@ const DAYS = [
    "a window"
   ],
   "hint": "Common in every home.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+13"
+  "video": null,
+  "relation": "Uncle-In-Law",
+  "wishFrom": "Dipak Mama"
  },
  {
-  "day": 12,
+  "day": 28,
   "date": "2026-10-25",
   "displayDate": "October 25, 2026",
   "lines": [
@@ -458,10 +494,12 @@ const DAYS = [
    "a teapot"
   ],
   "hint": "It holds tea.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+12"
+  "video": "https://youtube.com/shorts/crKQHr-ygzw?feature=share",
+  "relation": "Cousin",
+  "wishFrom": "Jayshreeben, Udaybhai & Rinku"
  },
  {
-  "day": 11,
+  "day": 29,
   "date": "2026-10-26",
   "displayDate": "October 26, 2026",
   "lines": [
@@ -474,10 +512,12 @@ const DAYS = [
    "a deck of cards"
   ],
   "hint": "Think playing cards.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+11"
+  "video": "https://youtu.be/26SCfqydB5c",
+  "relation": "Cousin",
+  "wishFrom": "Jetha Bapa Family"
  },
  {
-  "day": 10,
+  "day": 30,
   "date": "2026-10-27",
   "displayDate": "October 27, 2026",
   "lines": [
@@ -489,10 +529,12 @@ const DAYS = [
    "a promise"
   ],
   "hint": "It depends on trust.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+10"
+  "video": "https://youtu.be/yT0IEMagJ_k",
+  "relation": "Cousin",
+  "wishFrom": "Pravin Bapa Family"
  },
  {
-  "day": 9,
+  "day": 31,
   "date": "2026-10-28",
   "displayDate": "October 28, 2026",
   "lines": [
@@ -504,10 +546,12 @@ const DAYS = [
    "your brain"
   ],
   "hint": "A thinking answer.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+9"
+  "video": "https://youtube.com/shorts/cI3Jo0ij6x4?feature=share",
+  "relation": "Sister-In-Law & Niece",
+  "wishFrom": "Neha"
  },
  {
-  "day": 8,
+  "day": 32,
   "date": "2026-10-29",
   "displayDate": "October 29, 2026",
   "lines": [
@@ -520,10 +564,12 @@ const DAYS = [
    "the letter m"
   ],
   "hint": "Look at the spelling.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+8"
+  "video": "https://youtu.be/bvQLMAByDLs",
+  "relation": "Sister & Brother",
+  "wishFrom": "Bhavika, Anjani, Bhargav"
  },
  {
-  "day": 7,
+  "day": 33,
   "date": "2026-10-30",
   "displayDate": "October 30, 2026",
   "lines": [
@@ -535,10 +581,12 @@ const DAYS = [
    "a conversation"
   ],
   "hint": "You can 'hold' one with someone.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+7"
+  "video": "https://youtu.be/5yp2zgMFH3E",
+  "relation": "Brother & Sister Family",
+  "wishFrom": "Gaurav, Avni & Family"
  },
  {
-  "day": 6,
+  "day": 34,
   "date": "2026-10-31",
   "displayDate": "October 31, 2026",
   "lines": [
@@ -551,10 +599,12 @@ const DAYS = [
    "ear of corn"
   ],
   "hint": "Think food.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+6"
+  "video": null,
+  "relation": "Aunty",
+  "wishFrom": "Kaki"
  },
  {
-  "day": 5,
+  "day": 35,
   "date": "2026-11-01",
   "displayDate": "November 1, 2026",
   "lines": [
@@ -567,10 +617,12 @@ const DAYS = [
    "the letter e"
   ],
   "hint": "Look at the words.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+5"
+  "video": "https://youtu.be/HRwHPGniiog",
+  "relation": "Brother",
+  "wishFrom": "Bhargav"
  },
  {
-  "day": 4,
+  "day": 36,
   "date": "2026-11-02",
   "displayDate": "November 2, 2026",
   "lines": [
@@ -582,10 +634,12 @@ const DAYS = [
    "a rubber band"
   ],
   "hint": "It stretches.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+4"
+  "video": null,
+  "relation": "Sister",
+  "wishFrom": "Anjani"
  },
  {
-  "day": 3,
+  "day": 37,
   "date": "2026-11-03",
   "displayDate": "November 3, 2026",
   "lines": [
@@ -597,10 +651,12 @@ const DAYS = [
    "your legs"
   ],
   "hint": "Think anatomy and wordplay.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+3"
+  "video": "https://youtu.be/WX7MkZpFiIQ",
+  "relation": "Sister",
+  "wishFrom": "Bhavika"
  },
  {
-  "day": 2,
+  "day": 38,
   "date": "2026-11-04",
   "displayDate": "November 4, 2026",
   "lines": [
@@ -612,10 +668,12 @@ const DAYS = [
    "your word"
   ],
   "hint": "A promise-related phrase.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+2"
+  "video": "https://youtu.be/i2IfDjN-tb0",
+  "relation": "Dad",
+  "wishFrom": "Suresh Chavda"
  },
  {
-  "day": 1,
+  "day": 39,
   "date": "2026-11-05",
   "displayDate": "November 5, 2026",
   "lines": [
@@ -629,10 +687,12 @@ const DAYS = [
    "a doughnut"
   ],
   "hint": "Think round and delicious.",
-  "video": "https://www.youtube.com/results?search_query=hindi+songs+2026+day+1"
+  "video": null,
+  "relation": "Mom",
+  "wishFrom": "Leela Chavda"
  },
  {
-  "day": 0,
+  "day": 40,
   "date": "2026-11-06",
   "displayDate": "November 6, 2026",
   "lines": [
@@ -649,7 +709,10 @@ const DAYS = [
    "fortieth birthday"
   ],
   "hint": "Today, this celebration belongs entirely to you.",
-  "video": "https://www.youtube.com/results?search_query=happy+birthday+hindi+song"
+  "video": null,
+  "relation": "Husband",
+  "wishFrom": "Raj",
+  "unlockAt": "2026-11-06T00:01:00"
  }
 ];
 
@@ -669,6 +732,7 @@ const ANSWER_PLACEHOLDERS=[
 let currentDay=DAYS[0], attemptsUsed=0;
 let wrongPopupAwaitingAck=false, wrongPopupSuppressClickUntil=0, wrongPopupReadyAt=0;
 let confirmGiveUpReadyAt=0, confirmGiveUpUnlockTimer=0;
+let celebrationCleanupTimer=0, celebrationRunId=0;
 
 const $=id=>document.getElementById(id);
 
@@ -685,8 +749,28 @@ function fitRevealAnswer(text){
 }
 function hidePhoneQr(){
  const phone=isLikelyPhone();
- document.querySelectorAll("#video .divider,#video .qr-wrap,#video .qr-wrap + .muted.small,#finale .divider,#finale .qr-wrap,#finale .qr-wrap + .muted.small")
- .forEach(el=>el.style.display=phone?"none":"");
+ ["video","finale"].forEach(id=>{
+   const screen=$(id);
+   if(!screen) return;
+   const pending=screen.dataset.videoAvailable==="0";
+   screen.querySelectorAll(".divider,.qr-wrap,.qr-wrap + .muted.small")
+     .forEach(el=>el.style.display=(phone||pending)?"none":"");
+ });
+}
+function hasVideo(day=currentDay){
+ return !!(day && typeof day.video==="string" && /^https?:\/\//i.test(day.video));
+}
+function setVideoAvailability(screenId,buttonId,qrId){
+ const screen=$(screenId), button=$(buttonId), qr=$(qrId);
+ const available=hasVideo();
+ if(screen) screen.dataset.videoAvailable=available?"1":"0";
+ if(button) button.disabled=!available;
+ if(qr){
+   if(available) qr.src=`https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${encodeURIComponent(currentDay.video)}`;
+   else qr.removeAttribute("src");
+ }
+ hidePhoneQr();
+ return available;
 }
 function keyboardOffset(){
  const vv=window.visualViewport;
@@ -904,7 +988,16 @@ function todayISO(){
  const d=new Date();
  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 }
+function visibilityNow(){
+ if(!TEST_MODE) return new Date();
+ const date=normalizeTestDate(params.get("testDate"));
+ const raw=(params.get("testTime")||"2359").replace(/[^0-9]/g,"").padStart(4,"0").slice(-4);
+ const hh=Math.min(23,Number(raw.slice(0,2))||0);
+ const mm=Math.min(59,Number(raw.slice(2,4))||0);
+ return new Date(`${date}T${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}:00`);
+}
 function show(id){
+ if(id!=="finale") stopBirthdayCelebration();
  screens.forEach(s=>s.classList.toggle("active",s.id===id));
  document.body.classList.toggle("home-active",id==="home");
  if(id!=="puzzle") document.body.classList.remove("answer-entry-active");
@@ -919,10 +1012,13 @@ function show(id){
  },0);
 }
 function norm(v){return v.trim().toLowerCase().replace(/\s+/g," ")}
-function key(day){return `mika40_day_${day}`}
+function key(day){return `route4t_2026_exit_${day}`}
 function getResult(day){try{return JSON.parse(localStorage.getItem(key(day))||"null")}catch{return null}}
 function saveResult(day,result){localStorage.setItem(key(day),JSON.stringify(result))}
-function isVisible(d){return d.date<=todayISO()}
+function isVisible(d){
+ if(d.unlockAt) return visibilityNow().getTime()>=new Date(d.unlockAt).getTime();
+ return d.date<=todayISO();
+}
 function wrongMessageForAttempt(attemptNumber){
  return WRONG_MESSAGES[Math.max(0,Math.min(WRONG_MESSAGES.length-1,attemptNumber-1))];
 }
@@ -1046,7 +1142,7 @@ function flagIcon(){
 function stateMarkup(d){
  const r=getResult(d.day);
  if(r?.outcome==="solved"){
-   if(d.day===0){
+   if(d.day===FINAL_EXIT){
      return {
        icon:lockIcon(true),
        state:`<span class="solved">🎉 HAPPY BIRTHDAY!</span>`
@@ -1107,7 +1203,7 @@ function openDay(n){
 
  // Completed EXITs never reopen the riddle or alter saved stats.
  if(existing?.outcome==="solved"){
-   if(currentDay.day===0) openBirthdayFinale();
+   if(currentDay.day===FINAL_EXIT) openBirthdayFinale();
    else openSurprise(true);
    return;
  }
@@ -1130,7 +1226,7 @@ function check(){
    const tries=attemptsUsed+1;
    saveResult(currentDay.day,{outcome:"solved",attempts:tries,completedAt:new Date().toISOString()});
    input.value="";
-   if(currentDay.day===0) openBirthdayFinale();
+   if(currentDay.day===FINAL_EXIT) openBirthdayFinale();
    else openSurprise(true);
    return;
  }
@@ -1222,6 +1318,10 @@ $("saveMeBtn").onclick=e=>{
  saveResult(currentDay.day,{outcome:"gave-up",attempts:MAX_ATTEMPTS,completedAt:new Date().toISOString()});
  $("answerReveal").textContent=currentDay.answerDisplay;fitRevealAnswer(currentDay.answerDisplay);show("surrender");
 };
+function birthdayWishText(day=currentDay){
+ const from=(day?.wishFrom||"").trim();
+ return from?`A special birthday message from ${from} 🎉`:"A special birthday message for you 🎉";
+}
 function openSurprise(solved=true){
  $("solvedHeading").style.display=solved?"":"none";
  $("solvedSubheading").style.display=solved?"":"none";
@@ -1231,54 +1331,61 @@ function openSurprise(solved=true){
  ];
  const pick=options[Math.floor(Math.random()*options.length)];
  $("giftHeading").textContent=pick.heading;
- $("watchBtn").textContent=pick.button;
- $("qrImage").src=`https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${encodeURIComponent(currentDay.video)}`;
+ $("giftFrom").textContent=birthdayWishText();
+ const available=setVideoAvailability("video","watchBtn","qrImage");
+ $("watchBtn").textContent=available?pick.button:"VIDEO COMING SOON";
  $("videoEyebrow").textContent=`EXIT ${currentDay.day} UNLOCKED`;
  show("video");
 }
 
+function stopBirthdayCelebration(){
+ clearTimeout(celebrationCleanupTimer);
+ celebrationCleanupTimer=0;
+ celebrationRunId++;
+ const layer=$("celebrationLayer");
+ if(layer) layer.innerHTML="";
+}
 function launchBirthdayCelebration(){
  const layer=$("celebrationLayer");
  if(!layer) return;
 
- // Put the effect layer directly under <body>. This avoids mobile browsers
- // clipping fixed-position effects while the finale screen is fading in.
+ clearTimeout(celebrationCleanupTimer);
+ const runId=++celebrationRunId;
  if(layer.parentElement!==document.body) document.body.appendChild(layer);
-
  layer.innerHTML="";
+
  const reduced=window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ const phone=window.matchMedia && window.matchMedia("(max-width: 620px)").matches;
  layer.classList.toggle("reduced-motion",!!reduced);
 
- // Reduced-motion still gets a celebration, just fewer/slower elements.
- const confettiCount=reduced?22:60;
- const balloonCount=reduced?5:10;
+ // Keep the celebration tied to the visible viewport, not the document height.
+ // This makes mobile rendering independent of page scroll and hidden QR content.
+ const vv=window.visualViewport;
+ const viewportHeight=Math.max(320,Math.round(vv?.height||window.innerHeight||720));
+ const viewportWidth=Math.max(280,Math.round(vv?.width||window.innerWidth||390));
+ layer.style.width=`${viewportWidth}px`;
+ layer.style.height=`${viewportHeight}px`;
+ layer.style.setProperty("--balloon-origin-y",`${viewportHeight+8}px`);
+ layer.style.setProperty("--celebration-fall",`${viewportHeight+90}px`);
+ const riseDistance=viewportHeight+150;
+ layer.style.setProperty("--celebration-rise-mid",`${Math.round(-riseDistance*.52)}px`);
+ layer.style.setProperty("--celebration-rise-end",`${-riseDistance}px`);
+
+ // Full but still lightweight on phones. Reduced-motion keeps the effect gentler.
+ const confettiCount=reduced?28:(phone?88:112);
+ const balloonCount=reduced?6:(phone?12:15);
  const confettiChars=["✦","◆","●","★","♥","✧"];
  const confettiColors=["#ff6680","#ffd166","#b8a8ff","#78c7ff","#ff9ed2","#8ee3c0"];
-
- // Balloons begin at the QR/reward region instead of the bottom edge.
- // On mobile the QR is hidden, so anchor them just below the primary button.
- const mobileReward=window.matchMedia && window.matchMedia("(max-width: 620px)").matches;
- const qrWrap=document.querySelector("#finale .qr-wrap");
- const birthdayButton=$("birthdaySurpriseBtn");
- let balloonOrigin=Math.round(window.innerHeight*.72);
- if(!mobileReward && qrWrap){
-   const qrRect=qrWrap.getBoundingClientRect();
-   if(qrRect.height>0) balloonOrigin=Math.round(qrRect.top);
- }else if(birthdayButton){
-   const buttonRect=birthdayButton.getBoundingClientRect();
-   balloonOrigin=Math.round(Math.min(window.innerHeight-54,buttonRect.bottom+18));
- }
- layer.style.setProperty("--balloon-origin-y",`${balloonOrigin}px`);
 
  for(let i=0;i<confettiCount;i++){
    const piece=document.createElement("span");
    piece.className="confetti-piece";
    piece.textContent=confettiChars[Math.floor(Math.random()*confettiChars.length)];
    piece.style.left=`${Math.random()*100}%`;
-   piece.style.animationDelay=`${Math.random()*.34}s`;
-   piece.style.animationDuration=reduced?`${5.8+Math.random()*1.8}s`:`${2.8+Math.random()*2.1}s`;
-   piece.style.fontSize=`${9+Math.random()*11}px`;
-   piece.style.setProperty("--drift",`${-72+Math.random()*144}px`);
+   piece.style.animationDelay=reduced?`${Math.random()*.7}s`:`${Math.random()*1.25}s`;
+   piece.style.animationDuration=reduced?`${6.2+Math.random()*1.5}s`:`${3.6+Math.random()*2.2}s`;
+   piece.style.fontSize=`${9+Math.random()*12}px`;
+   piece.style.setProperty("--drift",`${-85+Math.random()*170}px`);
    piece.style.setProperty("--confetti-color",confettiColors[Math.floor(Math.random()*confettiColors.length)]);
    layer.appendChild(piece);
  }
@@ -1287,23 +1394,29 @@ function launchBirthdayCelebration(){
    const balloon=document.createElement("span");
    balloon.className="birthday-balloon";
    balloon.textContent="🎈";
-   balloon.style.left=`${4+Math.random()*92}%`;
-   balloon.style.animationDelay=`${.12+i*.08}s`;
-   balloon.style.animationDuration=reduced?`${7.3+Math.random()*1.2}s`:`${4.6+Math.random()*1.2}s`;
+   balloon.style.left=`${3+Math.random()*94}%`;
+   balloon.style.fontSize=`${phone?34+Math.random()*24:40+Math.random()*28}px`;
+   balloon.style.animationDelay=reduced?`${.3+i*.32}s`:`${.15+i*.20}s`;
+   balloon.style.animationDuration=reduced?`${8.4+Math.random()*1.4}s`:`${5.8+Math.random()*1.8}s`;
    layer.appendChild(balloon);
  }
 
- window.setTimeout(()=>{ if(layer) layer.innerHTML=""; },reduced?9500:8200);
+ celebrationCleanupTimer=window.setTimeout(()=>{
+   if(runId===celebrationRunId && layer) layer.innerHTML="";
+ },reduced?11000:10000);
 }
 function openBirthdayFinale(){
- $("birthdayQrImage").src=`https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${encodeURIComponent(currentDay.video)}`;
+ $("birthdayGiftFrom").textContent=birthdayWishText();
+ const available=setVideoAvailability("finale","birthdaySurpriseBtn","birthdayQrImage");
+ $("birthdaySurpriseBtn").textContent=available?"OPEN YOUR BIRTHDAY SURPRISE":"FINAL VIDEO COMING SOON";
  show("finale");
- window.setTimeout(launchBirthdayCelebration,260);
+ // Two frames lets the finale layout settle before the fixed celebration layer starts.
+ requestAnimationFrame(()=>requestAnimationFrame(launchBirthdayCelebration));
 }
 
-$("surrenderSurpriseBtn").onclick=()=>currentDay.day===0?openBirthdayFinale():openSurprise(false);
-$("watchBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
-$("birthdaySurpriseBtn").onclick=()=>window.open(currentDay.video,"_blank","noopener,noreferrer");
+$("surrenderSurpriseBtn").onclick=()=>currentDay.day===FINAL_EXIT?openBirthdayFinale():openSurprise(false);
+$("watchBtn").onclick=()=>{if(hasVideo()) window.open(currentDay.video,"_blank","noopener,noreferrer")};
+$("birthdaySurpriseBtn").onclick=()=>{if(hasVideo()) window.open(currentDay.video,"_blank","noopener,noreferrer")};
 document.querySelectorAll("[data-home]").forEach(b=>b.onclick=e=>{
  if(wrongPopupAwaitingAck){e.preventDefault();e.stopPropagation();return;}
  renderGrid();show("home");
@@ -1316,7 +1429,7 @@ function resetTestProgress(){
  if(!TEST_MODE) return;
  const ok=confirm("Reset all test progress for Mika's 40 Exits on this browser?");
  if(!ok) return;
- for(let day=0; day<=40; day++) localStorage.removeItem(key(day));
+ for(let day=1; day<=FINAL_EXIT; day++) localStorage.removeItem(key(day));
  renderGrid();
  show("home");
 }
@@ -1324,7 +1437,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=27").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=218").catch(()=>{}));
 }
 
 function syncDesktopFrame(){
