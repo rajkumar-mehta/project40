@@ -1,6 +1,6 @@
 # Route 4T / Project 40
 
-## Current build: v2.19
+## Current build: v2.20
 
 Built directly from the stable v2.16 baseline. The v2.16 wrong-answer popup, keyboard, surrender, sticky banner, sticky scoreboard, and EXIT-card behavior are intentionally unchanged.
 
@@ -257,3 +257,12 @@ Changes from v2.6:
 - Repositioned popups against VisualViewport so the OK button remains above the soft keyboard.
 - Added repeated viewport-positioning checks during keyboard transitions.
 - Service-worker/cache bumped to v27.
+
+
+## v2.20
+- Rebuilt puzzle/photo/YouTube mapping from corrected `YT URL(2).xlsx`.
+- Exit 0 now uses its spreadsheet YouTube URL and counts in scoreboard/statistics.
+- Exit 1 and all populated Photo Puzzles rows use the corrected sheet-2 question/photo/answer data.
+- Blank Photo Puzzles rows retain the original stable riddle for that exit.
+- Alternate answers are accepted for validation; surrender reveal displays only the Correct Answer value.
+- Corrected photo filename mapping is case-safe for GitHub Pages.

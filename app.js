@@ -9,20 +9,19 @@ const DAYS = [
   "day": 0,
   "date": "2026-09-27",
   "displayDate": "September 27, 2026",
-  "video": null,
-  "relation": "Prelude",
-  "wishFrom": "",
+  "video": "https://youtube.com/shorts/yUn1u7CIYNc?feature=share",
+  "relation": "Uncle, Aunty & Family",
+  "wishFrom": "Mahendrabhai",
   "lines": [
-   "Forty days before you entered this world, your story had already begun.",
-   "Your mother could have been anywhere on Earth…",
-   "Can you name the city where she may have been physically present?"
+   "Before you entered this world, your story had already begun… Your mother could have been anywhere on Earth…",
+   "Name the place (city), where your mom was physically present today - 40 years ago (40 days before your birth)?"
   ],
   "answerDisplay": "Ajman",
   "answers": [
    "ajman",
    "dubai"
   ],
-  "hint": "Think back to the place connected to this memory."
+  "hint": "Think back to this memory from your journey."
  },
  {
   "day": 1,
@@ -32,19 +31,15 @@ const DAYS = [
   "relation": "Cousin",
   "wishFrom": "Purvi & Kruti Family",
   "lines": [
-   "Forty days before you entered this world,",
-   "your story had already begun.",
-   "",
-   "Your mother could have been anywhere on Earth…",
-   "",
-   "Can you name the city where she may have been",
-   "physically present?"
+   "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "DUBAI",
+  "answerDisplay": "1991",
   "answers": [
-   "dubai"
+   "1991",
+   "1992"
   ],
-  "hint": "Think of a city in the United Arab Emirates."
+  "hint": "Look closely at the photo and think about when this memory happened.",
+  "photo": "Alap-8.jpeg"
  },
  {
   "day": 2,
@@ -54,15 +49,13 @@ const DAYS = [
   "relation": "Friend + Neighbor",
   "wishFrom": "Kamalbhai & Krupali",
   "lines": [
-   "Which year (yyyy) was this picture taken ?"
+   "Where (place) did you celebrate your 1st Bday in 1987"
   ],
-  "answerDisplay": "1991",
+  "answerDisplay": "Ajman",
   "answers": [
-   "1991",
-   "1992"
+   "ajman"
   ],
-  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
-  "photo": "Alap-8.jpeg"
+  "hint": "Think back to this memory from your journey."
  },
  {
   "day": 3,
@@ -72,18 +65,14 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Mihir & Unnati",
   "lines": [
-   "I travel around the world",
-   "while staying in one corner.",
-   "",
-   "What am I?"
+   "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "A STAMP",
+  "answerDisplay": "1993",
   "answers": [
-   "stamp",
-   "a stamp",
-   "postage stamp"
+   "1993"
   ],
-  "hint": "Travel, envelopes, and one small corner."
+  "hint": "Look closely at the photo and think about when this memory happened.",
+  "photo": "Alap-1.jpeg"
  },
  {
   "day": 4,
@@ -93,16 +82,14 @@ const DAYS = [
   "relation": "Friend + Neighbor",
   "wishFrom": "Beenaben",
   "lines": [
-   "Who is the baby in the middle ?"
+   "Around 2003-2004, what was your favorite unhealthy morning drink for Breakfast ?"
   ],
-  "answerDisplay": "Dhamini",
+  "answerDisplay": "Coke",
   "answers": [
-   "dhamini",
-   "anjani",
-   "bhargav"
+   "coke",
+   "pepsi"
   ],
-  "hint": "Look closely at the faces and think about who this memory is about.",
-  "photo": "Alap-2.jpeg"
+  "hint": "Think back to this memory from your journey."
  },
  {
   "day": 5,
@@ -112,16 +99,15 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Bharat Patel",
   "lines": [
-   "What has many keys",
-   "but can’t open a single lock?"
+   "Where was this picture taken ?"
   ],
-  "answerDisplay": "A PIANO",
+  "answerDisplay": "Bahrain",
   "answers": [
-   "piano",
-   "a piano",
-   "keyboard"
+   "bahrain",
+   "kuwait"
   ],
-  "hint": "These keys make music."
+  "hint": "Look closely at the photo and think about where this memory happened.",
+  "photo": "Alap-12.jpeg"
  },
  {
   "day": 6,
@@ -130,200 +116,6 @@ const DAYS = [
   "video": "https://youtu.be/zxKw6SfIT9M",
   "relation": "Friend + Neighbor",
   "wishFrom": "Vimalbhai & Pallaviben",
-  "lines": [
-   "Which year (yyyy) was this picture taken ?"
-  ],
-  "answerDisplay": "1988",
-  "answers": [
-   "1988",
-   "1987"
-  ],
-  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
-  "photo": "Alap-10.jpeg"
- },
- {
-  "day": 7,
-  "date": "2026-10-04",
-  "displayDate": "October 4, 2026",
-  "video": "https://youtu.be/SQAlRaVT3Vs",
-  "relation": "Friend",
-  "wishFrom": "Rajat & Ami",
-  "lines": [
-   "What has a neck but no head?"
-  ],
-  "answerDisplay": "A BOTTLE",
-  "answers": [
-   "bottle",
-   "a bottle"
-  ],
-  "hint": "You might drink from it."
- },
- {
-  "day": 8,
-  "date": "2026-10-05",
-  "displayDate": "October 5, 2026",
-  "video": "https://youtu.be/jexm_8zkQhc",
-  "relation": "Friend",
-  "wishFrom": "Chirag & Ashesh Family",
-  "lines": [
-   "Which year (yyyy) was this picture taken ?"
-  ],
-  "answerDisplay": "1993",
-  "answers": [
-   "1993"
-  ],
-  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
-  "photo": "Alap-1.jpeg"
- },
- {
-  "day": 9,
-  "date": "2026-10-06",
-  "displayDate": "October 6, 2026",
-  "video": null,
-  "relation": "Friend",
-  "wishFrom": "Hiral Patel & Akash",
-  "lines": [
-   "What was the School Bus Number, where Archana made you eat Lasan ki chutney"
-  ],
-  "answerDisplay": "3",
-  "answers": [
-   "3",
-   "three"
-  ],
-  "hint": "Think back to the place connected to this memory."
- },
- {
-  "day": 10,
-  "date": "2026-10-07",
-  "displayDate": "October 7, 2026",
-  "video": null,
-  "relation": "Friend",
-  "wishFrom": "ShAmeet",
-  "lines": [
-   "Which city (Place) was this picture taken ?"
-  ],
-  "answerDisplay": "Ajman",
-  "answers": [
-   "ajman",
-   "dubai",
-   "rajkot",
-   "bahrain"
-  ],
-  "hint": "Study the photo and think about where this memory happened.",
-  "photo": "Alap-9.jpeg"
- },
- {
-  "day": 11,
-  "date": "2026-10-08",
-  "displayDate": "October 8, 2026",
-  "video": "https://youtube.com/shorts/yUn1u7CIYNc?feature=share",
-  "relation": "Uncle, Aunty & Family",
-  "wishFrom": "Mahendrabhai",
-  "lines": [
-   "What was your favourite orange drink from Ajman"
-  ],
-  "answerDisplay": "Rani",
-  "answers": [
-   "rani"
-  ],
-  "hint": "Think back to a special memory from Mika’s journey."
- },
- {
-  "day": 12,
-  "date": "2026-10-09",
-  "displayDate": "October 9, 2026",
-  "video": "https://youtu.be/9Whn6sJi1yw",
-  "relation": "Friend",
-  "wishFrom": "Lynky & GariMan",
-  "lines": [
-   "How old are you in this picture"
-  ],
-  "answerDisplay": "15",
-  "answers": [
-   "15",
-   "fifteen"
-  ],
-  "hint": "Take a close look at the photo and think about the memory behind it.",
-  "photo": "Alap-11.jpeg"
- },
- {
-  "day": 13,
-  "date": "2026-10-10",
-  "displayDate": "October 10, 2026",
-  "video": "https://youtu.be/U55yQ0uvWhw",
-  "relation": "Friend",
-  "wishFrom": "Sanghvi Brothers",
-  "lines": [
-   "What was the color of the Scooty, from where you and Archana fell in the middle of the road ?"
-  ],
-  "answerDisplay": "Red",
-  "answers": [
-   "red",
-   "green",
-   "purple",
-   "blue"
-  ],
-  "hint": "Think back to the place connected to this memory."
- },
- {
-  "day": 14,
-  "date": "2026-10-11",
-  "displayDate": "October 11, 2026",
-  "video": null,
-  "relation": "Friend",
-  "wishFrom": "Payal & Sapan",
-  "lines": [
-   "Which city (Place) was this picture taken ?"
-  ],
-  "answerDisplay": "Ajman",
-  "answers": [
-   "ajman",
-   "dubai"
-  ],
-  "hint": "Study the photo and think about where this memory happened.",
-  "photo": "Alap-3.jpeg"
- },
- {
-  "day": 15,
-  "date": "2026-10-12",
-  "displayDate": "October 12, 2026",
-  "video": "https://youtu.be/aq81_wqX7QI",
-  "relation": "Cousin",
-  "wishFrom": "Umang & Hiral Family",
-  "lines": [
-   "What can you catch but not throw?"
-  ],
-  "answerDisplay": "A COLD",
-  "answers": [
-   "cold",
-   "a cold"
-  ],
-  "hint": "Usually unwanted."
- },
- {
-  "day": 16,
-  "date": "2026-10-13",
-  "displayDate": "October 13, 2026",
-  "video": "https://youtu.be/_c1vlWvXKes",
-  "relation": "Friend",
-  "wishFrom": "Rushabh, Palak, Arav & Rian",
-  "lines": [
-   "Name the country where this picture was taken"
-  ],
-  "answerDisplay": "Bahrain",
-  "answers": [
-   "bahrain"
-  ],
-  "hint": "Study the photo and think about where this memory happened.",
-  "photo": "Alap-7.jpeg"
- },
- {
-  "day": 17,
-  "date": "2026-10-14",
-  "displayDate": "October 14, 2026",
-  "video": "https://youtu.be/EOwkfgBSgbk",
-  "relation": "Friend",
-  "wishFrom": "Preet & Finny",
   "lines": [
    "What was the name of the Hindi Teacher in Bahrain you got into trouble with ?"
   ],
@@ -334,7 +126,204 @@ const DAYS = [
    "ms kaur",
    "kaur"
   ],
-  "hint": "Think back to a special memory from Mika’s journey."
+  "hint": "Think back to this memory from your journey."
+ },
+ {
+  "day": 7,
+  "date": "2026-10-04",
+  "displayDate": "October 4, 2026",
+  "video": "https://youtu.be/SQAlRaVT3Vs",
+  "relation": "Friend",
+  "wishFrom": "Rajat & Ami",
+  "lines": [
+   "Which year (yyyy) was this picture taken ?"
+  ],
+  "answerDisplay": "1988",
+  "answers": [
+   "1988",
+   "1987"
+  ],
+  "hint": "Look closely at the photo and think about when this memory happened.",
+  "photo": "Alap-10.jpeg"
+ },
+ {
+  "day": 8,
+  "date": "2026-10-05",
+  "displayDate": "October 5, 2026",
+  "video": "https://youtu.be/jexm_8zkQhc",
+  "relation": "Friend",
+  "wishFrom": "Chirag & Ashesh Family",
+  "lines": [
+   "What was the School Bus Number, where Archana made you eat Lasan ki chutney"
+  ],
+  "answerDisplay": "3",
+  "answers": [
+   "3",
+   "three"
+  ],
+  "hint": "Think back to this memory from your journey."
+ },
+ {
+  "day": 9,
+  "date": "2026-10-06",
+  "displayDate": "October 6, 2026",
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "Hiral Patel & Akash",
+  "lines": [
+   "Who is carrying you in her arms?"
+  ],
+  "answerDisplay": "Dadima",
+  "answers": [
+   "dadima"
+  ],
+  "hint": "Look closely at the people in the photo and think back to this memory.",
+  "photo": "Alap-13.jpeg"
+ },
+ {
+  "day": 10,
+  "date": "2026-10-07",
+  "displayDate": "October 7, 2026",
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "ShAmeet",
+  "lines": [
+   "What was the color of the Scooty, from where you and Archana fell in the middle of the road ?"
+  ],
+  "answerDisplay": "Red",
+  "answers": [
+   "red",
+   "green",
+   "purple",
+   "blue"
+  ],
+  "hint": "Think back to this memory from your journey."
+ },
+ {
+  "day": 11,
+  "date": "2026-10-08",
+  "displayDate": "October 8, 2026",
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "Komal",
+  "lines": [
+   "Which city (Place) was this picture taken ?"
+  ],
+  "answerDisplay": "Ajman",
+  "answers": [
+   "ajman",
+   "dubai",
+   "rajkot",
+   "bahrain"
+  ],
+  "hint": "Look closely at the photo and think about where this memory happened.",
+  "photo": "Alap-9.jpeg"
+ },
+ {
+  "day": 12,
+  "date": "2026-10-09",
+  "displayDate": "October 9, 2026",
+  "video": "https://youtu.be/9Whn6sJi1yw",
+  "relation": "Friend",
+  "wishFrom": "Lynky & GariMan",
+  "lines": [
+   "What was your favourite orange drink from Ajman"
+  ],
+  "answerDisplay": "Rani",
+  "answers": [
+   "rani"
+  ],
+  "hint": "Think back to this memory from your journey."
+ },
+ {
+  "day": 13,
+  "date": "2026-10-10",
+  "displayDate": "October 10, 2026",
+  "video": "https://youtu.be/U55yQ0uvWhw",
+  "relation": "Friend",
+  "wishFrom": "Sanghvi Brothers",
+  "lines": [
+   "How old are you in this picture"
+  ],
+  "answerDisplay": "15",
+  "answers": [
+   "15",
+   "fifteen"
+  ],
+  "hint": "Look closely at the photo and think back to this memory.",
+  "photo": "Alap-11.jpeg"
+ },
+ {
+  "day": 14,
+  "date": "2026-10-11",
+  "displayDate": "October 11, 2026",
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "Payal & Sapan",
+  "lines": [
+   "Name the country where this picture was taken"
+  ],
+  "answerDisplay": "Bahrain",
+  "answers": [
+   "bahrain"
+  ],
+  "hint": "Look closely at the photo and think about where this memory happened.",
+  "photo": "Alap-7.jpeg"
+ },
+ {
+  "day": 15,
+  "date": "2026-10-12",
+  "displayDate": "October 12, 2026",
+  "video": "https://youtu.be/aq81_wqX7QI",
+  "relation": "Cousin",
+  "wishFrom": "Umang & Hiral Family",
+  "lines": [
+   "Where was this picture taken ?"
+  ],
+  "answerDisplay": "Navsari",
+  "answers": [
+   "navsari",
+   "navsaari",
+   "nawsari"
+  ],
+  "hint": "Look closely at the photo and think about where this memory happened.",
+  "photo": "Jagruti-1.jpeg"
+ },
+ {
+  "day": 16,
+  "date": "2026-10-13",
+  "displayDate": "October 13, 2026",
+  "video": "https://youtu.be/_c1vlWvXKes",
+  "relation": "Friend",
+  "wishFrom": "Rushabh, Palak, Arav & Rian",
+  "lines": [
+   "Who is the baby in the middle ?"
+  ],
+  "answerDisplay": "Dhamini",
+  "answers": [
+   "dhamini",
+   "anjani",
+   "bhargav"
+  ],
+  "hint": "Look closely at the people in the photo and think back to this memory.",
+  "photo": "Alap-2.jpeg"
+ },
+ {
+  "day": 17,
+  "date": "2026-10-14",
+  "displayDate": "October 14, 2026",
+  "video": "https://youtu.be/EOwkfgBSgbk",
+  "relation": "Friend",
+  "wishFrom": "Preet & Finny",
+  "lines": [
+   "Where was this picture taken ?"
+  ],
+  "answerDisplay": "Sedona",
+  "answers": [
+   "sedona"
+  ],
+  "hint": "Look closely at the photo and think about where this memory happened.",
+  "photo": "Raj-2.jpg"
  },
  {
   "day": 18,
@@ -351,7 +340,7 @@ const DAYS = [
    "rakhi",
    "rakshabandhan"
   ],
-  "hint": "Take a close look at the photo and think about the memory behind it.",
+  "hint": "Look closely at the photo and think back to this memory.",
   "photo": "Alap-5.jpeg"
  },
  {
@@ -362,14 +351,14 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Leah & Shree",
   "lines": [
-   "What has lots of eyes but cannot see?"
+   "Where was this picture taken ?"
   ],
-  "answerDisplay": "A POTATO",
+  "answerDisplay": "Alaska",
   "answers": [
-   "potato",
-   "a potato"
+   "alaska"
   ],
-  "hint": "A vegetable with 'eyes'."
+  "hint": "Look closely at the photo and think about where this memory happened.",
+  "photo": "Raj-1.jpg"
  },
  {
   "day": 20,
@@ -379,16 +368,14 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Jagruti",
   "lines": [
-   "Where was this picture taken ?"
+   "Where was this picture taken ? Its not Boston - HAHA"
   ],
-  "answerDisplay": "Navsari",
+  "answerDisplay": "San Francisco",
   "answers": [
-   "navsari",
-   "navsaari",
-   "nawsari"
+   "san francisco"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
-  "photo": "Jagruti-1.jpeg"
+  "hint": "Look closely at the photo and think about where this memory happened.",
+  "photo": "Raj-3.jpg"
  },
  {
   "day": 21,
@@ -398,14 +385,15 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Divya & Pankaj",
   "lines": [
-   "What kind of room has no doors or windows?"
+   "Which city (Place) was this picture taken ?"
   ],
-  "answerDisplay": "A MUSHROOM",
+  "answerDisplay": "Ajman",
   "answers": [
-   "mushroom",
-   "a mushroom"
+   "ajman",
+   "dubai"
   ],
-  "hint": "A wordplay answer."
+  "hint": "Look closely at the photo and think about where this memory happened.",
+  "photo": "Alap-3.jpeg"
  },
  {
   "day": 22,
@@ -415,15 +403,14 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Rushiraj, Veer, Heer, Moulika & Pranali",
   "lines": [
-   "Where was this picture taken ?"
+   "Whose Birthday are you celebrating in this picture?"
   ],
-  "answerDisplay": "Bahrain",
+  "answerDisplay": "Bhargav",
   "answers": [
-   "bahrain",
-   "kuwait"
+   "bhargav"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
-  "photo": "Alap-12.jpeg"
+  "hint": "Look closely at the people in the photo and think back to this memory.",
+  "photo": "Alap-4.jpeg"
  },
  {
   "day": 23,
@@ -433,14 +420,14 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Misri - Payal",
   "lines": [
-   "Around 2003-2004, what was your favorite unhealthy morning drink for Breakfast ?"
+   "What has a head and a tail but no body?"
   ],
-  "answerDisplay": "Coke",
+  "answerDisplay": "A COIN",
   "answers": [
-   "coke",
-   "pepsi"
+   "coin",
+   "a coin"
   ],
-  "hint": "Think back to a special memory from Mika’s journey."
+  "hint": "Flip it."
  },
  {
   "day": 24,
@@ -450,14 +437,14 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Misri - Jayshree",
   "lines": [
-   "Whose Birthday are you celebrating in this picture?"
+   "What has four wheels and flies?"
   ],
-  "answerDisplay": "Bhargav",
+  "answerDisplay": "A GARBAGE TRUCK",
   "answers": [
-   "bhargav"
+   "garbage truck",
+   "a garbage truck"
   ],
-  "hint": "Look closely at the faces and think about who this memory is about.",
-  "photo": "Alap-4.jpeg"
+  "hint": "The 'flies' are not the vehicle."
  },
  {
   "day": 25,
@@ -484,15 +471,14 @@ const DAYS = [
   "relation": "Cousin",
   "wishFrom": "Jetha Bapa Family",
   "lines": [
-   "Who is carrying you in her arms?"
+   "What has branches but no fruit, trunk, or leaves?"
   ],
-  "answerDisplay": "Dadi",
+  "answerDisplay": "A BANK",
   "answers": [
-   "dadi",
-   "motaba"
+   "bank",
+   "a bank"
   ],
-  "hint": "Look closely at the faces and think about who this memory is about.",
-  "photo": "Alap-13.jpeg"
+  "hint": "Think business, not trees."
  },
  {
   "day": 27,
@@ -527,7 +513,7 @@ const DAYS = [
    "feb-2016",
    "feb"
   ],
-  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
+  "hint": "Look closely at the photo and think about when this memory happened.",
   "photo": "Alap-6.jpeg"
  },
  {
@@ -544,7 +530,7 @@ const DAYS = [
   "answers": [
    "11/6/2015"
   ],
-  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
+  "hint": "Look closely at the photo and think about when this memory happened.",
   "photo": "Raj-5.jpg"
  },
  {
@@ -561,7 +547,7 @@ const DAYS = [
   "answers": [
    "surednranagar"
   ],
-  "hint": "Think back to the place connected to this memory."
+  "hint": "Think back to this memory from your journey."
  },
  {
   "day": 31,
@@ -581,8 +567,8 @@ const DAYS = [
    "jersey city",
    "hoboken"
   ],
-  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
-  "photo": "Raj-5.jpg"
+  "hint": "Look closely at the photo and think about when this memory happened.",
+  "photo": "Raj-6.jpg"
  },
  {
   "day": 32,
@@ -592,14 +578,15 @@ const DAYS = [
   "relation": "Sister-In-Law & Niece",
   "wishFrom": "Neha",
   "lines": [
-   "Where was this picture taken ?"
+   "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "Alaska",
+  "answerDisplay": "2018",
   "answers": [
-   "alaska"
+   "2018",
+   "18"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
-  "photo": "Raj-1.jpg"
+  "hint": "Look closely at the photo and think about when this memory happened.",
+  "photo": "Raj-7.jpg"
  },
  {
   "day": 33,
@@ -609,14 +596,14 @@ const DAYS = [
   "relation": "Sister & Brother",
   "wishFrom": "Bhavika, Anjani, Bhargav",
   "lines": [
-   "Where was this picture taken ?"
+   "Exact date (mm/dd/yyyy) when this picture was taken ?"
   ],
-  "answerDisplay": "Sedona",
+  "answerDisplay": "01/05/2017",
   "answers": [
-   "sedona"
+   "01/05/2017"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
-  "photo": "Raj-2.jpg"
+  "hint": "Look closely at the photo and think about when this memory happened.",
+  "photo": "Raj-12.jpg"
  },
  {
   "day": 34,
@@ -626,15 +613,15 @@ const DAYS = [
   "relation": "Aunty",
   "wishFrom": "Kaki & Family",
   "lines": [
-   "What has ears but cannot hear?"
+   "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "CORN",
+  "answerDisplay": "2020",
   "answers": [
-   "corn",
-   "an ear of corn",
-   "ear of corn"
+   "2020",
+   "20"
   ],
-  "hint": "Think food."
+  "hint": "Look closely at the photo and think about when this memory happened.",
+  "photo": "Raj-8.jpg"
  },
  {
   "day": 35,
@@ -644,14 +631,15 @@ const DAYS = [
   "relation": "Brother",
   "wishFrom": "Bhargav",
   "lines": [
-   "Where was this picture taken ? Its not Boston - HAHA"
+   "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "San Francisco",
+  "answerDisplay": "2021",
   "answers": [
-   "san francisco"
+   "2021",
+   "21"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
-  "photo": "Raj-3.jpg"
+  "hint": "Look closely at the photo and think about when this memory happened.",
+  "photo": "Raj-9.jpg"
  },
  {
   "day": 36,
@@ -661,14 +649,15 @@ const DAYS = [
   "relation": "Sister",
   "wishFrom": "Anjani",
   "lines": [
-   "What kind of band never plays music?"
+   "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "A RUBBER BAND",
+  "answerDisplay": "2022",
   "answers": [
-   "rubber band",
-   "a rubber band"
+   "2022",
+   "22"
   ],
-  "hint": "It stretches."
+  "hint": "Look closely at the photo and think about when this memory happened.",
+  "photo": "Raj-10.jpg"
  },
  {
   "day": 37,
@@ -684,7 +673,7 @@ const DAYS = [
   "answers": [
    "singapore"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
+  "hint": "Look closely at the photo and think about where this memory happened.",
   "photo": "Raj-4.jpg"
  },
  {
@@ -695,14 +684,14 @@ const DAYS = [
   "relation": "Dad",
   "wishFrom": "Suresh Chavda",
   "lines": [
-   "What can you keep after giving it to someone?"
+   "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "YOUR WORD",
+  "answerDisplay": "2024",
   "answers": [
-   "word",
-   "your word"
+   "2024"
   ],
-  "hint": "A promise-related phrase."
+  "hint": "Look closely at the photo and think about when this memory happened.",
+  "photo": "Raj-11.jpg"
  },
  {
   "day": 39,
@@ -1070,7 +1059,7 @@ function visibleDays(){
    .sort((a,b)=>dateValue(b.date)-dateValue(a.date)); // newest first, deterministic across browsers
 }
 function computeStats(){
- const ordered=DAYS.filter(d=>d.day!==0 && isVisible(d)).slice().sort((a,b)=>dateValue(a.date)-dateValue(b.date)); // chronological
+ const ordered=DAYS.filter(isVisible).slice().sort((a,b)=>dateValue(a.date)-dateValue(b.date)); // chronological
  let solved=0,flags=0,firstTry=0,current=0,best=0;
  for(const d of ordered){
    const r=getResult(d.day);
@@ -1471,7 +1460,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=219").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=220").catch(()=>{}));
 }
 
 function syncDesktopFrame(){
