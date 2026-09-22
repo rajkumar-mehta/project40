@@ -1345,6 +1345,21 @@ function birthdayWishText(day=currentDay){
  const from=(day?.wishFrom||"").trim();
  return from?`A special birthday message from ${from} 🎉`:"A special birthday message for you 🎉";
 }
+function renderBirthdayWish(target,day=currentDay){
+ const el=typeof target==="string"?$(target):target;
+ if(!el) return;
+ const from=(day?.wishFrom||"").trim();
+ el.textContent="";
+ if(!from){
+   el.textContent="A special birthday message for you 🎉";
+   return;
+ }
+ el.append(document.createTextNode("A special birthday message from "));
+ const name=document.createElement("span");
+ name.className="gift-from-name";
+ name.textContent=from;
+ el.append(name,document.createTextNode(" 🎉"));
+}
 function openSurprise(solved=true){
  $("solvedHeading").style.display=solved?"":"none";
  $("solvedSubheading").style.display=solved?"":"none";
@@ -1354,7 +1369,7 @@ function openSurprise(solved=true){
  ];
  const pick=options[Math.floor(Math.random()*options.length)];
  $("giftHeading").textContent=pick.heading;
- $("giftFrom").textContent=birthdayWishText();
+ renderBirthdayWish("giftFrom");
  const available=setVideoAvailability("video","watchBtn","qrImage");
  $("watchBtn").textContent=available?pick.button:"VIDEO COMING SOON";
  $("videoEyebrow").textContent=`EXIT ${currentDay.day} UNLOCKED`;
@@ -1429,7 +1444,7 @@ function launchBirthdayCelebration(){
  },reduced?11000:10000);
 }
 function openBirthdayFinale(){
- $("birthdayGiftFrom").textContent=birthdayWishText();
+ renderBirthdayWish("birthdayGiftFrom");
  const available=setVideoAvailability("finale","birthdaySurpriseBtn","birthdayQrImage");
  $("birthdaySurpriseBtn").textContent=available?"OPEN YOUR BIRTHDAY SURPRISE":"FINAL VIDEO COMING SOON";
  show("finale");
@@ -1460,7 +1475,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=220").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=221").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

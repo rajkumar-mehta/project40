@@ -1522,3 +1522,28 @@ button.primary:disabled{
  .question-media{margin-bottom:18px;max-width:100%}
  .puzzle-photo{width:100%;max-height:min(42vh,320px);border-radius:14px}
 }
+
+
+/* =========================================================
+   ROUTE 4T v2.21 — solved/gift typography refinement only
+   ========================================================= */
+#video #giftHeading{
+  font-size:clamp(25px,3.6vw,32px);
+  margin-bottom:10px;
+}
+#video .gift-from{
+  color:#f0cf91;
+  font-size:clamp(19px,2.8vw,23px);
+  line-height:1.35;
+  margin:5px auto 13px;
+}
+#video .gift-from-name{
+  color:#ffd76a;
+  font-weight:700;
+  font-size:1.13em;
+}
+@media(max-width:620px){
+  #video #giftHeading{font-size:clamp(23px,7.2vw,29px);}
+  #video .gift-from{font-size:18px;margin:4px 12px 11px;}
+  #video .gift-from-name{font-size:1.1em;}
+}

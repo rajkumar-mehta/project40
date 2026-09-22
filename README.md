@@ -1,3 +1,8 @@
+# Route 4T — v2.21
+
+- Solved/gift screen typography refinement only: smaller surprise heading; larger warm-accent birthday-message line; emphasized sender name.
+- All v2.20 puzzle, media, scoring, popup, keyboard, surrender, sticky banner/scoreboard, and photo logic preserved.
+
 # Route 4T / Project 40
 
 ## Current build: v2.20
