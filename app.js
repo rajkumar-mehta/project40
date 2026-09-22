@@ -6,9 +6,31 @@ const FINAL_EXIT = 40;
 
 const DAYS = [
  {
+  "day": 0,
+  "date": "2026-09-27",
+  "displayDate": "September 27, 2026",
+  "video": null,
+  "relation": "Prelude",
+  "wishFrom": "",
+  "lines": [
+   "Forty days before you entered this world, your story had already begun.",
+   "Your mother could have been anywhere on Earth…",
+   "Can you name the city where she may have been physically present?"
+  ],
+  "answerDisplay": "Ajman",
+  "answers": [
+   "ajman",
+   "dubai"
+  ],
+  "hint": "Think back to the place connected to this memory."
+ },
+ {
   "day": 1,
   "date": "2026-09-28",
   "displayDate": "September 28, 2026",
+  "video": "https://youtu.be/K4pBJcpQbfQ",
+  "relation": "Cousin",
+  "wishFrom": "Purvi & Kruti Family",
   "lines": [
    "Forty days before you entered this world,",
    "your story had already begun.",
@@ -22,35 +44,33 @@ const DAYS = [
   "answers": [
    "dubai"
   ],
-  "hint": "Think of a city in the United Arab Emirates.",
-  "video": "https://youtu.be/K4pBJcpQbfQ",
-  "relation": "Cousin",
-  "wishFrom": "Purvi & Kruti Family"
+  "hint": "Think of a city in the United Arab Emirates."
  },
  {
   "day": 2,
   "date": "2026-09-29",
   "displayDate": "September 29, 2026",
-  "lines": [
-   "The more of me you take,",
-   "the more you leave behind.",
-   "",
-   "What am I?"
-  ],
-  "answerDisplay": "FOOTSTEPS",
-  "answers": [
-   "footsteps",
-   "steps"
-  ],
-  "hint": "Think about what follows you on a hike.",
   "video": "https://youtu.be/btRYOcFNmwo",
   "relation": "Friend + Neighbor",
-  "wishFrom": "Kamalbhai & Krupali"
+  "wishFrom": "Kamalbhai & Krupali",
+  "lines": [
+   "Which year (yyyy) was this picture taken ?"
+  ],
+  "answerDisplay": "1991",
+  "answers": [
+   "1991",
+   "1992"
+  ],
+  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
+  "photo": "Alap-8.jpeg"
  },
  {
   "day": 3,
   "date": "2026-09-30",
   "displayDate": "September 30, 2026",
+  "video": "https://youtu.be/48vUVl99XqE",
+  "relation": "Friend",
+  "wishFrom": "Mihir & Unnati",
   "lines": [
    "I travel around the world",
    "while staying in one corner.",
@@ -63,33 +83,34 @@ const DAYS = [
    "a stamp",
    "postage stamp"
   ],
-  "hint": "Travel, envelopes, and one small corner.",
-  "video": "https://youtu.be/vAzVv0Oc8Zg",
-  "relation": "Friend + Neighbor",
-  "wishFrom": "Beenaben"
+  "hint": "Travel, envelopes, and one small corner."
  },
  {
   "day": 4,
   "date": "2026-10-01",
   "displayDate": "October 1, 2026",
-  "lines": [
-   "What gets wetter",
-   "the more it dries?"
-  ],
-  "answerDisplay": "A TOWEL",
-  "answers": [
-   "towel",
-   "a towel"
-  ],
-  "hint": "You might need one after a spa day.",
-  "video": "https://youtu.be/zxKw6SfIT9M",
+  "video": "https://youtu.be/vAzVv0Oc8Zg",
   "relation": "Friend + Neighbor",
-  "wishFrom": "Vimalbhai & Pallaviben"
+  "wishFrom": "Beenaben",
+  "lines": [
+   "Who is the baby in the middle ?"
+  ],
+  "answerDisplay": "Dhamini",
+  "answers": [
+   "dhamini",
+   "anjani",
+   "bhargav"
+  ],
+  "hint": "Look closely at the faces and think about who this memory is about.",
+  "photo": "Alap-2.jpeg"
  },
  {
   "day": 5,
   "date": "2026-10-02",
   "displayDate": "October 2, 2026",
+  "video": "https://youtu.be/kja1pBH3b2Y",
+  "relation": "Friend",
+  "wishFrom": "Bharat Patel",
   "lines": [
    "What has many keys",
    "but can’t open a single lock?"
@@ -100,32 +121,33 @@ const DAYS = [
    "a piano",
    "keyboard"
   ],
-  "hint": "These keys make music.",
-  "video": "https://youtu.be/48vUVl99XqE",
-  "relation": "Friend",
-  "wishFrom": "Mihir & Unnati"
+  "hint": "These keys make music."
  },
  {
   "day": 6,
   "date": "2026-10-03",
   "displayDate": "October 3, 2026",
+  "video": "https://youtu.be/zxKw6SfIT9M",
+  "relation": "Friend + Neighbor",
+  "wishFrom": "Vimalbhai & Pallaviben",
   "lines": [
-   "What has hands but cannot clap?"
+   "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "A CLOCK",
+  "answerDisplay": "1988",
   "answers": [
-   "clock",
-   "a clock"
+   "1988",
+   "1987"
   ],
-  "hint": "It tells time.",
-  "video": "https://youtu.be/kja1pBH3b2Y",
-  "relation": "Friend",
-  "wishFrom": "Bharat Patel"
+  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
+  "photo": "Alap-10.jpeg"
  },
  {
   "day": 7,
   "date": "2026-10-04",
   "displayDate": "October 4, 2026",
+  "video": "https://youtu.be/SQAlRaVT3Vs",
+  "relation": "Friend",
+  "wishFrom": "Rajat & Ami",
   "lines": [
    "What has a neck but no head?"
   ],
@@ -134,134 +156,140 @@ const DAYS = [
    "bottle",
    "a bottle"
   ],
-  "hint": "You might drink from it.",
-  "video": "https://youtu.be/SQAlRaVT3Vs",
-  "relation": "Friend",
-  "wishFrom": "Rajat & Ami"
+  "hint": "You might drink from it."
  },
  {
   "day": 8,
   "date": "2026-10-05",
   "displayDate": "October 5, 2026",
-  "lines": [
-   "What has one eye but cannot see?"
-  ],
-  "answerDisplay": "A NEEDLE",
-  "answers": [
-   "needle",
-   "a needle"
-  ],
-  "hint": "Think sewing.",
-  "video": "https://youtu.be/bQa0x3hiDr0",
+  "video": "https://youtu.be/jexm_8zkQhc",
   "relation": "Friend",
-  "wishFrom": "Chirag, Arlett & Rhea"
+  "wishFrom": "Chirag & Ashesh Family",
+  "lines": [
+   "Which year (yyyy) was this picture taken ?"
+  ],
+  "answerDisplay": "1993",
+  "answers": [
+   "1993"
+  ],
+  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
+  "photo": "Alap-1.jpeg"
  },
  {
   "day": 9,
   "date": "2026-10-06",
   "displayDate": "October 6, 2026",
-  "lines": [
-   "What has many teeth but cannot bite?"
-  ],
-  "answerDisplay": "A COMB",
-  "answers": [
-   "comb",
-   "a comb"
-  ],
-  "hint": "Used for hair.",
   "video": null,
   "relation": "Friend",
-  "wishFrom": "Hiral Patel & Akash"
+  "wishFrom": "Hiral Patel & Akash",
+  "lines": [
+   "What was the School Bus Number, where Archana made you eat Lasan ki chutney"
+  ],
+  "answerDisplay": "3",
+  "answers": [
+   "3",
+   "three"
+  ],
+  "hint": "Think back to the place connected to this memory."
  },
  {
   "day": 10,
   "date": "2026-10-07",
   "displayDate": "October 7, 2026",
-  "lines": [
-   "What goes up but never comes down?"
-  ],
-  "answerDisplay": "YOUR AGE",
-  "answers": [
-   "age",
-   "your age"
-  ],
-  "hint": "Birthday-related.",
   "video": null,
   "relation": "Friend",
-  "wishFrom": "ShAmeet"
+  "wishFrom": "ShAmeet",
+  "lines": [
+   "Which city (Place) was this picture taken ?"
+  ],
+  "answerDisplay": "Ajman",
+  "answers": [
+   "ajman",
+   "dubai",
+   "rajkot",
+   "bahrain"
+  ],
+  "hint": "Study the photo and think about where this memory happened.",
+  "photo": "Alap-9.jpeg"
  },
  {
   "day": 11,
   "date": "2026-10-08",
   "displayDate": "October 8, 2026",
-  "lines": [
-   "What can fill a room but takes up no space?"
-  ],
-  "answerDisplay": "LIGHT",
-  "answers": [
-   "light"
-  ],
-  "hint": "Flip a switch.",
   "video": "https://youtube.com/shorts/yUn1u7CIYNc?feature=share",
   "relation": "Uncle, Aunty & Family",
-  "wishFrom": "Mahendrabhai"
+  "wishFrom": "Mahendrabhai",
+  "lines": [
+   "What was your favourite orange drink from Ajman"
+  ],
+  "answerDisplay": "Rani",
+  "answers": [
+   "rani"
+  ],
+  "hint": "Think back to a special memory from Mika’s journey."
  },
  {
   "day": 12,
   "date": "2026-10-09",
   "displayDate": "October 9, 2026",
-  "lines": [
-   "What has words but never speaks?"
-  ],
-  "answerDisplay": "A BOOK",
-  "answers": [
-   "book",
-   "a book"
-  ],
-  "hint": "Pages hold it.",
-  "video": null,
+  "video": "https://youtu.be/9Whn6sJi1yw",
   "relation": "Friend",
-  "wishFrom": "Payal"
+  "wishFrom": "Lynky & GariMan",
+  "lines": [
+   "How old are you in this picture"
+  ],
+  "answerDisplay": "15",
+  "answers": [
+   "15",
+   "fifteen"
+  ],
+  "hint": "Take a close look at the photo and think about the memory behind it.",
+  "photo": "Alap-11.jpeg"
  },
  {
   "day": 13,
   "date": "2026-10-10",
   "displayDate": "October 10, 2026",
-  "lines": [
-   "What runs but never walks?"
-  ],
-  "answerDisplay": "WATER",
-  "answers": [
-   "water",
-   "a river",
-   "river"
-  ],
-  "hint": "Think of a river.",
-  "video": null,
+  "video": "https://youtu.be/U55yQ0uvWhw",
   "relation": "Friend",
-  "wishFrom": "Jayashree"
+  "wishFrom": "Sanghvi Brothers",
+  "lines": [
+   "What was the color of the Scooty, from where you and Archana fell in the middle of the road ?"
+  ],
+  "answerDisplay": "Red",
+  "answers": [
+   "red",
+   "green",
+   "purple",
+   "blue"
+  ],
+  "hint": "Think back to the place connected to this memory."
  },
  {
   "day": 14,
   "date": "2026-10-11",
   "displayDate": "October 11, 2026",
-  "lines": [
-   "What has a face and two hands but no arms or legs?"
-  ],
-  "answerDisplay": "A CLOCK",
-  "answers": [
-   "clock",
-   "a clock"
-  ],
-  "hint": "It keeps time.",
   "video": null,
   "relation": "Friend",
-  "wishFrom": "Shweta Jha"
+  "wishFrom": "Payal & Sapan",
+  "lines": [
+   "Which city (Place) was this picture taken ?"
+  ],
+  "answerDisplay": "Ajman",
+  "answers": [
+   "ajman",
+   "dubai"
+  ],
+  "hint": "Study the photo and think about where this memory happened.",
+  "photo": "Alap-3.jpeg"
  },
  {
   "day": 15,
   "date": "2026-10-12",
   "displayDate": "October 12, 2026",
+  "video": "https://youtu.be/aq81_wqX7QI",
+  "relation": "Cousin",
+  "wishFrom": "Umang & Hiral Family",
   "lines": [
    "What can you catch but not throw?"
   ],
@@ -270,66 +298,69 @@ const DAYS = [
    "cold",
    "a cold"
   ],
-  "hint": "Usually unwanted.",
-  "video": "https://youtu.be/aq81_wqX7QI",
-  "relation": "Cousin",
-  "wishFrom": "Umang & Hiral Family"
+  "hint": "Usually unwanted."
  },
  {
   "day": 16,
   "date": "2026-10-13",
   "displayDate": "October 13, 2026",
-  "lines": [
-   "What has a thumb and four fingers but is not alive?"
-  ],
-  "answerDisplay": "A GLOVE",
-  "answers": [
-   "glove",
-   "a glove"
-  ],
-  "hint": "Wear it on your hand.",
   "video": "https://youtu.be/_c1vlWvXKes",
   "relation": "Friend",
-  "wishFrom": "Rushabh, Palak, Arav & Rian"
+  "wishFrom": "Rushabh, Palak, Arav & Rian",
+  "lines": [
+   "Name the country where this picture was taken"
+  ],
+  "answerDisplay": "Bahrain",
+  "answers": [
+   "bahrain"
+  ],
+  "hint": "Study the photo and think about where this memory happened.",
+  "photo": "Alap-7.jpeg"
  },
  {
   "day": 17,
   "date": "2026-10-14",
   "displayDate": "October 14, 2026",
-  "lines": [
-   "What gets bigger the more you take away?"
-  ],
-  "answerDisplay": "A HOLE",
-  "answers": [
-   "hole",
-   "a hole"
-  ],
-  "hint": "Digging makes it larger.",
   "video": "https://youtu.be/EOwkfgBSgbk",
   "relation": "Friend",
-  "wishFrom": "Preet & Finny"
+  "wishFrom": "Preet & Finny",
+  "lines": [
+   "What was the name of the Hindi Teacher in Bahrain you got into trouble with ?"
+  ],
+  "answerDisplay": "Mrs. Kaur",
+  "answers": [
+   "mrs. kaur",
+   "mrs kaur",
+   "ms kaur",
+   "kaur"
+  ],
+  "hint": "Think back to a special memory from Mika’s journey."
  },
  {
   "day": 18,
   "date": "2026-10-15",
   "displayDate": "October 15, 2026",
-  "lines": [
-   "What belongs to you but other people use it more than you do?"
-  ],
-  "answerDisplay": "YOUR NAME",
-  "answers": [
-   "name",
-   "your name"
-  ],
-  "hint": "People say it to get your attention.",
   "video": "https://youtube.com/shorts/VhqYw6WyuIk?feature=share",
   "relation": "Friend",
-  "wishFrom": "Meenu"
+  "wishFrom": "Meenu",
+  "lines": [
+   "Which festival is celebrated in this picture"
+  ],
+  "answerDisplay": "Rakhi",
+  "answers": [
+   "rakhi",
+   "rakshabandhan"
+  ],
+  "hint": "Take a close look at the photo and think about the memory behind it.",
+  "photo": "Alap-5.jpeg"
  },
  {
   "day": 19,
   "date": "2026-10-16",
   "displayDate": "October 16, 2026",
+  "video": "https://youtu.be/Jre-U5hMtqg",
+  "relation": "Friend",
+  "wishFrom": "Leah & Shree",
   "lines": [
    "What has lots of eyes but cannot see?"
   ],
@@ -338,33 +369,34 @@ const DAYS = [
    "potato",
    "a potato"
   ],
-  "hint": "A vegetable with 'eyes'.",
-  "video": "https://youtu.be/Jre-U5hMtqg",
-  "relation": "Friend",
-  "wishFrom": "Leah & Shree"
+  "hint": "A vegetable with 'eyes'."
  },
  {
   "day": 20,
   "date": "2026-10-17",
   "displayDate": "October 17, 2026",
-  "lines": [
-   "What has many rings but no fingers?"
-  ],
-  "answerDisplay": "A TELEPHONE",
-  "answers": [
-   "telephone",
-   "phone",
-   "a phone"
-  ],
-  "hint": "It can ring.",
   "video": "https://youtu.be/L5XfPm2tlOM",
   "relation": "Friend",
-  "wishFrom": "Jagruti"
+  "wishFrom": "Jagruti",
+  "lines": [
+   "Where was this picture taken ?"
+  ],
+  "answerDisplay": "Navsari",
+  "answers": [
+   "navsari",
+   "navsaari",
+   "nawsari"
+  ],
+  "hint": "Study the photo and think about where this memory happened.",
+  "photo": "Jagruti-1.jpeg"
  },
  {
   "day": 21,
   "date": "2026-10-18",
   "displayDate": "October 18, 2026",
+  "video": "https://youtu.be/PrJZoyts7e0",
+  "relation": "Friend",
+  "wishFrom": "Divya & Pankaj",
   "lines": [
    "What kind of room has no doors or windows?"
   ],
@@ -373,66 +405,67 @@ const DAYS = [
    "mushroom",
    "a mushroom"
   ],
-  "hint": "A wordplay answer.",
-  "video": "https://youtu.be/PrJZoyts7e0",
-  "relation": "Friend",
-  "wishFrom": "Divya & Pankaj"
+  "hint": "A wordplay answer."
  },
  {
   "day": 22,
   "date": "2026-10-19",
   "displayDate": "October 19, 2026",
-  "lines": [
-   "What can travel around the world without leaving its spot?"
-  ],
-  "answerDisplay": "A STAMP",
-  "answers": [
-   "stamp",
-   "a stamp"
-  ],
-  "hint": "It sits on mail.",
   "video": "https://youtu.be/LkJNKFt4leM",
   "relation": "Friend",
-  "wishFrom": "Rushiraj, Veer, Heer, Moulika & Pranali"
+  "wishFrom": "Rushiraj, Veer, Heer, Moulika & Pranali",
+  "lines": [
+   "Where was this picture taken ?"
+  ],
+  "answerDisplay": "Bahrain",
+  "answers": [
+   "bahrain",
+   "kuwait"
+  ],
+  "hint": "Study the photo and think about where this memory happened.",
+  "photo": "Alap-12.jpeg"
  },
  {
   "day": 23,
   "date": "2026-10-20",
   "displayDate": "October 20, 2026",
-  "lines": [
-   "What has a head and a tail but no body?"
-  ],
-  "answerDisplay": "A COIN",
-  "answers": [
-   "coin",
-   "a coin"
-  ],
-  "hint": "Flip it.",
   "video": null,
   "relation": "Friend",
-  "wishFrom": "Misri - Payal"
+  "wishFrom": "Misri - Payal",
+  "lines": [
+   "Around 2003-2004, what was your favorite unhealthy morning drink for Breakfast ?"
+  ],
+  "answerDisplay": "Coke",
+  "answers": [
+   "coke",
+   "pepsi"
+  ],
+  "hint": "Think back to a special memory from Mika’s journey."
  },
  {
   "day": 24,
   "date": "2026-10-21",
   "displayDate": "October 21, 2026",
-  "lines": [
-   "What has four wheels and flies?"
-  ],
-  "answerDisplay": "A GARBAGE TRUCK",
-  "answers": [
-   "garbage truck",
-   "a garbage truck"
-  ],
-  "hint": "The 'flies' are not the vehicle.",
   "video": null,
   "relation": "Friend",
-  "wishFrom": "Misri - Jayshree"
+  "wishFrom": "Misri - Jayshree",
+  "lines": [
+   "Whose Birthday are you celebrating in this picture?"
+  ],
+  "answerDisplay": "Bhargav",
+  "answers": [
+   "bhargav"
+  ],
+  "hint": "Look closely at the faces and think about who this memory is about.",
+  "photo": "Alap-4.jpeg"
  },
  {
   "day": 25,
   "date": "2026-10-22",
   "displayDate": "October 22, 2026",
+  "video": "https://youtu.be/7Qai7Mav74c",
+  "relation": "Cousin",
+  "wishFrom": "Jayanti Bapa Family",
   "lines": [
    "What has a bed but never sleeps?"
   ],
@@ -441,32 +474,33 @@ const DAYS = [
    "river",
    "a river"
   ],
-  "hint": "It flows.",
-  "video": "https://youtu.be/7Qai7Mav74c",
-  "relation": "Cousin",
-  "wishFrom": "Jayanti Bapa Family"
+  "hint": "It flows."
  },
  {
   "day": 26,
   "date": "2026-10-23",
   "displayDate": "October 23, 2026",
-  "lines": [
-   "What has branches but no fruit, trunk, or leaves?"
-  ],
-  "answerDisplay": "A BANK",
-  "answers": [
-   "bank",
-   "a bank"
-  ],
-  "hint": "Think business, not trees.",
-  "video": "https://youtube.com/shorts/dMGs_tKZvNg?feature=share",
+  "video": "https://youtu.be/26SCfqydB5c",
   "relation": "Cousin",
-  "wishFrom": "Harsh & Zalak"
+  "wishFrom": "Jetha Bapa Family",
+  "lines": [
+   "Who is carrying you in her arms?"
+  ],
+  "answerDisplay": "Dadi",
+  "answers": [
+   "dadi",
+   "motaba"
+  ],
+  "hint": "Look closely at the faces and think about who this memory is about.",
+  "photo": "Alap-13.jpeg"
  },
  {
   "day": 27,
   "date": "2026-10-24",
   "displayDate": "October 24, 2026",
+  "video": "https://youtube.com/shorts/dMGs_tKZvNg?feature=share",
+  "relation": "Uncle-In-Law",
+  "wishFrom": "Harsh & Zalak",
   "lines": [
    "What invention lets you look right through a wall?"
   ],
@@ -475,120 +509,122 @@ const DAYS = [
    "window",
    "a window"
   ],
-  "hint": "Common in every home.",
-  "video": null,
-  "relation": "Uncle-In-Law",
-  "wishFrom": "Dipak Mama"
+  "hint": "Common in every home."
  },
  {
   "day": 28,
   "date": "2026-10-25",
   "displayDate": "October 25, 2026",
-  "lines": [
-   "What begins with T, ends with T, and has T in it?"
-  ],
-  "answerDisplay": "A TEAPOT",
-  "answers": [
-   "teapot",
-   "tea pot",
-   "a teapot"
-  ],
-  "hint": "It holds tea.",
-  "video": "https://youtube.com/shorts/crKQHr-ygzw?feature=share",
+  "video": "https://youtu.be/yT0IEMagJ_k",
   "relation": "Cousin",
-  "wishFrom": "Jayshreeben, Udaybhai & Rinku"
+  "wishFrom": "Pravin Bapa Family",
+  "lines": [
+   "Which month and year (mm/yyyy) was this picture taken ?"
+  ],
+  "answerDisplay": "02/2016",
+  "answers": [
+   "02/2016",
+   "feb-2016",
+   "feb"
+  ],
+  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
+  "photo": "Alap-6.jpeg"
  },
  {
   "day": 29,
   "date": "2026-10-26",
   "displayDate": "October 26, 2026",
-  "lines": [
-   "What has 13 hearts but no other organs?"
-  ],
-  "answerDisplay": "A DECK OF CARDS",
-  "answers": [
-   "deck of cards",
-   "cards",
-   "a deck of cards"
-  ],
-  "hint": "Think playing cards.",
-  "video": "https://youtu.be/26SCfqydB5c",
+  "video": null,
   "relation": "Cousin",
-  "wishFrom": "Jetha Bapa Family"
+  "wishFrom": "Dipak Mama",
+  "lines": [
+   "What was the exact date (mm/dd/yyyy) when this picture was taken"
+  ],
+  "answerDisplay": "11/6/2015",
+  "answers": [
+   "11/6/2015"
+  ],
+  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
+  "photo": "Raj-5.jpg"
  },
  {
   "day": 30,
   "date": "2026-10-27",
   "displayDate": "October 27, 2026",
-  "lines": [
-   "What can be broken without being touched?"
-  ],
-  "answerDisplay": "A PROMISE",
-  "answers": [
-   "promise",
-   "a promise"
-  ],
-  "hint": "It depends on trust.",
-  "video": "https://youtu.be/yT0IEMagJ_k",
+  "video": "https://youtu.be/1b2bhSTGTkU",
   "relation": "Cousin",
-  "wishFrom": "Pravin Bapa Family"
+  "wishFrom": "Rajubhai & Ruchita",
+  "lines": [
+   "Name the city/place, you spent your birthday in 2016"
+  ],
+  "answerDisplay": "Surednranagar",
+  "answers": [
+   "surednranagar"
+  ],
+  "hint": "Think back to the place connected to this memory."
  },
  {
   "day": 31,
   "date": "2026-10-28",
   "displayDate": "October 28, 2026",
+  "video": "https://youtube.com/shorts/crKQHr-ygzw?feature=share",
+  "relation": "Cousin",
+  "wishFrom": "Jayshreeben, Udaybhai & Rinku",
   "lines": [
-   "What gets sharper the more you use it?"
+   "What was the exact date (mm/dd/yyyy) when this picture was taken ?",
+   "or",
+   "Name the City/Place where this picture was taken ?"
   ],
-  "answerDisplay": "YOUR BRAIN",
+  "answerDisplay": "11/6/2017",
   "answers": [
-   "brain",
-   "your brain"
+   "11/6/2017",
+   "jersey city",
+   "hoboken"
   ],
-  "hint": "A thinking answer.",
-  "video": "https://youtube.com/shorts/cI3Jo0ij6x4?feature=share",
-  "relation": "Sister-In-Law & Niece",
-  "wishFrom": "Neha"
+  "hint": "Take a close look at the photo and think about the year this memory belongs to.",
+  "photo": "Raj-5.jpg"
  },
  {
   "day": 32,
   "date": "2026-10-29",
   "displayDate": "October 29, 2026",
+  "video": "https://youtube.com/shorts/cI3Jo0ij6x4?feature=share",
+  "relation": "Sister-In-Law & Niece",
+  "wishFrom": "Neha",
   "lines": [
-   "What comes once in a minute, twice in a moment, but never in a thousand years?"
+   "Where was this picture taken ?"
   ],
-  "answerDisplay": "THE LETTER M",
+  "answerDisplay": "Alaska",
   "answers": [
-   "m",
-   "letter m",
-   "the letter m"
+   "alaska"
   ],
-  "hint": "Look at the spelling.",
-  "video": "https://youtu.be/bvQLMAByDLs",
-  "relation": "Sister & Brother",
-  "wishFrom": "Bhavika, Anjani, Bhargav"
+  "hint": "Study the photo and think about where this memory happened.",
+  "photo": "Raj-1.jpg"
  },
  {
   "day": 33,
   "date": "2026-10-30",
   "displayDate": "October 30, 2026",
+  "video": "https://youtu.be/bvQLMAByDLs",
+  "relation": "Sister & Brother",
+  "wishFrom": "Bhavika, Anjani, Bhargav",
   "lines": [
-   "What can you hold without ever touching it?"
+   "Where was this picture taken ?"
   ],
-  "answerDisplay": "A CONVERSATION",
+  "answerDisplay": "Sedona",
   "answers": [
-   "conversation",
-   "a conversation"
+   "sedona"
   ],
-  "hint": "You can 'hold' one with someone.",
-  "video": "https://youtu.be/5yp2zgMFH3E",
-  "relation": "Brother & Sister Family",
-  "wishFrom": "Gaurav, Avni & Family"
+  "hint": "Study the photo and think about where this memory happened.",
+  "photo": "Raj-2.jpg"
  },
  {
   "day": 34,
   "date": "2026-10-31",
   "displayDate": "October 31, 2026",
+  "video": "https://youtu.be/A8tQixyaVbg",
+  "relation": "Aunty",
+  "wishFrom": "Kaki & Family",
   "lines": [
    "What has ears but cannot hear?"
   ],
@@ -598,33 +634,32 @@ const DAYS = [
    "an ear of corn",
    "ear of corn"
   ],
-  "hint": "Think food.",
-  "video": null,
-  "relation": "Aunty",
-  "wishFrom": "Kaki"
+  "hint": "Think food."
  },
  {
   "day": 35,
   "date": "2026-11-01",
   "displayDate": "November 1, 2026",
-  "lines": [
-   "What can be seen once in a year, twice in a week, and never in a day?"
-  ],
-  "answerDisplay": "THE LETTER E",
-  "answers": [
-   "e",
-   "letter e",
-   "the letter e"
-  ],
-  "hint": "Look at the words.",
   "video": "https://youtu.be/HRwHPGniiog",
   "relation": "Brother",
-  "wishFrom": "Bhargav"
+  "wishFrom": "Bhargav",
+  "lines": [
+   "Where was this picture taken ? Its not Boston - HAHA"
+  ],
+  "answerDisplay": "San Francisco",
+  "answers": [
+   "san francisco"
+  ],
+  "hint": "Study the photo and think about where this memory happened.",
+  "photo": "Raj-3.jpg"
  },
  {
   "day": 36,
   "date": "2026-11-02",
   "displayDate": "November 2, 2026",
+  "video": null,
+  "relation": "Sister",
+  "wishFrom": "Anjani",
   "lines": [
    "What kind of band never plays music?"
   ],
@@ -633,32 +668,32 @@ const DAYS = [
    "rubber band",
    "a rubber band"
   ],
-  "hint": "It stretches.",
-  "video": null,
-  "relation": "Sister",
-  "wishFrom": "Anjani"
+  "hint": "It stretches."
  },
  {
   "day": 37,
   "date": "2026-11-03",
   "displayDate": "November 3, 2026",
-  "lines": [
-   "What has a bottom at the top?"
-  ],
-  "answerDisplay": "YOUR LEGS",
-  "answers": [
-   "legs",
-   "your legs"
-  ],
-  "hint": "Think anatomy and wordplay.",
   "video": "https://youtu.be/WX7MkZpFiIQ",
   "relation": "Sister",
-  "wishFrom": "Bhavika"
+  "wishFrom": "Bhavika",
+  "lines": [
+   "Where was this picture taken ?"
+  ],
+  "answerDisplay": "Singapore",
+  "answers": [
+   "singapore"
+  ],
+  "hint": "Study the photo and think about where this memory happened.",
+  "photo": "Raj-4.jpg"
  },
  {
   "day": 38,
   "date": "2026-11-04",
   "displayDate": "November 4, 2026",
+  "video": "https://youtu.be/i2IfDjN-tb0",
+  "relation": "Dad",
+  "wishFrom": "Suresh Chavda",
   "lines": [
    "What can you keep after giving it to someone?"
   ],
@@ -667,15 +702,15 @@ const DAYS = [
    "word",
    "your word"
   ],
-  "hint": "A promise-related phrase.",
-  "video": "https://youtu.be/i2IfDjN-tb0",
-  "relation": "Dad",
-  "wishFrom": "Suresh Chavda"
+  "hint": "A promise-related phrase."
  },
  {
   "day": 39,
   "date": "2026-11-05",
   "displayDate": "November 5, 2026",
+  "video": null,
+  "relation": "Mom",
+  "wishFrom": "Leela Chavda",
   "lines": [
    "What has no beginning, end, or middle?"
   ],
@@ -686,15 +721,15 @@ const DAYS = [
    "a donut",
    "a doughnut"
   ],
-  "hint": "Think round and delicious.",
-  "video": null,
-  "relation": "Mom",
-  "wishFrom": "Leela Chavda"
+  "hint": "Think round and delicious."
  },
  {
   "day": 40,
   "date": "2026-11-06",
   "displayDate": "November 6, 2026",
+  "video": null,
+  "relation": "Husband",
+  "wishFrom": "Raj",
   "lines": [
    "I come once every year,",
    "but today I arrive with forty candles.",
@@ -709,9 +744,6 @@ const DAYS = [
    "fortieth birthday"
   ],
   "hint": "Today, this celebration belongs entirely to you.",
-  "video": null,
-  "relation": "Husband",
-  "wishFrom": "Raj",
   "unlockAt": "2026-11-06T00:01:00"
  }
 ];
@@ -1038,7 +1070,7 @@ function visibleDays(){
    .sort((a,b)=>dateValue(b.date)-dateValue(a.date)); // newest first, deterministic across browsers
 }
 function computeStats(){
- const ordered=DAYS.filter(isVisible).slice().sort((a,b)=>dateValue(a.date)-dateValue(b.date)); // chronological
+ const ordered=DAYS.filter(d=>d.day!==0 && isVisible(d)).slice().sort((a,b)=>dateValue(a.date)-dateValue(b.date)); // chronological
  let solved=0,flags=0,firstTry=0,current=0,best=0;
  for(const d of ordered){
    const r=getResult(d.day);
@@ -1185,8 +1217,10 @@ function renderGrid(){
  bindPortraitScoreFreeze();
  requestAnimationFrame(()=>{measurePortraitScore();syncPortraitScoreFreeze();syncMobileHomeChrome();});
 }
-function renderQuestion(lines){
- $("puzzleText").innerHTML=lines.map(line=>line===""?`<div class="gap"></div>`:`<span class="line">${line}</span>`).join("");
+function renderQuestion(day){
+ const lines=day.lines||[];
+ const photoMarkup=day.photo?`<div class="question-media"><img class="puzzle-photo" src="photos/${encodeURIComponent(day.photo)}" alt="Memory clue for EXIT ${day.day}" loading="eager" decoding="async"></div>`:"";
+ $("puzzleText").innerHTML=photoMarkup + lines.map(line=>line===""?`<div class="gap"></div>`:`<span class="line">${line}</span>`).join("");
 }
 function resetPuzzle(){
  attemptsUsed=0;
@@ -1215,7 +1249,7 @@ function openDay(n){
 
  resetPuzzle();
  $("dayEyebrow").textContent=`EXIT ${currentDay.day} · ${currentDay.displayDate.toUpperCase()}`;
- renderQuestion(currentDay.lines);
+ renderQuestion(currentDay);
  show("puzzle");
 }
 function check(){
@@ -1429,7 +1463,7 @@ function resetTestProgress(){
  if(!TEST_MODE) return;
  const ok=confirm("Reset all test progress for Mika's 40 Exits on this browser?");
  if(!ok) return;
- for(let day=1; day<=FINAL_EXIT; day++) localStorage.removeItem(key(day));
+ for(let day=0; day<=FINAL_EXIT; day++) localStorage.removeItem(key(day));
  renderGrid();
  show("home");
 }
@@ -1437,7 +1471,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=218").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=219").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

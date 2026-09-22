@@ -1,10 +1,10 @@
 # Route 4T / Project 40
 
-## Current build: v2.18
+## Current build: v2.19
 
 Built directly from the stable v2.16 baseline. The v2.16 wrong-answer popup, keyboard, surrender, sticky banner, sticky scoreboard, and EXIT-card behavior are intentionally unchanged.
 
-### v2.18 changes
+### v2.19 changes
 - Reversed the journey numbering to EXIT 1 → EXIT 40.
 - EXIT 1 starts September 28, 2026; one new EXIT unlocks each day.
 - EXIT 40 is November 6, 2026 and has a production unlock time of 12:01 AM local time.
