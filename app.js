@@ -3,6 +3,7 @@ const TEST_MODE = true;
 const DEFAULT_TEST_DATE = "2026-11-06";
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
+const TEST_EXIT_MAX = 3; // v2.24 focused QA: show EXIT 0–3 only
 
 const DAYS = [
  {
@@ -926,6 +927,36 @@ function buildWrongPopup(){
 function ensureWrongPopup(){
  return $("wrongAnswerPopover") || buildWrongPopup();
 }
+function revealFirstWrongPopupAfterViewportSettles(p){
+ // v2.24: the first mobile error occurs while Android is still in its first
+ // keyboard/scroll viewport session. Keep the proven v2.7 positioning model,
+ // but wait for the visual viewport to stop moving before revealing attempt 1.
+ const started=Date.now();
+ let lastKey="", stableSamples=0;
+ const sample=()=>{
+   if(!p?.isConnected || !p.classList.contains("show")) return;
+   const vv=window.visualViewport;
+   const key=vv?`${Math.round(vv.offsetTop)}:${Math.round(vv.height)}:${Math.round(vv.width)}:${Math.round(window.scrollY)}`:`${window.innerHeight}:${Math.round(window.scrollY)}`;
+   if(key===lastKey) stableSamples++; else { lastKey=key; stableSamples=0; }
+   positionKeyboardUI();
+   if(stableSamples>=2 || Date.now()-started>=650){
+     requestAnimationFrame(()=>{
+       positionKeyboardUI();
+       requestAnimationFrame(()=>{
+         if(!p.isConnected || !p.classList.contains("show")) return;
+         p.style.visibility="visible";
+         p.style.opacity="1";
+       });
+     });
+     return;
+   }
+   setTimeout(sample,70);
+ };
+ // Normalize the answer field into the visible keyboard viewport first. This
+ // is especially important for photo puzzles whose document height is larger.
+ keepAnswerVisible();
+ setTimeout(sample,70);
+}
 function showWrongPopup(message,remaining){
  if(!isLikelyPhone())return false;
  // Fresh DOM instance for EVERY attempt. The attempt cannot be submitted again
@@ -946,22 +977,27 @@ function showWrongPopup(message,remaining){
  if(backdrop){backdrop.classList.add("show");backdrop.setAttribute("aria-hidden","false");}
  p.classList.add("show");
  p.setAttribute("aria-hidden","false");
- // v2.14 is intentionally based on the stable v2.7 popup code. Keep the
- // same placement sequence, but conceal the modal during those first layout
- // passes so the user sees only the final stable position instead of flicker.
+ // Keep the popup hidden until its final position is known. Attempts 2/3
+ // retain the stable v2.7/v2.14 sequence. Attempt 1 gets only a quiet-period
+ // stabilization before reveal; its geometry/placement engine is otherwise the same.
  p.style.visibility="hidden";
  p.style.opacity="0";
- positionKeyboardUI();
- requestAnimationFrame(()=>{positionKeyboardUI(); requestAnimationFrame(positionKeyboardUI);});
- setTimeout(positionKeyboardUI,80);
- setTimeout(()=>{
+ const attemptNumber=MAX_ATTEMPTS-remaining;
+ if(attemptNumber===1){
+   revealFirstWrongPopupAfterViewportSettles(p);
+ }else{
    positionKeyboardUI();
-   requestAnimationFrame(()=>{
-     if(!p.isConnected || !p.classList.contains("show")) return;
-     p.style.visibility="visible";
-     p.style.opacity="1";
-   });
- },220);
+   requestAnimationFrame(()=>{positionKeyboardUI(); requestAnimationFrame(positionKeyboardUI);});
+   setTimeout(positionKeyboardUI,80);
+   setTimeout(()=>{
+     positionKeyboardUI();
+     requestAnimationFrame(()=>{
+       if(!p.isConnected || !p.classList.contains("show")) return;
+       p.style.visibility="visible";
+       p.style.opacity="1";
+     });
+   },220);
+ }
  return true;
 }
 function showSurrenderPopup(){
@@ -1060,12 +1096,12 @@ function dateValue(iso){
 }
 function visibleDays(){
  return DAYS
-   .filter(isVisible)
+   .filter(d=>isVisible(d) && (!TEST_MODE || d.day<=TEST_EXIT_MAX))
    .slice()
    .sort((a,b)=>dateValue(b.date)-dateValue(a.date)); // newest first, deterministic across browsers
 }
 function computeStats(){
- const ordered=DAYS.filter(isVisible).slice().sort((a,b)=>dateValue(a.date)-dateValue(b.date)); // chronological
+ const ordered=DAYS.filter(d=>isVisible(d) && (!TEST_MODE || d.day<=TEST_EXIT_MAX)).slice().sort((a,b)=>dateValue(a.date)-dateValue(b.date)); // chronological
  let solved=0,flags=0,firstTry=0,current=0,best=0;
  for(const d of ordered){
    const r=getResult(d.day);
@@ -1514,7 +1550,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=223").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=224").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

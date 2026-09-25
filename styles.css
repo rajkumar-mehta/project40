@@ -1555,3 +1555,39 @@ button.primary:disabled{
    ROUTE 4T v2.22 — mobile regression hardening
    ========================================================= */
 #hintBtn{display:none!important}
+
+
+/* =========================================================
+   ROUTE 4T v2.24 — focused mobile QA (EXIT 0–3)
+   Standardize photo-puzzle geometry without cropping originals.
+   ========================================================= */
+.question-media{
+  width:min(100%,520px)!important;
+  max-width:520px!important;
+  aspect-ratio:4/3!important;
+  height:auto!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  margin:0 auto 22px!important;
+  border-radius:16px!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  background:rgba(6,10,18,.72)!important;
+  box-shadow:0 14px 32px rgba(0,0,0,.28)!important;
+}
+.question-media .puzzle-photo{
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+}
+@media(max-width:620px){
+  .question-media{width:100%!important;aspect-ratio:4/3!important;margin-bottom:18px!important;border-radius:14px!important}
+}

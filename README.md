@@ -287,3 +287,12 @@ Changes from v2.6:
 - Strengthens Android/SwiftKey input locking while a wrong-answer popup is awaiting OK, without disabling the input or intentionally closing the keyboard.
 - Adds a measured visibility safeguard for the popup OK button without replacing the stable v2.16/v2.7 popup model.
 - Removes SHOW HINT from laptop and mobile.
+
+
+## v2.24 focused QA build
+- Built from v2.23.
+- TEST MODE intentionally shows only EXIT 0–3.
+- Photo puzzles use one fixed 4:3 display area with object-fit: contain (no cropping/stretching).
+- First mobile wrong-answer popup retains the same popup engine but waits for the Android visual viewport to settle before reveal; attempts 2 and 3 are unchanged.
+- Green → Purple → Red wrong-answer sequence retained.
+- SHOW HINT remains removed.
