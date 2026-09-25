@@ -1,9 +1,7 @@
 
-const TEST_MODE = true;
-const DEFAULT_TEST_DATE = "2026-11-06";
+const QA_SHOW_ALL_EXITS = true; // v2.27 QA: intentionally exposes EXIT 0–40 for full production-URL testing. Disable for launch.
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
-const TEST_EXIT_MAX = 3; // v2.25 focused QA: show EXIT 0–3 only during production-URL validation
 
 const DAYS = [
  {
@@ -167,9 +165,9 @@ const DAYS = [
   "day": 9,
   "date": "2026-10-06",
   "displayDate": "October 6, 2026",
-  "video": null,
+  "video": "https://youtu.be/GC6Eh0lCJ84",
   "relation": "Friend",
-  "wishFrom": "Hiral Patel & Akash",
+  "wishFrom": "Misri - Payal",
   "lines": [
    "Who is carrying you in her arms?"
   ],
@@ -184,9 +182,9 @@ const DAYS = [
   "day": 10,
   "date": "2026-10-07",
   "displayDate": "October 7, 2026",
-  "video": "https://youtu.be/jexm_8zkQhc",
+  "video": "https://youtu.be/bQa0x3hiDr0",
   "relation": "Friend",
-  "wishFrom": "Chirag & Ashesh Family",
+  "wishFrom": "Chirag & Arlett",
   "lines": [
    "What was the color of the Scooty, from where you and Archana fell in the middle of the road ?"
   ],
@@ -239,9 +237,9 @@ const DAYS = [
   "day": 13,
   "date": "2026-10-10",
   "displayDate": "October 10, 2026",
-  "video": null,
+  "video": "https://youtu.be/MIS5d7pivQ0",
   "relation": "Friend",
-  "wishFrom": "Komal",
+  "wishFrom": "LynKy",
   "lines": [
    "How old are you in this picture"
   ],
@@ -257,9 +255,9 @@ const DAYS = [
   "day": 14,
   "date": "2026-10-11",
   "displayDate": "October 11, 2026",
-  "video": "https://youtu.be/MIS5d7pivQ0",
+  "video": "https://youtu.be/aq81_wqX7QI",
   "relation": "Friend",
-  "wishFrom": "LynKy",
+  "wishFrom": "Umang & Hiral Family",
   "lines": [
    "Name the country where this picture was taken"
   ],
@@ -274,9 +272,9 @@ const DAYS = [
   "day": 15,
   "date": "2026-10-12",
   "displayDate": "October 12, 2026",
-  "video": "https://youtu.be/aq81_wqX7QI",
+  "video": "https://youtu.be/cG0eOPmZUbo",
   "relation": "Cousin",
-  "wishFrom": "Umang & Hiral Family",
+  "wishFrom": "Ashesh & Krishna",
   "lines": [
    "Where was this picture taken ?"
   ],
@@ -416,9 +414,9 @@ const DAYS = [
   "day": 23,
   "date": "2026-10-20",
   "displayDate": "October 20, 2026",
-  "video": null,
+  "video": "https://youtu.be/1b2bhSTGTkU",
   "relation": "Friend",
-  "wishFrom": "Payal & Sapan",
+  "wishFrom": "Rajubhai & Ruchita",
   "lines": [
    "What has a head and a tail but no body?"
   ],
@@ -433,9 +431,9 @@ const DAYS = [
   "day": 24,
   "date": "2026-10-21",
   "displayDate": "October 21, 2026",
-  "video": "https://youtu.be/GC6Eh0lCJ84",
+  "video": "https://youtu.be/26SCfqydB5c",
   "relation": "Friend",
-  "wishFrom": "Misri - Payal",
+  "wishFrom": "Jetha Bapa Family",
   "lines": [
    "What has four wheels and flies?"
   ],
@@ -467,9 +465,9 @@ const DAYS = [
   "day": 26,
   "date": "2026-10-23",
   "displayDate": "October 23, 2026",
-  "video": "https://youtu.be/7Qai7Mav74c",
+  "video": null,
   "relation": "Cousin",
-  "wishFrom": "Jayanti Bapa Family",
+  "wishFrom": "Payal & Sapan",
   "lines": [
    "What has branches but no fruit, trunk, or leaves?"
   ],
@@ -484,9 +482,9 @@ const DAYS = [
   "day": 27,
   "date": "2026-10-24",
   "displayDate": "October 24, 2026",
-  "video": "https://youtu.be/26SCfqydB5c",
+  "video": null,
   "relation": "Cousin",
-  "wishFrom": "Jetha Bapa Family",
+  "wishFrom": "Vatsal Bhai & Sejal",
   "lines": [
    "What invention lets you look right through a wall?"
   ],
@@ -537,9 +535,9 @@ const DAYS = [
   "day": 30,
   "date": "2026-10-27",
   "displayDate": "October 27, 2026",
-  "video": "https://youtu.be/5K1bO78drq0",
+  "video": "https://youtu.be/7Qai7Mav74c",
   "relation": "Niece",
-  "wishFrom": "Hetvi & Abhit",
+  "wishFrom": "Jayanti Bapa Family",
   "lines": [
    "Name the city/place, you spent your birthday in 2016"
   ],
@@ -553,9 +551,9 @@ const DAYS = [
   "day": 31,
   "date": "2026-10-28",
   "displayDate": "October 28, 2026",
-  "video": "https://youtu.be/1b2bhSTGTkU",
+  "video": "https://youtube.com/shorts/SknlZ23htAU?feature=share",
   "relation": "Cousin",
-  "wishFrom": "Rajubhai & Ruchita",
+  "wishFrom": "Jayshreeben, Udaybhai & Rinku",
   "lines": [
    "What was the exact date (mm/dd/yyyy) when this picture was taken ?",
    "",
@@ -576,9 +574,9 @@ const DAYS = [
   "day": 32,
   "date": "2026-10-29",
   "displayDate": "October 29, 2026",
-  "video": "https://youtube.com/shorts/SknlZ23htAU?feature=share",
+  "video": "https://youtu.be/sWUeLegdRrQ",
   "relation": "Cousin",
-  "wishFrom": "Jayshreeben, Udaybhai & Rinku",
+  "wishFrom": "Neha",
   "lines": [
    "Which year (yyyy) was this picture taken ?"
   ],
@@ -594,9 +592,9 @@ const DAYS = [
   "day": 33,
   "date": "2026-10-30",
   "displayDate": "October 30, 2026",
-  "video": "https://youtu.be/sWUeLegdRrQ",
+  "video": "https://youtu.be/5K1bO78drq0",
   "relation": "Sister-In-Law",
-  "wishFrom": "Neha",
+  "wishFrom": "Hetvi & Abhit",
   "lines": [
    "Exact date (mm/dd/yyyy) when this picture was taken ?"
   ],
@@ -738,6 +736,14 @@ const DAYS = [
   "unlockAt": "2026-11-06T00:01:00"
  }
 ];
+
+// Runtime hardening: puzzle definitions are read-only once the app loads.
+DAYS.forEach(d=>{
+  if(Array.isArray(d.answers)) Object.freeze(d.answers);
+  if(Array.isArray(d.lines)) Object.freeze(d.lines);
+  Object.freeze(d);
+});
+Object.freeze(DAYS);
 
 const WRONG_MESSAGES=[
  "Not quite 😏 Two guesses left.",
@@ -1036,29 +1042,12 @@ function showSurrenderPopup(){
 }
 
 const screens=[...document.querySelectorAll(".screen")];
-const params=new URLSearchParams(location.search);
 
-function normalizeTestDate(raw){
- if(!raw) return DEFAULT_TEST_DATE;
- if(/^\d{4}$/.test(raw)){
-   const mm=raw.slice(0,2), dd=raw.slice(2,4);
-   return `2026-${mm}-${dd}`;
- }
- return raw;
-}
 function todayISO(){
- if(TEST_MODE) return normalizeTestDate(params.get("testDate"));
  const d=new Date();
  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 }
-function visibilityNow(){
- if(!TEST_MODE) return new Date();
- const date=normalizeTestDate(params.get("testDate"));
- const raw=(params.get("testTime")||"2359").replace(/[^0-9]/g,"").padStart(4,"0").slice(-4);
- const hh=Math.min(23,Number(raw.slice(0,2))||0);
- const mm=Math.min(59,Number(raw.slice(2,4))||0);
- return new Date(`${date}T${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}:00`);
-}
+function visibilityNow(){ return new Date(); }
 function show(id){
  if(id!=="finale") stopBirthdayCelebration();
  screens.forEach(s=>s.classList.toggle("active",s.id===id));
@@ -1076,10 +1065,51 @@ function show(id){
  },0);
 }
 function norm(v){return v.trim().toLowerCase().replace(/\s+/g," ")}
-function key(day){return `route4t_2026_exit_${day}`}
-function getResult(day){try{return JSON.parse(localStorage.getItem(key(day))||"null")}catch{return null}}
-function saveResult(day,result){localStorage.setItem(key(day),JSON.stringify(result))}
+const RESULT_PREFIX="route4t_2026_exit_";
+const BACKUP_KEY="route4t_2026_progress_backup_v1";
+function key(day){return `${RESULT_PREFIX}${day}`}
+function validResult(r){
+ if(!r || typeof r!=="object") return false;
+ if(r.outcome==="solved") return Number.isInteger(r.attempts)&&r.attempts>=1&&r.attempts<=MAX_ATTEMPTS;
+ if(r.outcome==="gave-up") return r.attempts===MAX_ATTEMPTS;
+ if(r.outcome==="in-progress") return Number.isInteger(r.attemptsUsed)&&r.attemptsUsed>=0&&r.attemptsUsed<=MAX_ATTEMPTS;
+ return false;
+}
+function readBackup(){try{const x=JSON.parse(localStorage.getItem(BACKUP_KEY)||"{}");return x&&typeof x==="object"?x:{}}catch{return {}}}
+function writeBackup(all){try{localStorage.setItem(BACKUP_KEY,JSON.stringify(all))}catch{}}
+function rawPrimary(day){try{const r=JSON.parse(localStorage.getItem(key(day))||"null");return validResult(r)?r:null}catch{return null}}
+function getResult(day){
+ const primary=rawPrimary(day);
+ const backup=readBackup();
+ const mirror=validResult(backup[day])?backup[day]:null;
+ // Completed results are immutable: if the backup already has a final result, it wins.
+ const chosen=(mirror&&(mirror.outcome==="solved"||mirror.outcome==="gave-up"))?mirror:(primary||mirror);
+ if(chosen){
+   try{if(JSON.stringify(primary)!==JSON.stringify(chosen)) localStorage.setItem(key(day),JSON.stringify(chosen))}catch{}
+   if(JSON.stringify(mirror)!==JSON.stringify(chosen)){backup[day]=chosen;writeBackup(backup)}
+ }
+ return chosen||null;
+}
+function saveResult(day,result){
+ if(!validResult(result)) return getResult(day);
+ const existing=getResult(day);
+ // Never overwrite an already completed EXIT through app code.
+ if(existing&&(existing.outcome==="solved"||existing.outcome==="gave-up")) return existing;
+ // Do not allow in-progress attempt counts to move backwards except via the explicit retry button.
+ if(existing?.outcome==="in-progress"&&result.outcome==="in-progress"&&result.attemptsUsed<existing.attemptsUsed) return existing;
+ try{localStorage.setItem(key(day),JSON.stringify(result))}catch{}
+ const backup=readBackup(); backup[day]=result; writeBackup(backup);
+ return result;
+}
+function saveInProgress(day,count){return saveResult(day,{outcome:"in-progress",attemptsUsed:count,updatedAt:new Date().toISOString()})}
+function restartInProgress(day){
+ const r={outcome:"in-progress",attemptsUsed:0,updatedAt:new Date().toISOString()};
+ try{localStorage.setItem(key(day),JSON.stringify(r))}catch{}
+ const backup=readBackup(); backup[day]=r; writeBackup(backup);
+ return r;
+}
 function isVisible(d){
+ if(QA_SHOW_ALL_EXITS) return true;
  if(d.unlockAt) return visibilityNow().getTime()>=new Date(d.unlockAt).getTime();
  return d.date<=todayISO();
 }
@@ -1097,12 +1127,12 @@ function dateValue(iso){
 }
 function visibleDays(){
  return DAYS
-   .filter(d=>isVisible(d) && (!TEST_MODE || d.day<=TEST_EXIT_MAX))
+   .filter(d=>isVisible(d))
    .slice()
    .sort((a,b)=>dateValue(b.date)-dateValue(a.date)); // newest first, deterministic across browsers
 }
 function computeStats(){
- const ordered=DAYS.filter(d=>isVisible(d) && (!TEST_MODE || d.day<=TEST_EXIT_MAX)).slice().sort((a,b)=>dateValue(a.date)-dateValue(b.date)); // chronological
+ const ordered=DAYS.filter(d=>isVisible(d)).slice().sort((a,b)=>dateValue(a.date)-dateValue(b.date)); // chronological
  let solved=0,flags=0,firstTry=0,current=0,best=0;
  for(const d of ordered){
    const r=getResult(d.day);
@@ -1244,7 +1274,6 @@ function renderGrid(){
    grid.appendChild(b);
  });
  renderScore();
- const simDateText=$("simDateText"); if(simDateText) simDateText.textContent=todayISO();
  bindMobileHomeScroll();
  bindPortraitScoreFreeze();
  requestAnimationFrame(()=>{measurePortraitScore();syncPortraitScoreFreeze();syncMobileHomeChrome();});
@@ -1265,7 +1294,9 @@ function resetPuzzle(){
  const popup=$("wrongAnswerPopover"); if(popup) popup.remove(); const backdrop=$("wrongAnswerBackdrop"); if(backdrop) backdrop.remove();
 }
 function openDay(n){
- currentDay=DAYS.find(d=>d.day===n);
+ const requested=DAYS.find(d=>d.day===n);
+ if(!requested || !isVisible(requested)) return;
+ currentDay=requested;
  const existing=getResult(currentDay.day);
 
  // Completed EXITs never reopen the riddle or alter saved stats.
@@ -1281,6 +1312,14 @@ function openDay(n){
  }
 
  resetPuzzle();
+ if(existing?.outcome==="in-progress"){
+   attemptsUsed=Math.max(0,Math.min(MAX_ATTEMPTS,existing.attemptsUsed||0));
+   syncAnswerPlaceholder();
+   if(attemptsUsed>=MAX_ATTEMPTS){
+     openConfirmGiveUpGuarded();
+     return;
+   }
+ }
  $("dayEyebrow").textContent=`EXIT ${currentDay.day} · ${currentDay.displayDate.toUpperCase()}`;
  renderQuestion(currentDay);
  show("puzzle");
@@ -1302,6 +1341,7 @@ function check(){
    return;
  }
  attemptsUsed++;
+ saveInProgress(currentDay.day,attemptsUsed);
  input.value="";
  const remaining=MAX_ATTEMPTS-attemptsUsed;
  const wrongMessage=wrongMessageForAttempt(attemptsUsed);
@@ -1396,6 +1436,7 @@ $("scrollCue").onclick=()=>$("answerArea").scrollIntoView({behavior:"smooth",blo
 $("giveUpBtn").onclick=()=>show("confirmGiveUp");
 $("tryAgainBtn").onclick=e=>{
  if(Date.now()<confirmGiveUpReadyAt){e.preventDefault();e.stopPropagation();return;}
+ restartInProgress(currentDay.day);
  resetPuzzle();show("puzzle");
 };
 $("saveMeBtn").onclick=e=>{
@@ -1539,16 +1580,17 @@ function enterRoute4T(){
  renderGrid();
  show("home");
 }
-const enterRouteDesktop=$("enterRouteDesktop");
 const enterRouteMobile=$("enterRouteMobile");
-if(enterRouteDesktop) enterRouteDesktop.onclick=enterRoute4T;
 if(enterRouteMobile) enterRouteMobile.onclick=enterRoute4T;
 
 document.body.classList.add("welcome-active");
 show("welcome");
 
+// Ask the browser not to evict Route 4T progress under storage pressure.
+if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
+
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=225").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=227").catch(()=>{}));
 }
 
 function syncDesktopFrame(){
