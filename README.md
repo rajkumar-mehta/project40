@@ -1,3 +1,7 @@
+# Route 4T — v2.25 QA Candidate
+
+This build adds the new Rule of the Road entry screen, removes the visible test/reset footer, and preserves the existing v2.24 HOME/puzzle flow. The temporary EXIT 0–3 QA date simulation remains enabled under the hood for production-URL validation and must be stripped before the final public release.
+
 
 ## v2.23
 - Updated Route 4T data from `YT URL(3).xlsx` (latest YouTube URLs, names, photo-puzzle mappings, correct/alternate answers).

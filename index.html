@@ -6,13 +6,42 @@
 <meta name="theme-color" content="#0d1422">
 <title>ROUTE 4T · MIKA'S JOURNEY</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=224">
+<link rel="stylesheet" href="styles.css?v=225">
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
 <main class="app-shell">
 
-<section id="home" class="screen active">
+<section id="welcome" class="screen active welcome-screen" aria-labelledby="welcomeTitle">
+  <div class="welcome-desktop-poster" aria-label="Route 4T opening screen">
+    <img src="route4t-welcome-desktop.png" alt="Route 4T — Mika’s Journey with 40 Exits">
+    <button id="enterRouteDesktop" class="welcome-poster-hit" type="button" aria-label="Fine, let’s hit the road"></button>
+  </div>
+
+  <div class="welcome-mobile-layout">
+    <div class="welcome-mobile-brand" id="welcomeTitle">
+      <div class="welcome-route-mark">ROUTE <span>4T</span></div>
+      <div class="welcome-journey">MIKA’S JOURNEY <em>with 40 EXITS</em></div>
+      <div class="welcome-wiser">BIGGER PUZZLES · BRIGHTER DAYS · A WISER YOU</div>
+    </div>
+
+    <div class="welcome-photo-wrap">
+      <img src="welcome-mika.jpg" alt="Mika standing in the back of a Cybertruck">
+    </div>
+
+    <div class="welcome-rule-card">
+      <div class="welcome-rule-title">RULE OF THE ROAD 🚗</div>
+      <p><strong>Phones while driving? Absolutely not.<br>Phones for Route 4T? Unfortunately, yes. 😏</strong></p>
+      <p>Pick one phone and one browser and stick with them for the entire journey.<br>Otherwise your score may mysteriously “take the next exit.” 😂</p>
+    </div>
+
+    <button id="enterRouteMobile" class="welcome-enter" type="button">
+      <span>FINE… LET’S HIT THE ROAD 🚗</span><b aria-hidden="true">›</b>
+    </button>
+  </div>
+</section>
+
+<section id="home" class="screen">
   <header class="masthead project40-header">
     <div class="project40-brand" aria-label="Route 4T">
       <span class="brand-sparkle sparkle-left" aria-hidden="true">✦</span>
@@ -55,12 +84,6 @@
   <div id="dayGrid" class="day-grid"></div>
   <p id="emptyState" class="empty-state hidden">Your first mystery has not been revealed yet.</p>
 
-  <div class="test-tools">
-    <div>v2.24 TEST MODE · EXIT 0–3 ONLY</div>
-    <div>Simulated date: <b id="simDateText"></b></div>
-    <div class="test-hint">Try <code>?testDate=0930</code>, <code>?testDate=1012</code>, or <code>?testDate=1106</code></div>
-    <button id="resetTestBtn" class="reset-test" type="button">RESET TEST PROGRESS</button>
-  </div>
 </section>
 
 <section id="puzzle" class="screen">
@@ -154,6 +177,6 @@
 </section>
 
 </main>
-<script src="app.js?v=224"></script>
+<script src="app.js?v=225"></script>
 </body>
 </html>

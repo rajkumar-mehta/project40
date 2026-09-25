@@ -3,7 +3,7 @@ const TEST_MODE = true;
 const DEFAULT_TEST_DATE = "2026-11-06";
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
-const TEST_EXIT_MAX = 3; // v2.24 focused QA: show EXIT 0–3 only
+const TEST_EXIT_MAX = 3; // v2.25 focused QA: show EXIT 0–3 only during production-URL validation
 
 const DAYS = [
  {
@@ -1063,6 +1063,7 @@ function show(id){
  if(id!=="finale") stopBirthdayCelebration();
  screens.forEach(s=>s.classList.toggle("active",s.id===id));
  document.body.classList.toggle("home-active",id==="home");
+ document.body.classList.toggle("welcome-active",id==="welcome");
  if(id!=="puzzle") document.body.classList.remove("answer-entry-active");
  if(id!=="home"){
    document.body.classList.remove("home-grid-scrolled","portrait-score-fixed");
@@ -1243,7 +1244,7 @@ function renderGrid(){
    grid.appendChild(b);
  });
  renderScore();
- $("simDateText").textContent=todayISO();
+ const simDateText=$("simDateText"); if(simDateText) simDateText.textContent=todayISO();
  bindMobileHomeScroll();
  bindPortraitScoreFreeze();
  requestAnimationFrame(()=>{measurePortraitScore();syncPortraitScoreFreeze();syncMobileHomeChrome();});
@@ -1534,23 +1535,20 @@ document.addEventListener("click",e=>{
    e.preventDefault();e.stopImmediatePropagation();
  }
 },true);
-document.body.classList.add("home-active");
-renderGrid();
-
-
-function resetTestProgress(){
- if(!TEST_MODE) return;
- const ok=confirm("Reset all test progress for Mika's 40 Exits on this browser?");
- if(!ok) return;
- for(let day=0; day<=FINAL_EXIT; day++) localStorage.removeItem(key(day));
+function enterRoute4T(){
  renderGrid();
  show("home");
 }
-const resetBtn=$("resetTestBtn");
-if(resetBtn) resetBtn.onclick=resetTestProgress;
+const enterRouteDesktop=$("enterRouteDesktop");
+const enterRouteMobile=$("enterRouteMobile");
+if(enterRouteDesktop) enterRouteDesktop.onclick=enterRoute4T;
+if(enterRouteMobile) enterRouteMobile.onclick=enterRoute4T;
+
+document.body.classList.add("welcome-active");
+show("welcome");
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=224").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=225").catch(()=>{}));
 }
 
 function syncDesktopFrame(){
