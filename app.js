@@ -752,6 +752,8 @@ const ANSWER_PLACEHOLDERS=[
 
 let currentDay=DAYS[0], attemptsUsed=0;
 let wrongPopupAwaitingAck=false, wrongPopupSuppressClickUntil=0, wrongPopupReadyAt=0;
+let wrongPopupLockedValue="";
+let mobileSuccessGuardUntil=0;
 let confirmGiveUpReadyAt=0, confirmGiveUpUnlockTimer=0;
 let celebrationCleanupTimer=0, celebrationRunId=0;
 
@@ -823,6 +825,21 @@ function positionKeyboardUI(){
        if(!Number.isFinite(currentTop) || Math.abs(currentTop-top)>=3){
          p.style.top=top+"px";
        }
+       // v2.22 mobile-only safety net: do not guess from scroll direction.
+       // Measure the actual OK button against Chrome's currently visible viewport
+       // and move the existing v2.16/v2.7 popup only if the button is genuinely clipped.
+       const ok=p.querySelector(".wap-ok");
+       if(ok){
+         const okRect=ok.getBoundingClientRect();
+         const visibleTop=vv?vv.offsetTop:0;
+         const visibleBottom=visibleTop+(vv?vv.height:window.innerHeight);
+         const edgeGap=8;
+         if(okRect.bottom>visibleBottom-edgeGap){
+           const shift=okRect.bottom-(visibleBottom-edgeGap);
+           const popupRect=p.getBoundingClientRect();
+           p.style.top=Math.max(visibleTop+edgeGap,popupRect.top-shift)+"px";
+         }
+       }
      });
    });
  }
@@ -865,6 +882,7 @@ function openConfirmGiveUpGuarded(){
 function acknowledgeWrongPopup(p){
  if(!p || !p.classList.contains("show")) return;
  wrongPopupAwaitingAck=false;
+ wrongPopupLockedValue="";
  const backdrop=$("wrongAnswerBackdrop");
  if(p.dataset.mode==="surrender"){
    p.classList.remove("show");
@@ -928,6 +946,7 @@ function showWrongPopup(message,remaining){
  // until this exact instance is acknowledged because wrongPopupAwaitingAck=true.
  const p=buildWrongPopup();
  wrongPopupAwaitingAck=true;
+ wrongPopupLockedValue=$("answerInput")?.value??"";
  p.dataset.mode="wrong";
  p.dataset.attempt=String(MAX_ATTEMPTS-remaining);
  p.dataset.after=remaining===0?"surrender":"";
@@ -963,6 +982,7 @@ function showSurrenderPopup(){
  if(!isLikelyPhone())return false;
  const p=buildWrongPopup();
  wrongPopupAwaitingAck=true;
+ wrongPopupLockedValue=$("answerInput")?.value??"";
  p.dataset.mode="surrender";
  p.dataset.attempt="";
  p.dataset.after="";
@@ -1214,6 +1234,7 @@ function renderQuestion(day){
 function resetPuzzle(){
  attemptsUsed=0;
  wrongPopupAwaitingAck=false;
+ wrongPopupLockedValue="";
  $("answerInput").value="";$("answerInput").disabled=false;
  syncAnswerPlaceholder();
  $("feedback").textContent="";$("attempts").textContent="";
@@ -1249,6 +1270,10 @@ function check(){
    const tries=attemptsUsed+1;
    saveResult(currentDay.day,{outcome:"solved",attempts:tries,completedAt:new Date().toISOString()});
    input.value="";
+   // v2.22 mobile-only: a tap submitted while the soft keyboard is open can
+   // produce a delayed synthetic click after the success screen is already up.
+   // Guard that one originating tap so it cannot immediately hit HOME.
+   if(isLikelyPhone()) mobileSuccessGuardUntil=Date.now()+850;
    if(currentDay.day===FINAL_EXIT) openBirthdayFinale();
    else openSurprise(true);
    return;
@@ -1301,6 +1326,21 @@ submitButton.onclick=()=>{
 $("answerInput").addEventListener("beforeinput",e=>{
  if(wrongPopupAwaitingAck){e.preventDefault();e.stopPropagation();}
 });
+$("answerInput").addEventListener("input",e=>{
+ if(!wrongPopupAwaitingAck) return;
+ // Some Android IMEs (including SwiftKey composition paths) can commit text
+ // even when beforeinput was cancelled. Keep the focused field alive/keyboard
+ // open, but make its value logically immutable until OK is acknowledged.
+ if(e.currentTarget.value!==wrongPopupLockedValue){
+   e.currentTarget.value=wrongPopupLockedValue;
+   try{e.currentTarget.setSelectionRange(wrongPopupLockedValue.length,wrongPopupLockedValue.length)}catch{}
+ }
+});
+$("answerInput").addEventListener("compositionend",e=>{
+ if(wrongPopupAwaitingAck && e.currentTarget.value!==wrongPopupLockedValue){
+   e.currentTarget.value=wrongPopupLockedValue;
+ }
+});
 $("answerInput").addEventListener("paste",e=>{
  if(wrongPopupAwaitingAck){e.preventDefault();e.stopPropagation();}
 });
@@ -1329,7 +1369,6 @@ if(window.visualViewport){
 window.addEventListener("resize",hidePhoneQr,{passive:true});
 window.addEventListener("orientationchange",()=>setTimeout(hidePhoneQr,120),{passive:true});
 hidePhoneQr();
-$("hintBtn").onclick=()=>{$("feedback").textContent=`Hint: ${currentDay.hint}`;$("feedback").className="feedback";};
 $("scrollCue").onclick=()=>$("answerArea").scrollIntoView({behavior:"smooth",block:"start"});
 $("giveUpBtn").onclick=()=>show("confirmGiveUp");
 $("tryAgainBtn").onclick=e=>{
@@ -1385,7 +1424,7 @@ function stopBirthdayCelebration(){
 }
 function launchBirthdayCelebration(){
  const layer=$("celebrationLayer");
- if(!layer) return;
+ if(!layer || !$("finale")?.classList.contains("active")) return;
 
  clearTimeout(celebrationCleanupTimer);
  const runId=++celebrationRunId;
@@ -1449,16 +1488,30 @@ function openBirthdayFinale(){
  $("birthdaySurpriseBtn").textContent=available?"OPEN YOUR BIRTHDAY SURPRISE":"FINAL VIDEO COMING SOON";
  show("finale");
  // Two frames lets the finale layout settle before the fixed celebration layer starts.
- requestAnimationFrame(()=>requestAnimationFrame(launchBirthdayCelebration));
+ // If anything has navigated away in the meantime, do not launch over another screen.
+ const finaleRun=celebrationRunId;
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{
+   if(finaleRun!==celebrationRunId || !$("finale")?.classList.contains("active")) return;
+   launchBirthdayCelebration();
+ }));
 }
 
 $("surrenderSurpriseBtn").onclick=()=>currentDay.day===FINAL_EXIT?openBirthdayFinale():openSurprise(false);
 $("watchBtn").onclick=()=>{if(hasVideo()) window.open(currentDay.video,"_blank","noopener,noreferrer")};
 $("birthdaySurpriseBtn").onclick=()=>{if(hasVideo()) window.open(currentDay.video,"_blank","noopener,noreferrer")};
 document.querySelectorAll("[data-home]").forEach(b=>b.onclick=e=>{
- if(wrongPopupAwaitingAck){e.preventDefault();e.stopPropagation();return;}
+ if(wrongPopupAwaitingAck || (isLikelyPhone() && Date.now()<mobileSuccessGuardUntil)){
+   e.preventDefault();e.stopPropagation();return;
+ }
  renderGrid();show("home");
 });
+// Capture the delayed click generated by the same mobile tap that submitted a
+// correct answer. This guard exists only for the short success-transition window.
+document.addEventListener("click",e=>{
+ if(isLikelyPhone() && Date.now()<mobileSuccessGuardUntil){
+   e.preventDefault();e.stopImmediatePropagation();
+ }
+},true);
 document.body.classList.add("home-active");
 renderGrid();
 
@@ -1475,7 +1528,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=221").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=222").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

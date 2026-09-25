@@ -1,4 +1,4 @@
-# Route 4T — v2.21
+# Route 4T — v2.22
 
 - Solved/gift screen typography refinement only: smaller surprise heading; larger warm-accent birthday-message line; emphasized sender name.
 - All v2.20 puzzle, media, scoring, popup, keyboard, surrender, sticky banner/scoreboard, and photo logic preserved.
@@ -271,3 +271,12 @@ Changes from v2.6:
 - Blank Photo Puzzles rows retain the original stable riddle for that exit.
 - Alternate answers are accepted for validation; surrender reveal displays only the Correct Answer value.
 - Corrected photo filename mapping is case-safe for GitHub Pages.
+
+
+## v2.22 mobile QA patch
+- Preserves the v2.21 laptop flow.
+- Blocks the mobile post-submit ghost/tap-through click that could flash the success/finale screen and immediately return Home.
+- Birthday celebration now starts only while the finale screen is still active, so balloons/confetti cannot leak onto Home.
+- Strengthens Android/SwiftKey input locking while a wrong-answer popup is awaiting OK, without disabling the input or intentionally closing the keyboard.
+- Adds a measured visibility safeguard for the popup OK button without replacing the stable v2.16/v2.7 popup model.
+- Removes SHOW HINT from laptop and mobile.

@@ -1547,3 +1547,9 @@ button.primary:disabled{
   #video .gift-from{font-size:18px;margin:4px 12px 11px;}
   #video .gift-from-name{font-size:1.1em;}
 }
+
+
+/* =========================================================
+   ROUTE 4T v2.22 — mobile regression hardening
+   ========================================================= */
+#hintBtn{display:none!important}
