@@ -1,3 +1,10 @@
+
+## v2.23
+- Updated Route 4T data from `YT URL(3).xlsx` (latest YouTube URLs, names, photo-puzzle mappings, correct/alternate answers).
+- Wrong-answer colors are now Green → Purple → Red. All three use the same common popup engine; the prior Yellow theme is removed.
+- Removed the v2.22 first-popup viewport safety-net regression while retaining the stronger Android input lock and mobile success guards.
+- SHOW HINT remains removed on mobile and laptop.
+
 # Route 4T — v2.22
 
 - Solved/gift screen typography refinement only: smaller surprise heading; larger warm-accent birthday-message line; emphasized sender name.

@@ -1319,10 +1319,12 @@ button.primary,button.secondary,button.giveup,.home-button{width:100%;padding:15
 }
 
 /* Wrong answer attempt palette: 1 yellow, 2 lavender, 3 green. */
-.wrong-answer-popover[data-attempt="1"]{background:#5a4b23!important;border-color:#f4d978!important}
-.wrong-answer-popover[data-attempt="1"] .wap-message{color:#fff8d9!important}.wrong-answer-popover[data-attempt="1"] .wap-remaining{color:#f7e9a8!important}.wrong-answer-popover[data-attempt="1"] .wap-ok{background:#e8c95e!important;border-color:#f6df87!important;color:#241e0b!important}
+/* v2.23: one common popup engine; deterministic Green → Purple → Red themes. */
+.wrong-answer-popover[data-attempt="1"]{background:#294b3d!important;border-color:#9ed7b9!important}
+.wrong-answer-popover[data-attempt="1"] .wap-message{color:#f1fff7!important}.wrong-answer-popover[data-attempt="1"] .wap-remaining{color:#ccebd9!important}.wrong-answer-popover[data-attempt="1"] .wap-ok{background:#91cfad!important;border-color:#b8e4cb!important;color:#10261a!important}
 .wrong-answer-popover[data-attempt="2"]{background:#403653!important;border-color:#cdb9e8!important}.wrong-answer-popover[data-attempt="2"] .wap-message{color:#fffafc!important}.wrong-answer-popover[data-attempt="2"] .wap-remaining{color:#eadff6!important}.wrong-answer-popover[data-attempt="2"] .wap-ok{background:#b79ad8!important;border-color:#d9c7ed!important;color:#1b1422!important}
-.wrong-answer-popover[data-attempt="3"]{background:#294b3d!important;border-color:#9ed7b9!important}.wrong-answer-popover[data-attempt="3"] .wap-message{color:#f1fff7!important}.wrong-answer-popover[data-attempt="3"] .wap-remaining{color:#ccebd9!important}.wrong-answer-popover[data-attempt="3"] .wap-ok{background:#91cfad!important;border-color:#b8e4cb!important;color:#10261a!important}
+.wrong-answer-popover[data-attempt="3"]{background:#562e36!important;border-color:#e49aa5!important}
+.wrong-answer-popover[data-attempt="3"] .wap-message{color:#fff4f5!important}.wrong-answer-popover[data-attempt="3"] .wap-remaining{color:#f4c9cf!important}.wrong-answer-popover[data-attempt="3"] .wap-ok{background:#d97984!important;border-color:#efaab2!important;color:#2b1015!important}
 
 /* Ensure modal remains compact above phone keyboard. */
 @media(max-width:620px){

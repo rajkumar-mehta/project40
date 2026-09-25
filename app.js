@@ -21,7 +21,7 @@ const DAYS = [
    "ajman",
    "dubai"
   ],
-  "hint": "Think back to this memory from your journey."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 1,
@@ -33,12 +33,12 @@ const DAYS = [
   "lines": [
    "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "1991",
+  "answerDisplay": "1987",
   "answers": [
-   "1991",
-   "1992"
+   "1987",
+   "1988"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Alap-8.jpeg"
  },
  {
@@ -55,7 +55,7 @@ const DAYS = [
   "answers": [
    "ajman"
   ],
-  "hint": "Think back to this memory from your journey."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 3,
@@ -67,11 +67,11 @@ const DAYS = [
   "lines": [
    "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "1993",
+  "answerDisplay": "1992",
   "answers": [
-   "1993"
+   "1992"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Alap-1.jpeg"
  },
  {
@@ -89,7 +89,7 @@ const DAYS = [
    "coke",
    "pepsi"
   ],
-  "hint": "Think back to this memory from your journey."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 5,
@@ -101,12 +101,11 @@ const DAYS = [
   "lines": [
    "Where was this picture taken ?"
   ],
-  "answerDisplay": "Bahrain",
+  "answerDisplay": "Kuwait",
   "answers": [
-   "bahrain",
    "kuwait"
   ],
-  "hint": "Look closely at the photo and think about where this memory happened.",
+  "hint": "Study the photo and think about where this memory happened.",
   "photo": "Alap-12.jpeg"
  },
  {
@@ -126,7 +125,7 @@ const DAYS = [
    "ms kaur",
    "kaur"
   ],
-  "hint": "Think back to this memory from your journey."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 7,
@@ -143,16 +142,16 @@ const DAYS = [
    "1988",
    "1987"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Alap-10.jpeg"
  },
  {
   "day": 8,
   "date": "2026-10-05",
   "displayDate": "October 5, 2026",
-  "video": "https://youtu.be/jexm_8zkQhc",
+  "video": "https://youtu.be/U55yQ0uvWhw",
   "relation": "Friend",
-  "wishFrom": "Chirag & Ashesh Family",
+  "wishFrom": "Sanghvi Brothers",
   "lines": [
    "What was the School Bus Number, where Archana made you eat Lasan ki chutney"
   ],
@@ -161,7 +160,7 @@ const DAYS = [
    "3",
    "three"
   ],
-  "hint": "Think back to this memory from your journey."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 9,
@@ -177,16 +176,16 @@ const DAYS = [
   "answers": [
    "dadima"
   ],
-  "hint": "Look closely at the people in the photo and think back to this memory.",
+  "hint": "Look closely at the people in this memory.",
   "photo": "Alap-13.jpeg"
  },
  {
   "day": 10,
   "date": "2026-10-07",
   "displayDate": "October 7, 2026",
-  "video": null,
+  "video": "https://youtu.be/jexm_8zkQhc",
   "relation": "Friend",
-  "wishFrom": "ShAmeet",
+  "wishFrom": "Chirag & Ashesh Family",
   "lines": [
    "What was the color of the Scooty, from where you and Archana fell in the middle of the road ?"
   ],
@@ -197,15 +196,15 @@ const DAYS = [
    "purple",
    "blue"
   ],
-  "hint": "Think back to this memory from your journey."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 11,
   "date": "2026-10-08",
   "displayDate": "October 8, 2026",
-  "video": null,
+  "video": "https://youtube.com/shorts/EJIS5RhjFUo?feature=share",
   "relation": "Friend",
-  "wishFrom": "Komal",
+  "wishFrom": "GariMan",
   "lines": [
    "Which city (Place) was this picture taken ?"
   ],
@@ -216,16 +215,16 @@ const DAYS = [
    "rajkot",
    "bahrain"
   ],
-  "hint": "Look closely at the photo and think about where this memory happened.",
+  "hint": "Study the photo and think about where this memory happened.",
   "photo": "Alap-9.jpeg"
  },
  {
   "day": 12,
   "date": "2026-10-09",
   "displayDate": "October 9, 2026",
-  "video": "https://youtu.be/9Whn6sJi1yw",
+  "video": "https://youtu.be/b46etLzpx5c",
   "relation": "Friend",
-  "wishFrom": "Lynky & GariMan",
+  "wishFrom": "ShAmeet",
   "lines": [
    "What was your favourite orange drink from Ajman"
   ],
@@ -233,15 +232,15 @@ const DAYS = [
   "answers": [
    "rani"
   ],
-  "hint": "Think back to this memory from your journey."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 13,
   "date": "2026-10-10",
   "displayDate": "October 10, 2026",
-  "video": "https://youtu.be/U55yQ0uvWhw",
+  "video": null,
   "relation": "Friend",
-  "wishFrom": "Sanghvi Brothers",
+  "wishFrom": "Komal",
   "lines": [
    "How old are you in this picture"
   ],
@@ -250,16 +249,16 @@ const DAYS = [
    "15",
    "fifteen"
   ],
-  "hint": "Look closely at the photo and think back to this memory.",
+  "hint": "Take a close look at the photo and think about the memory behind it.",
   "photo": "Alap-11.jpeg"
  },
  {
   "day": 14,
   "date": "2026-10-11",
   "displayDate": "October 11, 2026",
-  "video": null,
+  "video": "https://youtu.be/MIS5d7pivQ0",
   "relation": "Friend",
-  "wishFrom": "Payal & Sapan",
+  "wishFrom": "LynKy",
   "lines": [
    "Name the country where this picture was taken"
   ],
@@ -267,7 +266,7 @@ const DAYS = [
   "answers": [
    "bahrain"
   ],
-  "hint": "Look closely at the photo and think about where this memory happened.",
+  "hint": "Study the photo and think about where this memory happened.",
   "photo": "Alap-7.jpeg"
  },
  {
@@ -286,7 +285,7 @@ const DAYS = [
    "navsaari",
    "nawsari"
   ],
-  "hint": "Look closely at the photo and think about where this memory happened.",
+  "hint": "Study the photo and think about where this memory happened.",
   "photo": "Jagruti-1.jpeg"
  },
  {
@@ -305,7 +304,7 @@ const DAYS = [
    "anjani",
    "bhargav"
   ],
-  "hint": "Look closely at the people in the photo and think back to this memory.",
+  "hint": "Look closely at the people in this memory.",
   "photo": "Alap-2.jpeg"
  },
  {
@@ -322,7 +321,7 @@ const DAYS = [
   "answers": [
    "sedona"
   ],
-  "hint": "Look closely at the photo and think about where this memory happened.",
+  "hint": "Study the photo and think about where this memory happened.",
   "photo": "Raj-2.jpg"
  },
  {
@@ -340,7 +339,7 @@ const DAYS = [
    "rakhi",
    "rakshabandhan"
   ],
-  "hint": "Look closely at the photo and think back to this memory.",
+  "hint": "Take a close look at the photo and think about the memory behind it.",
   "photo": "Alap-5.jpeg"
  },
  {
@@ -357,7 +356,7 @@ const DAYS = [
   "answers": [
    "alaska"
   ],
-  "hint": "Look closely at the photo and think about where this memory happened.",
+  "hint": "Study the photo and think about where this memory happened.",
   "photo": "Raj-1.jpg"
  },
  {
@@ -374,7 +373,7 @@ const DAYS = [
   "answers": [
    "san francisco"
   ],
-  "hint": "Look closely at the photo and think about where this memory happened.",
+  "hint": "Study the photo and think about where this memory happened.",
   "photo": "Raj-3.jpg"
  },
  {
@@ -392,7 +391,7 @@ const DAYS = [
    "ajman",
    "dubai"
   ],
-  "hint": "Look closely at the photo and think about where this memory happened.",
+  "hint": "Study the photo and think about where this memory happened.",
   "photo": "Alap-3.jpeg"
  },
  {
@@ -409,7 +408,7 @@ const DAYS = [
   "answers": [
    "bhargav"
   ],
-  "hint": "Look closely at the people in the photo and think back to this memory.",
+  "hint": "Look closely at the people in this memory.",
   "photo": "Alap-4.jpeg"
  },
  {
@@ -418,7 +417,7 @@ const DAYS = [
   "displayDate": "October 20, 2026",
   "video": null,
   "relation": "Friend",
-  "wishFrom": "Misri - Payal",
+  "wishFrom": "Payal & Sapan",
   "lines": [
    "What has a head and a tail but no body?"
   ],
@@ -433,9 +432,9 @@ const DAYS = [
   "day": 24,
   "date": "2026-10-21",
   "displayDate": "October 21, 2026",
-  "video": null,
+  "video": "https://youtu.be/GC6Eh0lCJ84",
   "relation": "Friend",
-  "wishFrom": "Misri - Jayshree",
+  "wishFrom": "Misri - Payal",
   "lines": [
    "What has four wheels and flies?"
   ],
@@ -450,9 +449,9 @@ const DAYS = [
   "day": 25,
   "date": "2026-10-22",
   "displayDate": "October 22, 2026",
-  "video": "https://youtu.be/7Qai7Mav74c",
-  "relation": "Cousin",
-  "wishFrom": "Jayanti Bapa Family",
+  "video": null,
+  "relation": "Friend",
+  "wishFrom": "Misri - Jayshree",
   "lines": [
    "What has a bed but never sleeps?"
   ],
@@ -467,9 +466,9 @@ const DAYS = [
   "day": 26,
   "date": "2026-10-23",
   "displayDate": "October 23, 2026",
-  "video": "https://youtu.be/26SCfqydB5c",
+  "video": "https://youtu.be/7Qai7Mav74c",
   "relation": "Cousin",
-  "wishFrom": "Jetha Bapa Family",
+  "wishFrom": "Jayanti Bapa Family",
   "lines": [
    "What has branches but no fruit, trunk, or leaves?"
   ],
@@ -484,9 +483,9 @@ const DAYS = [
   "day": 27,
   "date": "2026-10-24",
   "displayDate": "October 24, 2026",
-  "video": "https://youtube.com/shorts/dMGs_tKZvNg?feature=share",
-  "relation": "Uncle-In-Law",
-  "wishFrom": "Harsh & Zalak",
+  "video": "https://youtu.be/26SCfqydB5c",
+  "relation": "Cousin",
+  "wishFrom": "Jetha Bapa Family",
   "lines": [
    "What invention lets you look right through a wall?"
   ],
@@ -501,9 +500,9 @@ const DAYS = [
   "day": 28,
   "date": "2026-10-25",
   "displayDate": "October 25, 2026",
-  "video": "https://youtu.be/yT0IEMagJ_k",
-  "relation": "Cousin",
-  "wishFrom": "Pravin Bapa Family",
+  "video": "https://youtube.com/shorts/dMGs_tKZvNg?feature=share",
+  "relation": "Uncle-In-Law",
+  "wishFrom": "Harsh & Zalak",
   "lines": [
    "Which month and year (mm/yyyy) was this picture taken ?"
   ],
@@ -513,16 +512,16 @@ const DAYS = [
    "feb-2016",
    "feb"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Alap-6.jpeg"
  },
  {
   "day": 29,
   "date": "2026-10-26",
   "displayDate": "October 26, 2026",
-  "video": null,
+  "video": "https://youtu.be/yT0IEMagJ_k",
   "relation": "Cousin",
-  "wishFrom": "Dipak Mama",
+  "wishFrom": "Pravin Bapa Family",
   "lines": [
    "What was the exact date (mm/dd/yyyy) when this picture was taken"
   ],
@@ -530,16 +529,16 @@ const DAYS = [
   "answers": [
    "11/6/2015"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Raj-5.jpg"
  },
  {
   "day": 30,
   "date": "2026-10-27",
   "displayDate": "October 27, 2026",
-  "video": "https://youtu.be/1b2bhSTGTkU",
-  "relation": "Cousin",
-  "wishFrom": "Rajubhai & Ruchita",
+  "video": "https://youtu.be/5K1bO78drq0",
+  "relation": "Niece",
+  "wishFrom": "Hetvi & Abhit",
   "lines": [
    "Name the city/place, you spent your birthday in 2016"
   ],
@@ -547,18 +546,20 @@ const DAYS = [
   "answers": [
    "surednranagar"
   ],
-  "hint": "Think back to this memory from your journey."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 31,
   "date": "2026-10-28",
   "displayDate": "October 28, 2026",
-  "video": "https://youtube.com/shorts/crKQHr-ygzw?feature=share",
+  "video": "https://youtu.be/1b2bhSTGTkU",
   "relation": "Cousin",
-  "wishFrom": "Jayshreeben, Udaybhai & Rinku",
+  "wishFrom": "Rajubhai & Ruchita",
   "lines": [
    "What was the exact date (mm/dd/yyyy) when this picture was taken ?",
-   "or",
+   "",
+   "OR",
+   "",
    "Name the City/Place where this picture was taken ?"
   ],
   "answerDisplay": "11/6/2017",
@@ -567,16 +568,16 @@ const DAYS = [
    "jersey city",
    "hoboken"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Raj-6.jpg"
  },
  {
   "day": 32,
   "date": "2026-10-29",
   "displayDate": "October 29, 2026",
-  "video": "https://youtube.com/shorts/cI3Jo0ij6x4?feature=share",
-  "relation": "Sister-In-Law & Niece",
-  "wishFrom": "Neha",
+  "video": "https://youtube.com/shorts/SknlZ23htAU?feature=share",
+  "relation": "Cousin",
+  "wishFrom": "Jayshreeben, Udaybhai & Rinku",
   "lines": [
    "Which year (yyyy) was this picture taken ?"
   ],
@@ -585,16 +586,16 @@ const DAYS = [
    "2018",
    "18"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Raj-7.jpg"
  },
  {
   "day": 33,
   "date": "2026-10-30",
   "displayDate": "October 30, 2026",
-  "video": "https://youtu.be/bvQLMAByDLs",
-  "relation": "Sister & Brother",
-  "wishFrom": "Bhavika, Anjani, Bhargav",
+  "video": "https://youtu.be/sWUeLegdRrQ",
+  "relation": "Sister-In-Law",
+  "wishFrom": "Neha",
   "lines": [
    "Exact date (mm/dd/yyyy) when this picture was taken ?"
   ],
@@ -602,7 +603,7 @@ const DAYS = [
   "answers": [
    "01/05/2017"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Raj-12.jpg"
  },
  {
@@ -610,7 +611,7 @@ const DAYS = [
   "date": "2026-10-31",
   "displayDate": "October 31, 2026",
   "video": "https://youtu.be/A8tQixyaVbg",
-  "relation": "Aunty",
+  "relation": "Aunty & Family",
   "wishFrom": "Kaki & Family",
   "lines": [
    "Which year (yyyy) was this picture taken ?"
@@ -620,7 +621,7 @@ const DAYS = [
    "2020",
    "20"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Raj-8.jpg"
  },
  {
@@ -638,7 +639,7 @@ const DAYS = [
    "2021",
    "21"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Raj-9.jpg"
  },
  {
@@ -656,7 +657,7 @@ const DAYS = [
    "2022",
    "22"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Raj-10.jpg"
  },
  {
@@ -673,7 +674,7 @@ const DAYS = [
   "answers": [
    "singapore"
   ],
-  "hint": "Look closely at the photo and think about where this memory happened.",
+  "hint": "Study the photo and think about where this memory happened.",
   "photo": "Raj-4.jpg"
  },
  {
@@ -690,14 +691,14 @@ const DAYS = [
   "answers": [
    "2024"
   ],
-  "hint": "Look closely at the photo and think about when this memory happened.",
+  "hint": "Take a close look at the photo and think about when this memory happened.",
   "photo": "Raj-11.jpg"
  },
  {
   "day": 39,
   "date": "2026-11-05",
   "displayDate": "November 5, 2026",
-  "video": null,
+  "video": "https://youtube.com/shorts/ahWvAv5jIP0?feature=share",
   "relation": "Mom",
   "wishFrom": "Leela Chavda",
   "lines": [
@@ -824,21 +825,6 @@ function positionKeyboardUI(){
        // visualViewport jitter that made an already-correct popup visibly flicker.
        if(!Number.isFinite(currentTop) || Math.abs(currentTop-top)>=3){
          p.style.top=top+"px";
-       }
-       // v2.22 mobile-only safety net: do not guess from scroll direction.
-       // Measure the actual OK button against Chrome's currently visible viewport
-       // and move the existing v2.16/v2.7 popup only if the button is genuinely clipped.
-       const ok=p.querySelector(".wap-ok");
-       if(ok){
-         const okRect=ok.getBoundingClientRect();
-         const visibleTop=vv?vv.offsetTop:0;
-         const visibleBottom=visibleTop+(vv?vv.height:window.innerHeight);
-         const edgeGap=8;
-         if(okRect.bottom>visibleBottom-edgeGap){
-           const shift=okRect.bottom-(visibleBottom-edgeGap);
-           const popupRect=p.getBoundingClientRect();
-           p.style.top=Math.max(visibleTop+edgeGap,popupRect.top-shift)+"px";
-         }
        }
      });
    });
@@ -1528,7 +1514,7 @@ const resetBtn=$("resetTestBtn");
 if(resetBtn) resetBtn.onclick=resetTestProgress;
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=222").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=223").catch(()=>{}));
 }
 
 function syncDesktopFrame(){
