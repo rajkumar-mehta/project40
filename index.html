@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0d1422">
+<meta name="theme-color" content="#5a2f10">
 <title>ROUTE 4T · MIKA'S JOURNEY</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=231">
+<link rel="stylesheet" href="styles.css?v=232">
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
@@ -14,60 +14,40 @@
 
 <section id="welcome" class="screen active welcome-screen" aria-labelledby="welcomeTitle">
   <div class="welcome-poster-shell">
-    <img class="welcome-top-full" src="welcome-top-full.png" alt="" aria-hidden="true">
     <h1 id="welcomeTitle" class="sr-only">Route 4T — Mika’s Journey with 40 Exits</h1>
-    <p class="sr-only">Challenging Puzzles and Rewarding Gifts for a Wiser You.</p>
-    <div class="welcome-photo-stage">
-      <img class="welcome-original-photo" src="welcome-mika-crop.jpg" alt="Mika standing in the back of a Cybertruck">
+
+    <div class="welcome-photo-frame">
+      <img class="welcome-original-photo" src="welcome-mika-fall.png" alt="Mika standing in the back of a Cybertruck on a fall mountain road">
     </div>
-    <img class="welcome-rule-art" src="welcome-rule.png" alt="" aria-hidden="true">
-    <div class="sr-only">
-      <h2>Rule of the Road</h2>
-      <p>Phones while driving? Never. Phones for Route 4T? Sadly, yes. One phone. One browser. All 40 exits. Or your score may take the next exit.</p>
-    </div>
-    <button id="enterRouteMobile" class="welcome-poster-enter" type="button" aria-label="Fine, let’s hit the road">
-      <span class="welcome-enter-label">FINE… LET’S HIT THE ROAD 🚗</span>
-      <span class="welcome-enter-arrow" aria-hidden="true">›</span>
+
+    <img class="welcome-title-art" src="welcome-title-autumn.png" alt="Route 4T — Mika’s Journey with 40 Exits. Solve Daily Puzzles, Unlock Surprise Gifts, Beat the Scoreboard — Ready for the Game?">
+
+    <img class="welcome-rules-art" src="welcome-rules-autumn.png" alt="Rules of the Road: Phones while driving? Never. Phones for Route 4T? Sadly, yes. One phone. One browser. All 40 exits. Honk the horn to enter the game.">
+
+    <button id="enterRouteMobile" class="welcome-honk-button" type="button" aria-label="Honk the horn to enter Route 4T">
+      <img src="welcome-honk-autumn.png" alt="" aria-hidden="true">
+      <span class="sr-only">Honk to hit the road</span>
     </button>
   </div>
 </section>
 
 <section id="home" class="screen">
   <header class="masthead project40-header">
-    <div class="project40-brand" aria-label="Route 4T">
-      <span class="brand-sparkle sparkle-left" aria-hidden="true">✦</span>
-      <h1 class="project40-handwritten">Route <span>4T</span></h1>
-      <span class="brand-sparkle sparkle-right" aria-hidden="true">✧</span>
-      <span class="brand-sparkle sparkle-mini" aria-hidden="true">✦</span>
-    </div>
-    <div class="journey-lockup option5-lockup">
-      <div class="project40-subtitle">MIKA’S JOURNEY</div>
-      <div class="project40-subline"><span class="subline-with">with</span> <span class="subline-exits">40 EXITS</span></div>
-    </div>
-    <div class="journey-intro">
-      <span class="intro-desktop">A 40-DAY JOURNEY HAS BEGUN. ONE MYSTERY AWAITS EACH DAY.<br>
-      SOLVE THE MYSTERY, UNLOCK EXITS, GRAB SURPRISE GIFTS.</span>
-      <span class="intro-mobile">
-        <span>A 40-DAY JOURNEY HAS BEGUN.</span>
-        <span>ONE MYSTERY AWAITS EACH DAY.</span>
-        <span>SOLVE THE MYSTERY, UNLOCK EXITS,</span>
-        <span>GRAB SURPRISE GIFTS.</span>
-      </span>
-    </div>
+    <img class="home-header-art" src="home-header-autumn.png" alt="Route 4T — Mika’s Journey with 40 Exits. Solve Daily Puzzles, Unlock Surprise Gifts, Beat the Scoreboard — Ready for the Game?">
   </header>
 
   <section class="score-card" aria-label="Scoreboard">
     <div class="score-main">
       <div class="score-player"><small>MIKA</small><strong id="mikaScore">0</strong></div>
-      <div class="score-divider"><small>VS.</small><span>—</span></div>
+      <div class="score-divider"><small>VS.</small><span>VS</span></div>
       <div class="score-player"><small>THE MYSTERY</small><strong id="mysteryScore">0</strong></div>
     </div>
     <div class="score-stats">
-      <span>✦ Solved <b id="solvedCount">0</b></span>
-      <span><span class="white-flag">⚑</span> White Flags <b id="flagCount">0</b></span>
-      <span>◎ First-Try <b id="firstTryCount">0</b></span>
-      <span>🔥 Current Streak <b id="streakCount">0</b></span>
-      <span>★ Best Streak <b id="bestStreakCount">0</b></span>
+      <span class="stat-item stat-solved"><span class="stat-icon" aria-hidden="true">🧩</span><span class="stat-label">Solved</span><b id="solvedCount">0</b></span>
+      <span class="stat-item stat-flags"><span class="stat-icon" aria-hidden="true">⚑</span><span class="stat-label">White Flags</span><b id="flagCount">0</b></span>
+      <span class="stat-item stat-first"><span class="stat-icon" aria-hidden="true">◎</span><span class="stat-label">First-Try</span><b id="firstTryCount">0</b></span>
+      <span class="stat-item stat-current"><span class="stat-icon" aria-hidden="true">🔥</span><span class="stat-label">Current Streak</span><b id="streakCount">0</b></span>
+      <span class="stat-item stat-best"><span class="stat-icon" aria-hidden="true">🏆</span><span class="stat-label">Best Streak</span><b id="bestStreakCount">0</b></span>
     </div>
   </section>
 
@@ -168,6 +148,6 @@
 </section>
 
 </main>
-<script src="app.js?v=231"></script>
+<script src="app.js?v=232"></script>
 </body>
 </html>

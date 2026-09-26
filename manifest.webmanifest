@@ -1,10 +1,10 @@
 {
-  "name": "Route 4T — Mika's Journey",
+  "name": "Route 4T \u2014 Mika's Journey",
   "short_name": "Route 4T",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0b111d",
-  "theme_color": "#0b111d",
+  "background_color": "#5a2f10",
+  "theme_color": "#5a2f10",
   "description": "A forty-day mystery made for Mika.",
   "icons": [
     {

@@ -1,5 +1,5 @@
 
-const QA_SHOW_ALL_EXITS = true; // v2.30 QA: intentionally exposes EXIT 0–40 for full production-URL testing. Disable for launch.
+const QA_SHOW_ALL_EXITS = true; // v2.32 QA: intentionally exposes EXIT 0–40 for full production-URL testing. Disable for launch.
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
 
@@ -1170,7 +1170,7 @@ function renderScore(){
  const s=computeStats();
  $("mikaScore").textContent=s.solved;
  $("mysteryScore").textContent=s.flags;
- $("solvedCount").textContent=s.solved;
+ $("solvedCount").textContent=`${s.solved}/40`;
  $("flagCount").textContent=s.flags;
  $("firstTryCount").textContent=s.firstTry;
  $("streakCount").textContent=s.current;
@@ -1259,22 +1259,36 @@ function stateMarkup(d){
    if(d.day===FINAL_EXIT){
      return {
        icon:lockIcon(true),
+       rowClass:"solved-state",
        state:`<span class="solved">🎉 HAPPY BIRTHDAY!</span>`
      };
    }
    return {
      icon:lockIcon(true),
+     rowClass:"solved-state",
      state:`<span class="solved">MYSTERY SOLVED · ${r.attempts} ATTEMPT${r.attempts===1?"":"S"}</span>`
    };
  }
  if(r?.outcome==="gave-up"){
    return {
      icon:flagIcon(),
+     rowClass:"flag-state",
      state:`<span class="flag">THE MYSTERY WON THIS ONE</span>`
    };
  }
+ // In the all-exits QA build, future EXITs remain tappable for testing but
+ // visually retain their real-world locked state. The launch build hides them.
+ const futureLocked=(d.unlockAt ? visibilityNow().getTime()<new Date(d.unlockAt).getTime() : d.date>todayISO());
+ if(futureLocked){
+   return {
+     icon:lockIcon(false),
+     rowClass:"locked-state",
+     state:`<span class="locked">LOCKED</span>`
+   };
+ }
  return {
-   icon:lockIcon(false),
+   icon:lockIcon(true),
+   rowClass:"ready-state",
    state:`<span class="ready">READY TO UNLOCK</span>`
  };
 }
@@ -1289,7 +1303,7 @@ function renderGrid(){
    const todayChip=d.date===todayISO()?`<span class="today-chip">TODAY</span>`:"";
    b.dataset.secret=String(d.day);
    b.dataset.date=d.date;
-   b.innerHTML=`<div class="dayline"><div class="day"><span class="exit-word">EXIT</span><span class="exit-number">${d.day}</span></div>${status.icon}</div><div class="date">${d.displayDate} ${todayChip}</div><div class="state">${status.state}</div>`;
+   b.innerHTML=`<div class="dayline"><div class="day"><span class="exit-word">EXIT</span><span class="exit-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
    b.onclick=()=>openDay(d.day);
    grid.appendChild(b);
  });
@@ -1629,9 +1643,45 @@ document.addEventListener("click",e=>{
    }
  },{capture:true,passive:false});
 });
+function playHonkSound(){
+ try{
+   const AudioCtx=window.AudioContext||window.webkitAudioContext;
+   if(!AudioCtx) return Promise.resolve();
+   const ctx=new AudioCtx();
+   const master=ctx.createGain();
+   master.gain.value=0.0001;
+   master.connect(ctx.destination);
+   const start=ctx.currentTime+0.02;
+   const freqs=[392,329,392,329];
+   freqs.forEach((f,i)=>{
+     const osc=ctx.createOscillator();
+     const gain=ctx.createGain();
+     osc.type=i%2?"square":"sawtooth";
+     osc.frequency.setValueAtTime(f,start+i*0.12);
+     gain.gain.setValueAtTime(0.0001,start+i*0.12);
+     gain.gain.exponentialRampToValueAtTime(0.16,start+i*0.12+0.02);
+     gain.gain.exponentialRampToValueAtTime(0.0001,start+i*0.12+0.11);
+     osc.connect(gain);gain.connect(master);
+     osc.start(start+i*0.12); osc.stop(start+i*0.12+0.12);
+   });
+   master.gain.exponentialRampToValueAtTime(0.9,start+0.01);
+   master.gain.exponentialRampToValueAtTime(0.0001,start+0.52);
+   return new Promise(res=>setTimeout(()=>{ctx.close().catch(()=>{});res();},560));
+ }catch(e){ return Promise.resolve(); }
+}
 function enterRoute4T(){
- renderGrid();
- show("home");
+ const button=$("enterRouteMobile");
+ if(button?.disabled) return;
+ if(button){button.disabled=true;button.classList.add("honked");}
+ const p=playHonkSound();
+ // Keep the HONK sign on screen for a beat so the press animation and horn
+ // feel intentional, then enter the existing game HOME without touching progress.
+ setTimeout(()=>{
+   renderGrid();
+   show("home");
+   if(button){button.disabled=false;button.classList.remove("honked");}
+ },430);
+ if(p&&typeof p.then==="function") p.catch(()=>{});
 }
 const enterRouteMobile=$("enterRouteMobile");
 if(enterRouteMobile) enterRouteMobile.onclick=enterRoute4T;
@@ -1643,7 +1693,7 @@ show("welcome");
 if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=231").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=232").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

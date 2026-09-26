@@ -1,22 +1,30 @@
-# Route 4T — v2.31 WELCOME-PAGE REFINEMENT QA BUILD
+# Route 4T — v2.32 AUTUMN THEME QA BUILD
 
-Built directly from v2.30. Gameplay code, popup behavior, YouTube app handling,
-scoring, storage keys, answer validation, surrender flow, latest puzzle/YT data,
-and all-exits QA visibility are carried forward unchanged.
+Built from the proven v2.31/v2.30 gameplay baseline. Puzzle logic, three-attempt
+flow, popup keyboard protection, anti-ghost-tap shield, surrender flow, scoring,
+storage keys, completed-EXIT immutability, YouTube-app launch behavior, puzzle
+content and YT mappings are carried forward.
 
-## Focused v2.31 changes
-- Removed the baked-in decorative ENTER button from the rendered poster by splitting
-  the welcome artwork before that region. There is now only ONE visible/live button.
-- New ENTER button is a raised green highway-sign control with double white border,
-  depth/shadow, arrow block, and pressed/tap feedback.
-- Mika/Cybertruck uses a crop taken directly from the original uploaded photo.
-  No AI-modified Mika image is used; only excess lower parking-lot detail was cropped.
-- The photo panel is shorter/wider, allowing more of the winding-road scenery to remain visible.
-- Rule of the Road artwork/copy is unchanged.
-- v2.30 gameplay fixes are untouched.
+## v2.32 visual changes
+- New autumn/fall visual direction across WELCOME and GAME HOME.
+- WELCOME starts with the user-supplied fall Cybertruck/Mika image. The exact
+  uploaded PNG bytes are included as `welcome-mika-fall.png`; no face retouching
+  or recompression is applied.
+- Route 4T / Mika's Journey artwork uses the approved fall road theme.
+- Copy now uses the approved game message and **RULES of the ROAD** wording.
+- HONK sign replaces the old ENTER button. Tapping it plays a short horn sound,
+  gives a press animation, then enters the existing GAME HOME.
+- GAME HOME no longer uses the black/full-moon theme. It uses the fall road theme.
+- Scoreboard restyled to the approved wood/brass direction while preserving all
+  live values. Bottom stat strip prominently shows Solved, White Flags, First-Try,
+  Current Streak and Best Streak.
+- EXIT tiles are now solid sign-style cards rather than repeating scenic photos.
+- Green open locks indicate available/solved states; red closed locks indicate
+  future locked states in this all-exits QA build. Future EXITs remain tappable
+  only because QA_SHOW_ALL_EXITS is enabled.
+- Portrait scoreboard freeze behavior is preserved.
 
 ## QA note
-- EXIT 0 through EXIT 40 remain visible for testing.
+- EXIT 0 through EXIT 40 remain visible/tappable for testing.
 - This is NOT the date-gated launch build.
-
-Cache/service-worker version: v231.
+- Cache/service-worker version: v232.
