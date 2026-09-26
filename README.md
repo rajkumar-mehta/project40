@@ -1,30 +1,24 @@
-# Route 4T — v2.32 AUTUMN THEME QA BUILD
+# Route 4T — v2.33 FULL FALL + SEQUENTIAL PLAY QA BUILD
 
-Built from the proven v2.31/v2.30 gameplay baseline. Puzzle logic, three-attempt
-flow, popup keyboard protection, anti-ghost-tap shield, surrender flow, scoring,
-storage keys, completed-EXIT immutability, YouTube-app launch behavior, puzzle
-content and YT mappings are carried forward.
+Built from v2.32 with the approved gameplay engine preserved and the requested final-theme/notification changes layered on top.
 
-## v2.32 visual changes
-- New autumn/fall visual direction across WELCOME and GAME HOME.
-- WELCOME starts with the user-supplied fall Cybertruck/Mika image. The exact
-  uploaded PNG bytes are included as `welcome-mika-fall.png`; no face retouching
-  or recompression is applied.
-- Route 4T / Mika's Journey artwork uses the approved fall road theme.
-- Copy now uses the approved game message and **RULES of the ROAD** wording.
-- HONK sign replaces the old ENTER button. Tapping it plays a short horn sound,
-  gives a press animation, then enters the existing GAME HOME.
-- GAME HOME no longer uses the black/full-moon theme. It uses the fall road theme.
-- Scoreboard restyled to the approved wood/brass direction while preserving all
-  live values. Bottom stat strip prominently shows Solved, White Flags, First-Try,
-  Current Streak and Best Streak.
-- EXIT tiles are now solid sign-style cards rather than repeating scenic photos.
-- Green open locks indicate available/solved states; red closed locks indicate
-  future locked states in this all-exits QA build. Future EXITs remain tappable
-  only because QA_SHOW_ALL_EXITS is enabled.
-- Portrait scoreboard freeze behavior is preserved.
+## v2.33 focus
+- Continuous fall-road background across Welcome, Game Home, Puzzle, Review, Surrender, Gift, and Finale screens.
+- Solid unified green highway EXIT tiles; no pasted-on black status rectangle.
+- Green open padlock for playable/solved; red closed padlock for blocked/locked; white flag remains for surrendered exits.
+- Wood/brass scoreboard retained with five-stat bottom row: Solved/40, White Flags, First-Try, Current Streak, Best Streak.
+- Wrong-answer + surrender popups use one mature autumn color theme and the same top-of-visible-viewport anchor.
+- Reveal-answer typography reduced and forced to one line where practical.
+- Completed exits are read-only: question + correct answer + locked result, no replay.
+- Strict sequential progression: earliest unfinished eligible EXIT must be completed before later EXITs can be played. Catch-up can continue through multiple exits the same day, in order.
+- Sequence warning redirects to the required EXIT.
+- Formspree notifications to configured endpoint for EXIT opened, each answer submitted, solved, and surrendered; delivery failure never blocks gameplay and pending alerts retry later.
+- HONK-only entry sign, smaller/mobile-safe, with deeper semi-truck/train-style synthesized horn.
+- YouTube app preference preserved.
+- Existing result storage keys and completed-result immutability preserved.
 
 ## QA note
-- EXIT 0 through EXIT 40 remain visible/tappable for testing.
-- This is NOT the date-gated launch build.
-- Cache/service-worker version: v232.
+- EXIT 0–40 remain visible and date-eligible in this QA build (`QA_SHOW_ALL_EXITS = true`) so sequential progression can be tested immediately.
+- Final launch build must switch QA visibility off to restore real date gating/hide future exits.
+
+Cache/service-worker version: v233.

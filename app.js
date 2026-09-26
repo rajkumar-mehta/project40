@@ -2,6 +2,9 @@
 const QA_SHOW_ALL_EXITS = true; // v2.32 QA: intentionally exposes EXIT 0–40 for full production-URL testing. Disable for launch.
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mjykazrp";
+const EMAIL_QUEUE_KEY = "route4t_email_queue_v1";
+const EMAIL_SENT_PREFIX = "route4t_email_sent_v1_";
 
 const DAYS = [
  {
@@ -773,7 +776,12 @@ function isLikelyPhone(){
 function fitRevealAnswer(text){
  const el=$("answerReveal"); if(!el) return;
  const n=(text||"").trim().length;
- el.style.fontSize=n<=8?"clamp(48px,14vw,86px)":n<=14?"clamp(38px,10.5vw,68px)":n<=22?"clamp(29px,8vw,54px)":"clamp(23px,6.4vw,42px)";
+ // v2.33: reveal answers are intentionally ~35% smaller and kept on one line.
+ const size=n<=8?"clamp(30px,8vw,52px)":n<=14?"clamp(24px,6.7vw,42px)":n<=22?"clamp(20px,5.6vw,34px)":"clamp(16px,4.6vw,28px)";
+ el.style.fontSize=size;
+ el.style.whiteSpace="nowrap";
+ el.style.overflowX="auto";
+ el.style.textOverflow="clip";
 }
 function hidePhoneQr(){
  const phone=isLikelyPhone();
@@ -820,22 +828,9 @@ function positionKeyboardUI(){
      const maxH=Math.max(104,viewportHeight-(safeGap*2));
      p.style.maxHeight=maxH+"px";
      p.style.bottom="auto";
-     p.style.top=(viewportTop+safeGap)+"px";
-     requestAnimationFrame(()=>{
-       const h=Math.min(p.offsetHeight,maxH);
-       const isWrong=p.dataset.mode==="wrong";
-       // v2.30: ALL wrong-answer messages use one fixed, keyboard-safe position.
-       // Green, Purple and Red are anchored to the TOP of the browser's currently
-       // visible viewport across Samsung Internet/Chrome and common Android keyboards.
-       const top=isWrong
-         ? viewportTop+safeGap
-         : Math.max(viewportTop+safeGap,viewportTop+viewportHeight-h-safeGap);
-       const currentTop=parseFloat(p.style.top);
-       // Ignore tiny Android visualViewport jitter that would otherwise flicker.
-       if(!Number.isFinite(currentTop) || Math.abs(currentTop-top)>=3){
-         p.style.top=top+"px";
-       }
-     });
+     const top=viewportTop+safeGap;
+     const currentTop=parseFloat(p.style.top);
+     if(!Number.isFinite(currentTop) || Math.abs(currentTop-top)>=2) p.style.top=top+"px";
    });
  }
 }
@@ -1128,10 +1123,105 @@ function restartInProgress(day){
  const backup=readBackup(); backup[day]=r; writeBackup(backup);
  return r;
 }
-function isVisible(d){
+
+function isFinalResult(r){return !!r&&(r.outcome==="solved"||r.outcome==="gave-up")}
+function isDateEligible(d){
  if(QA_SHOW_ALL_EXITS) return true;
  if(d.unlockAt) return visibilityNow().getTime()>=new Date(d.unlockAt).getTime();
  return d.date<=todayISO();
+}
+function nextRequiredDay(){
+ const eligible=DAYS.filter(isDateEligible).slice().sort((a,b)=>a.day-b.day);
+ return eligible.find(d=>!isFinalResult(getResult(d.day)))||null;
+}
+function scoreSnapshot(){
+ const s=computeStats();
+ return `Mika ${s.solved} | Mystery ${s.flags} | Solved ${s.solved}/40 | White Flags ${s.flags} | First-Try ${s.firstTry} | Current Streak ${s.current} | Best Streak ${s.best}`;
+}
+function emailTime(){
+ try{return new Date().toLocaleString("en-US",{timeZone:"America/New_York",dateStyle:"medium",timeStyle:"short"})+" ET"}catch{return new Date().toString()}
+}
+function emailSentKey(id){return EMAIL_SENT_PREFIX+id}
+function emailWasSent(id){try{return localStorage.getItem(emailSentKey(id))==="1"}catch{return false}}
+function markEmailSent(id){try{localStorage.setItem(emailSentKey(id),"1")}catch{}}
+function readEmailQueue(){try{const x=JSON.parse(localStorage.getItem(EMAIL_QUEUE_KEY)||"[]");return Array.isArray(x)?x:[]}catch{return []}}
+function writeEmailQueue(q){try{localStorage.setItem(EMAIL_QUEUE_KEY,JSON.stringify(q.slice(-60)))}catch{}}
+function queueEmail(item){
+ if(emailWasSent(item.id)) return;
+ const q=readEmailQueue();
+ if(!q.some(x=>x.id===item.id)){q.push(item);writeEmailQueue(q)}
+}
+async function deliverEmail(item){
+ if(emailWasSent(item.id)) return true;
+ try{
+   const res=await fetch(FORMSPREE_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(item.fields),keepalive:true});
+   if(res.ok){markEmailSent(item.id);return true}
+ }catch{}
+ return false;
+}
+function sendGameEmailOnce(id,fields){
+ if(emailWasSent(id)) return;
+ const item={id,fields:{...fields,_subject:fields._subject||"Route 4T Game Alert"}};
+ deliverEmail(item).then(ok=>{if(!ok) queueEmail(item)});
+}
+async function flushEmailQueue(){
+ const q=readEmailQueue(); if(!q.length)return;
+ const keep=[];
+ for(const item of q){if(!(await deliverEmail(item))) keep.push(item)}
+ writeEmailQueue(keep);
+}
+function notifyExitOpened(day){
+ const r=getResult(day.day); if(isFinalResult(r)) return;
+ sendGameEmailOnce(`open-${day.day}`,{
+   _subject:`Route 4T — EXIT ${day.day} OPENED`,event:"EXIT OPENED",exit:day.day,date:day.displayDate,time:emailTime(),scoreboard:scoreSnapshot()
+ });
+}
+function notifyAnswer(day,attempt,answer,result){
+ sendGameEmailOnce(`answer-${day.day}-${attempt}-${result}`,{
+   _subject:`Route 4T — EXIT ${day.day} — ANSWER ${result.toUpperCase()}`,
+   event:"ANSWER SUBMITTED",exit:day.day,date:day.displayDate,attempt:`${attempt} of ${MAX_ATTEMPTS}`,answer,result,time:emailTime(),scoreboard:scoreSnapshot()
+ });
+}
+function notifySolved(day,attempt){
+ sendGameEmailOnce(`solved-${day.day}`,{
+   _subject:`Route 4T — EXIT ${day.day} SOLVED ✅`,event:"EXIT SOLVED",exit:day.day,date:day.displayDate,attempts:attempt,time:emailTime(),scoreboard:scoreSnapshot()
+ });
+}
+function notifySurrender(day){
+ sendGameEmailOnce(`surrender-${day.day}`,{
+   _subject:`Route 4T — EXIT ${day.day} WHITE FLAG 🏳️`,event:"EXIT SURRENDERED",exit:day.day,date:day.displayDate,time:emailTime(),scoreboard:scoreSnapshot()
+ });
+}
+function showSequencePopup(required,requested){
+ const old=$("sequenceGateBackdrop"); if(old)old.remove();
+ const bd=document.createElement("div"); bd.id="sequenceGateBackdrop"; bd.className="sequence-gate-backdrop";
+ const box=document.createElement("div"); box.className="sequence-gate-popup";
+ box.innerHTML=`<div class="sequence-gate-title">NOT SO FAST, MIKA 😏</div><div class="sequence-gate-copy">No skipping exits on Route 4T.<br><strong>EXIT ${required.day} is your next stop.</strong><br>Clear it first, then keep rolling. 🚗</div><button type="button">TAKE ME TO EXIT ${required.day} →</button>`;
+ bd.appendChild(box);document.body.appendChild(bd);
+ const go=()=>{bd.remove();openDay(required.day)};
+ box.querySelector("button").onclick=go;
+ bd.addEventListener("click",e=>{if(e.target===bd)bd.remove()});
+}
+function renderQuestionInto(targetId,day){
+ const target=$(targetId); if(!target)return;
+ const lines=day.lines||[];
+ const photoMarkup=day.photo?`<div class="question-media"><img class="puzzle-photo" src="photos/${encodeURIComponent(day.photo)}" alt="Memory clue for EXIT ${day.day}" loading="eager" decoding="async"></div>`:"";
+ target.innerHTML=photoMarkup+lines.map(line=>line===""?`<div class="gap"></div>`:`<span class="line">${line}</span>`).join("");
+}
+function openReview(day,result){
+ currentDay=day;
+ $("reviewEyebrow").textContent=`EXIT ${day.day} · ${day.displayDate.toUpperCase()}`;
+ renderQuestionInto("reviewQuestion",day);
+ $("reviewAnswer").textContent=day.answerDisplay;
+ $("reviewOutcome").textContent=result.outcome==="solved"?`Solved in ${result.attempts} attempt${result.attempts===1?"":"s"}. Score is locked.`:"White flag recorded. Score is locked.";
+ const gift=$("reviewGiftBtn");
+ gift.style.display=hasVideo(day)?"":"none";
+ gift.onclick=()=>result.outcome==="solved"?(day.day===FINAL_EXIT?openBirthdayFinale():openSurprise(true)):(day.day===FINAL_EXIT?openBirthdayFinale():openSurprise(false));
+ show("review");
+}
+function isVisible(d){
+ if(QA_SHOW_ALL_EXITS) return true;
+ return isDateEligible(d);
 }
 function wrongMessageForAttempt(attemptNumber){
  return WRONG_MESSAGES[Math.max(0,Math.min(WRONG_MESSAGES.length-1,attemptNumber-1))];
@@ -1256,41 +1346,17 @@ function flagIcon(){
 function stateMarkup(d){
  const r=getResult(d.day);
  if(r?.outcome==="solved"){
-   if(d.day===FINAL_EXIT){
-     return {
-       icon:lockIcon(true),
-       rowClass:"solved-state",
-       state:`<span class="solved">🎉 HAPPY BIRTHDAY!</span>`
-     };
-   }
-   return {
-     icon:lockIcon(true),
-     rowClass:"solved-state",
-     state:`<span class="solved">MYSTERY SOLVED · ${r.attempts} ATTEMPT${r.attempts===1?"":"S"}</span>`
-   };
+   return {icon:lockIcon(true),rowClass:"solved-state",state:`<span class="solved">${d.day===FINAL_EXIT?"🎉 HAPPY BIRTHDAY!":`MYSTERY SOLVED · ${r.attempts} ATTEMPT${r.attempts===1?"":"S"}`}</span>`};
  }
  if(r?.outcome==="gave-up"){
-   return {
-     icon:flagIcon(),
-     rowClass:"flag-state",
-     state:`<span class="flag">THE MYSTERY WON THIS ONE</span>`
-   };
+   return {icon:flagIcon(),rowClass:"flag-state",state:`<span class="flag">THE MYSTERY WON THIS ONE</span>`};
  }
- // In the all-exits QA build, future EXITs remain tappable for testing but
- // visually retain their real-world locked state. The launch build hides them.
- const futureLocked=(d.unlockAt ? visibilityNow().getTime()<new Date(d.unlockAt).getTime() : d.date>todayISO());
- if(futureLocked){
-   return {
-     icon:lockIcon(false),
-     rowClass:"locked-state",
-     state:`<span class="locked">LOCKED</span>`
-   };
+ if(!isDateEligible(d)) return {icon:lockIcon(false),rowClass:"locked-state",state:`<span class="locked">LOCKED</span>`};
+ const required=nextRequiredDay();
+ if(required && d.day!==required.day){
+   return {icon:lockIcon(false),rowClass:"locked-state sequence-locked",state:`<span class="locked">COMPLETE EXIT ${required.day} FIRST</span>`};
  }
- return {
-   icon:lockIcon(true),
-   rowClass:"ready-state",
-   state:`<span class="ready">READY TO UNLOCK</span>`
- };
+ return {icon:lockIcon(true),rowClass:"ready-state",state:`<span class="ready">READY TO UNLOCK</span>`};
 }
 function renderGrid(){
  const grid=$("dayGrid");grid.innerHTML="";
@@ -1312,11 +1378,7 @@ function renderGrid(){
  bindPortraitScoreFreeze();
  requestAnimationFrame(()=>{measurePortraitScore();syncPortraitScoreFreeze();syncMobileHomeChrome();});
 }
-function renderQuestion(day){
- const lines=day.lines||[];
- const photoMarkup=day.photo?`<div class="question-media"><img class="puzzle-photo" src="photos/${encodeURIComponent(day.photo)}" alt="Memory clue for EXIT ${day.day}" loading="eager" decoding="async"></div>`:"";
- $("puzzleText").innerHTML=photoMarkup + lines.map(line=>line===""?`<div class="gap"></div>`:`<span class="line">${line}</span>`).join("");
-}
+function renderQuestion(day){renderQuestionInto("puzzleText",day)}
 function resetPuzzle(){
  attemptsUsed=0;
  wrongPopupAwaitingAck=false;
@@ -1330,52 +1392,40 @@ function resetPuzzle(){
 function openDay(n){
  const requested=DAYS.find(d=>d.day===n);
  if(!requested || !isVisible(requested)) return;
+ const existing=getResult(requested.day);
+ if(isFinalResult(existing)){openReview(requested,existing);return;}
+ if(!isDateEligible(requested)) return;
+ const required=nextRequiredDay();
+ if(required && requested.day!==required.day){showSequencePopup(required,requested);return;}
  currentDay=requested;
- const existing=getResult(currentDay.day);
-
- // Completed EXITs never reopen the riddle or alter saved stats.
- if(existing?.outcome==="solved"){
-   if(currentDay.day===FINAL_EXIT) openBirthdayFinale();
-   else openSurprise(true);
-   return;
- }
- if(existing?.outcome==="gave-up"){
-   $("answerReveal").textContent=currentDay.answerDisplay; fitRevealAnswer(currentDay.answerDisplay);
-   show("surrender");
-   return;
- }
-
  resetPuzzle();
  if(existing?.outcome==="in-progress"){
    attemptsUsed=Math.max(0,Math.min(MAX_ATTEMPTS,existing.attemptsUsed||0));
    syncAnswerPlaceholder();
-   if(attemptsUsed>=MAX_ATTEMPTS){
-     openConfirmGiveUpGuarded();
-     return;
-   }
+   if(attemptsUsed>=MAX_ATTEMPTS){openConfirmGiveUpGuarded();return;}
  }
  $("dayEyebrow").textContent=`EXIT ${currentDay.day} · ${currentDay.displayDate.toUpperCase()}`;
  renderQuestion(currentDay);
  show("puzzle");
+ notifyExitOpened(currentDay);
 }
 function check(){
  if(wrongPopupAwaitingAck) return;
- const input=$("answerInput"), value=norm(input.value);
+ const input=$("answerInput"), raw=(input.value||"").trim(), value=norm(raw);
  if(!value)return;
  if(currentDay.answers.includes(value)){
    const tries=attemptsUsed+1;
    saveResult(currentDay.day,{outcome:"solved",attempts:tries,completedAt:new Date().toISOString()});
+   notifyAnswer(currentDay,tries,raw,"correct");
+   notifySolved(currentDay,tries);
    input.value="";
-   // v2.22 mobile-only: a tap submitted while the soft keyboard is open can
-   // produce a delayed synthetic click after the success screen is already up.
-   // Guard that one originating tap so it cannot immediately hit HOME.
    if(isLikelyPhone()) mobileSuccessGuardUntil=Date.now()+850;
-   if(currentDay.day===FINAL_EXIT) openBirthdayFinale();
-   else openSurprise(true);
+   if(currentDay.day===FINAL_EXIT) openBirthdayFinale(); else openSurprise(true);
    return;
  }
  attemptsUsed++;
  saveInProgress(currentDay.day,attemptsUsed);
+ notifyAnswer(currentDay,attemptsUsed,raw,"wrong");
  input.value="";
  const remaining=MAX_ATTEMPTS-attemptsUsed;
  const wrongMessage=wrongMessageForAttempt(attemptsUsed);
@@ -1384,18 +1434,9 @@ function check(){
  $("attempts").textContent=isLikelyPhone()?"":(remaining>0?`${remaining} attempt${remaining===1?"":"s"} remaining`:"Three attempts used.");
  if(remaining===0){
    $("submitBtn").disabled=true;
-   if(isLikelyPhone()){
-     // Keep the focused input alive so Android/iOS do not close and reopen
-     // the keyboard while the third-failure and surrender popups are shown.
-     $("giveUpBtn").classList.add("hidden");
-     showWrongPopup(wrongMessage,0);
-   }else{
-     input.disabled=true;
-     $("giveUpBtn").classList.remove("hidden");
-   }
- }else{
-   if(!showWrongPopup(wrongMessage,remaining)) refocusAnswer(false);
- }
+   if(isLikelyPhone()){$("giveUpBtn").classList.add("hidden");showWrongPopup(wrongMessage,0)}
+   else{input.disabled=true;$("giveUpBtn").classList.remove("hidden")}
+ }else if(!showWrongPopup(wrongMessage,remaining)) refocusAnswer(false);
 }
 const submitButton=$("submitBtn");
 let suppressSubmitClickUntil=0;
@@ -1476,6 +1517,7 @@ $("tryAgainBtn").onclick=e=>{
 $("saveMeBtn").onclick=e=>{
  if(Date.now()<confirmGiveUpReadyAt){e.preventDefault();e.stopPropagation();return;}
  saveResult(currentDay.day,{outcome:"gave-up",attempts:MAX_ATTEMPTS,completedAt:new Date().toISOString()});
+ notifySurrender(currentDay);
  $("answerReveal").textContent=currentDay.answerDisplay;fitRevealAnswer(currentDay.answerDisplay);show("surrender");
 };
 function birthdayWishText(day=currentDay){
@@ -1648,26 +1690,19 @@ function playHonkSound(){
    const AudioCtx=window.AudioContext||window.webkitAudioContext;
    if(!AudioCtx) return Promise.resolve();
    const ctx=new AudioCtx();
-   const master=ctx.createGain();
-   master.gain.value=0.0001;
-   master.connect(ctx.destination);
-   const start=ctx.currentTime+0.02;
-   const freqs=[392,329,392,329];
-   freqs.forEach((f,i)=>{
-     const osc=ctx.createOscillator();
-     const gain=ctx.createGain();
-     osc.type=i%2?"square":"sawtooth";
-     osc.frequency.setValueAtTime(f,start+i*0.12);
-     gain.gain.setValueAtTime(0.0001,start+i*0.12);
-     gain.gain.exponentialRampToValueAtTime(0.16,start+i*0.12+0.02);
-     gain.gain.exponentialRampToValueAtTime(0.0001,start+i*0.12+0.11);
-     osc.connect(gain);gain.connect(master);
-     osc.start(start+i*0.12); osc.stop(start+i*0.12+0.12);
+   const master=ctx.createGain(); master.gain.value=.0001; master.connect(ctx.destination);
+   const compressor=ctx.createDynamicsCompressor(); compressor.threshold.value=-18; compressor.knee.value=8; compressor.ratio.value=5; compressor.attack.value=.003; compressor.release.value=.18; compressor.connect(master);
+   const start=ctx.currentTime+.02, dur=1.05;
+   [92,116,138].forEach((f,i)=>{
+     const osc=ctx.createOscillator(), g=ctx.createGain();
+     osc.type=i===0?"sawtooth":"square"; osc.frequency.setValueAtTime(f,start); osc.frequency.linearRampToValueAtTime(f*.985,start+dur);
+     g.gain.setValueAtTime(.0001,start); g.gain.exponentialRampToValueAtTime(i===0?.18:.11,start+.04); g.gain.setValueAtTime(i===0?.18:.11,start+.72); g.gain.exponentialRampToValueAtTime(.0001,start+dur);
+     osc.connect(g);g.connect(compressor);osc.start(start);osc.stop(start+dur+.03);
    });
-   master.gain.exponentialRampToValueAtTime(0.9,start+0.01);
-   master.gain.exponentialRampToValueAtTime(0.0001,start+0.52);
-   return new Promise(res=>setTimeout(()=>{ctx.close().catch(()=>{});res();},560));
- }catch(e){ return Promise.resolve(); }
+   const wob=ctx.createOscillator(), wobGain=ctx.createGain(); wob.type="sine";wob.frequency.value=2.8;wobGain.gain.value=.035;wob.connect(wobGain);wobGain.connect(master.gain);wob.start(start);wob.stop(start+dur);
+   master.gain.exponentialRampToValueAtTime(.78,start+.03); master.gain.setValueAtTime(.78,start+.72); master.gain.exponentialRampToValueAtTime(.0001,start+dur);
+   return new Promise(res=>setTimeout(()=>{ctx.close().catch(()=>{});res()},1120));
+ }catch{return Promise.resolve()}
 }
 function enterRoute4T(){
  const button=$("enterRouteMobile");
@@ -1680,7 +1715,7 @@ function enterRoute4T(){
    renderGrid();
    show("home");
    if(button){button.disabled=false;button.classList.remove("honked");}
- },430);
+ },760);
  if(p&&typeof p.then==="function") p.catch(()=>{});
 }
 const enterRouteMobile=$("enterRouteMobile");
@@ -1689,11 +1724,14 @@ if(enterRouteMobile) enterRouteMobile.onclick=enterRoute4T;
 document.body.classList.add("welcome-active");
 show("welcome");
 
+flushEmailQueue().catch(()=>{});
+window.addEventListener("online",()=>flushEmailQueue().catch(()=>{}));
+
 // Ask the browser not to evict Route 4T progress under storage pressure.
 if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=232").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=233").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

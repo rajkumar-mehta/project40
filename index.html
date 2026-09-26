@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#5a2f10">
 <title>ROUTE 4T · MIKA'S JOURNEY</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=232">
+<link rel="stylesheet" href="styles.css?v=233">
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
@@ -25,8 +25,8 @@
     <img class="welcome-rules-art" src="welcome-rules-autumn.png" alt="Rules of the Road: Phones while driving? Never. Phones for Route 4T? Sadly, yes. One phone. One browser. All 40 exits. Honk the horn to enter the game.">
 
     <button id="enterRouteMobile" class="welcome-honk-button" type="button" aria-label="Honk the horn to enter Route 4T">
-      <img src="welcome-honk-autumn.png" alt="" aria-hidden="true">
-      <span class="sr-only">Honk to hit the road</span>
+      <img src="welcome-honk-only.png" alt="" aria-hidden="true">
+      <span class="sr-only">HONK</span>
     </button>
   </div>
 </section>
@@ -85,6 +85,23 @@
     <button id="giveUpBtn" class="giveup hidden">I GIVE UP — I'M SO OLD… I'M ABOUT TO TURN 40! 😂</button>
     <button class="home-button" data-home>HOME</button>
   </div>
+</section>
+
+<section id="review" class="screen review-screen">
+  <button class="home-link" data-home>← HOME</button>
+  <div id="reviewEyebrow" class="day-eyebrow"></div>
+  <div class="review-badge">REPLAY LOCKED · VIEW ONLY</div>
+  <div class="puzzle-card review-question-card">
+    <div class="card-label">THE MYSTERY</div>
+    <div id="reviewQuestion" class="question"></div>
+  </div>
+  <div class="review-answer-card">
+    <div class="review-answer-label">CORRECT ANSWER</div>
+    <div id="reviewAnswer" class="review-answer"></div>
+    <div id="reviewOutcome" class="review-outcome"></div>
+  </div>
+  <button id="reviewGiftBtn" class="primary">VIEW THIS EXIT'S GIFT</button>
+  <button class="home-button" data-home>HOME</button>
 </section>
 
 <section id="confirmGiveUp" class="screen">
@@ -148,6 +165,6 @@
 </section>
 
 </main>
-<script src="app.js?v=232"></script>
+<script src="app.js?v=233"></script>
 </body>
 </html>
