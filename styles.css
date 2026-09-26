@@ -1909,3 +1909,109 @@ body.welcome-active .app-shell{
     background:transparent!important;
   }
 }
+
+
+/* =========================================================
+   ROUTE 4T v2.30 — Samsung QA refinement only
+   - clearer welcome ENTER control, cooler welcome palette
+   - all three wrong-answer popups share the same top anchor
+   - slightly more compact mobile puzzle/question cards
+   ========================================================= */
+
+/* Tone the poster artwork down slightly; the untouched Mika/Cybertruck overlay
+   remains above this layer and is not filtered. */
+.welcome-poster-bg{
+  filter:saturate(.94) brightness(.98) contrast(1.01)!important;
+}
+
+/* Make the live hit-area unmistakably look and feel like an actual button.
+   It intentionally covers the baked poster button while leaving the scenic
+   background and Rule of the Road artwork intact. */
+.welcome-poster-enter{
+  left:5.0%!important;
+  right:5.0%!important;
+  bottom:2.55%!important;
+  height:8.85%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  padding:0 48px 0 22px!important;
+  border:3px solid #8ed5ff!important;
+  border-radius:999px!important;
+  background:linear-gradient(180deg,rgba(22,76,126,.98),rgba(4,31,69,.99))!important;
+  color:#f8fbff!important;
+  box-shadow:
+    0 7px 0 #03172f,
+    0 13px 26px rgba(0,0,0,.42),
+    0 0 0 2px rgba(255,255,255,.10) inset,
+    0 0 14px rgba(82,184,255,.38)!important;
+  font-family:Impact,"Arial Narrow",system-ui,sans-serif!important;
+  font-size:clamp(18px,5.2vw,27px)!important;
+  font-style:italic!important;
+  font-weight:900!important;
+  letter-spacing:.025em!important;
+  line-height:1!important;
+  text-shadow:0 2px 0 rgba(0,0,0,.42)!important;
+  transform:translateY(-2px);
+  transition:transform .08s ease,box-shadow .08s ease,filter .08s ease;
+}
+.welcome-poster-enter::before{
+  content:"";
+  position:absolute;
+  left:12%;right:12%;bottom:12%;height:3px;
+  border-radius:999px;
+  background:repeating-linear-gradient(90deg,#dff4ff 0 24px,transparent 24px 39px);
+  opacity:.70;
+  pointer-events:none;
+}
+.welcome-enter-label{position:relative;z-index:1;white-space:nowrap}
+.welcome-enter-arrow{
+  position:absolute;right:17px;top:50%;z-index:1;
+  transform:translateY(-53%);
+  width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#e9f7ff;color:#062f5e;
+  font-family:Arial,sans-serif;font-style:normal;font-size:35px;font-weight:900;line-height:.8;
+  box-shadow:0 2px 8px rgba(0,0,0,.28);
+}
+.welcome-poster-enter:active{
+  transform:translateY(4px)!important;
+  box-shadow:0 2px 0 #03172f,0 6px 14px rgba(0,0,0,.34),0 0 0 2px rgba(255,255,255,.08) inset!important;
+  filter:brightness(1.08);
+}
+@media(max-width:390px){
+  .welcome-poster-enter{font-size:clamp(16px,4.9vw,20px)!important;padding-left:16px!important;padding-right:43px!important}
+  .welcome-enter-arrow{right:12px;width:30px;height:30px;font-size:31px}
+}
+
+/* All three wrong-answer colors now occupy the same keyboard-safe top slot. */
+@media(max-width:920px){
+  .wrong-answer-popover[data-mode="wrong"]{bottom:auto!important}
+}
+
+/* Slightly tighter puzzle presentation on phones only. Desktop/laptop stays unchanged. */
+@media(max-width:620px){
+  #puzzle .puzzle-card{
+    width:96%!important;
+    padding:16px 13px!important;
+    margin:10px auto 11px!important;
+  }
+  #puzzle .card-label{
+    margin-bottom:10px!important;
+    font-size:10px!important;
+    letter-spacing:.06em!important;
+  }
+  #puzzle .question{
+    max-width:28em!important;
+    font-size:clamp(16px,4.35vw,18.5px)!important;
+    line-height:1.42!important;
+  }
+  #puzzle .question .gap{height:.65em!important}
+  #puzzle .question-media{
+    width:92%!important;
+    max-width:430px!important;
+    margin-bottom:12px!important;
+    border-radius:12px!important;
+  }
+}

@@ -1,5 +1,5 @@
 
-const QA_SHOW_ALL_EXITS = true; // v2.29 QA: intentionally exposes EXIT 0–40 for full production-URL testing. Disable for launch.
+const QA_SHOW_ALL_EXITS = true; // v2.30 QA: intentionally exposes EXIT 0–40 for full production-URL testing. Disable for launch.
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
 
@@ -823,11 +823,11 @@ function positionKeyboardUI(){
      p.style.top=(viewportTop+safeGap)+"px";
      requestAnimationFrame(()=>{
        const h=Math.min(p.offsetHeight,maxH);
-       const isFirstWrong=p.dataset.mode==="wrong" && p.dataset.attempt==="1";
-       // v2.29: attempt 1 no longer depends on the keyboard's final height.
-       // Anchor it to the TOP of the browser's currently visible viewport, which
-       // remains reachable across Samsung Internet/Chrome and Samsung/Gboard/SwiftKey.
-       const top=isFirstWrong
+       const isWrong=p.dataset.mode==="wrong";
+       // v2.30: ALL wrong-answer messages use one fixed, keyboard-safe position.
+       // Green, Purple and Red are anchored to the TOP of the browser's currently
+       // visible viewport across Samsung Internet/Chrome and common Android keyboards.
+       const top=isWrong
          ? viewportTop+safeGap
          : Math.max(viewportTop+safeGap,viewportTop+viewportHeight-h-safeGap);
        const currentTop=parseFloat(p.style.top);
@@ -1003,9 +1003,9 @@ function showWrongPopup(message,remaining){
  if(backdrop){backdrop.classList.add("show");backdrop.setAttribute("aria-hidden","false");}
  p.classList.add("show");
  p.setAttribute("aria-hidden","false");
- // Keep the popup hidden until its final position is known. Attempts 2/3
- // retain the stable v2.7/v2.14 sequence. Attempt 1 gets only a quiet-period
- // stabilization before reveal; its geometry/placement engine is otherwise the same.
+ // Keep the popup hidden until its final position is known. All three wrong-answer
+ // attempts now share the same top-of-visible-viewport geometry. Attempt 1 retains
+ // the extra quiet-period stabilization because it occurs during the initial keyboard session.
  p.style.visibility="hidden";
  p.style.opacity="0";
  const attemptNumber=MAX_ATTEMPTS-remaining;
@@ -1581,8 +1581,31 @@ function openBirthdayFinale(){
 }
 
 $("surrenderSurpriseBtn").onclick=()=>currentDay.day===FINAL_EXIT?openBirthdayFinale():openSurprise(false);
-$("watchBtn").onclick=()=>{if(hasVideo()) window.open(currentDay.video,"_blank","noopener,noreferrer")};
-$("birthdaySurpriseBtn").onclick=()=>{if(hasVideo()) window.open(currentDay.video,"_blank","noopener,noreferrer")};
+function youtubeVideoId(url){
+ try{
+   const u=new URL(url);
+   if(u.hostname==="youtu.be") return u.pathname.split("/").filter(Boolean)[0]||"";
+   const parts=u.pathname.split("/").filter(Boolean);
+   if(parts[0]==="shorts" || parts[0]==="embed") return parts[1]||"";
+   return u.searchParams.get("v")||"";
+ }catch{return ""}
+}
+function openYouTubePreferred(url){
+ if(!url) return;
+ const isAndroid=/Android/i.test(navigator.userAgent||"");
+ if(isAndroid){
+   const id=youtubeVideoId(url);
+   const fallback=id?`https://www.youtube.com/watch?v=${encodeURIComponent(id)}`:url;
+   const target=id?`www.youtube.com/watch?v=${encodeURIComponent(id)}`:url.replace(/^https?:\/\//i,"");
+   // Samsung Internet/Chrome: explicitly request the installed YouTube package.
+   // Android handles the browser fallback if the app is unavailable or app-links are disabled.
+   window.location.href=`intent://${target}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodeURIComponent(fallback)};end`;
+   return;
+ }
+ window.open(url,"_blank","noopener,noreferrer");
+}
+$("watchBtn").onclick=()=>{if(hasVideo()) openYouTubePreferred(currentDay.video)};
+$("birthdaySurpriseBtn").onclick=()=>{if(hasVideo()) openYouTubePreferred(currentDay.video)};
 document.querySelectorAll("[data-home]").forEach(b=>b.onclick=e=>{
  if(wrongPopupAwaitingAck || (isLikelyPhone() && (Date.now()<mobileSuccessGuardUntil || Date.now()<mobileWrongAckGuardUntil))){
    e.preventDefault();e.stopPropagation();return;
@@ -1620,7 +1643,7 @@ show("welcome");
 if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=229").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=230").catch(()=>{}));
 }
 
 function syncDesktopFrame(){
