@@ -1,5 +1,5 @@
 
-const QA_SHOW_ALL_EXITS = true; // v2.27 QA: intentionally exposes EXIT 0–40 for full production-URL testing. Disable for launch.
+const QA_SHOW_ALL_EXITS = true; // v2.28 QA: intentionally exposes EXIT 0–40 for full production-URL testing. Disable for launch.
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
 
@@ -37,7 +37,7 @@ const DAYS = [
    "1987",
    "1988"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-8.jpeg"
  },
  {
@@ -70,7 +70,7 @@ const DAYS = [
   "answers": [
    "1992"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-1.jpeg"
  },
  {
@@ -104,7 +104,7 @@ const DAYS = [
   "answers": [
    "kuwait"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-12.jpeg"
  },
  {
@@ -141,7 +141,7 @@ const DAYS = [
    "1988",
    "1987"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-10.jpeg"
  },
  {
@@ -175,7 +175,7 @@ const DAYS = [
   "answers": [
    "dadima"
   ],
-  "hint": "Look closely at the people in this memory.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-13.jpeg"
  },
  {
@@ -214,7 +214,7 @@ const DAYS = [
    "rajkot",
    "bahrain"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-9.jpeg"
  },
  {
@@ -248,7 +248,7 @@ const DAYS = [
    "15",
    "fifteen"
   ],
-  "hint": "Take a close look at the photo and think about the memory behind it.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-11.jpeg"
  },
  {
@@ -265,7 +265,7 @@ const DAYS = [
   "answers": [
    "bahrain"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-7.jpeg"
  },
  {
@@ -284,7 +284,7 @@ const DAYS = [
    "navsaari",
    "nawsari"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Jagruti-1.jpeg"
  },
  {
@@ -303,7 +303,7 @@ const DAYS = [
    "anjani",
    "bhargav"
   ],
-  "hint": "Look closely at the people in this memory.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-2.jpeg"
  },
  {
@@ -320,7 +320,7 @@ const DAYS = [
   "answers": [
    "sedona"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-2.jpg"
  },
  {
@@ -338,7 +338,7 @@ const DAYS = [
    "rakhi",
    "rakshabandhan"
   ],
-  "hint": "Take a close look at the photo and think about the memory behind it.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-5.jpeg"
  },
  {
@@ -355,7 +355,7 @@ const DAYS = [
   "answers": [
    "alaska"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-1.jpg"
  },
  {
@@ -372,7 +372,7 @@ const DAYS = [
   "answers": [
    "san francisco"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-3.jpg"
  },
  {
@@ -390,7 +390,7 @@ const DAYS = [
    "ajman",
    "dubai"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-3.jpeg"
  },
  {
@@ -407,7 +407,7 @@ const DAYS = [
   "answers": [
    "bhargav"
   ],
-  "hint": "Look closely at the people in this memory.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-4.jpeg"
  },
  {
@@ -418,14 +418,14 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Rajubhai & Ruchita",
   "lines": [
-   "What has a head and a tail but no body?"
+   "What was the name of the tutor whose house Bhavika ran away from ?"
   ],
-  "answerDisplay": "A COIN",
+  "answerDisplay": "Janet",
   "answers": [
-   "coin",
-   "a coin"
+   "janet",
+   "janet aunty"
   ],
-  "hint": "Flip it."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 24,
@@ -435,14 +435,13 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Jetha Bapa Family",
   "lines": [
-   "What has four wheels and flies?"
+   "What was the subject of the Rangoli where you got the prize ?"
   ],
-  "answerDisplay": "A GARBAGE TRUCK",
+  "answerDisplay": "Ganesh",
   "answers": [
-   "garbage truck",
-   "a garbage truck"
+   "ganesh"
   ],
-  "hint": "The 'flies' are not the vehicle."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 25,
@@ -469,20 +468,19 @@ const DAYS = [
   "relation": "Cousin",
   "wishFrom": "Payal & Sapan",
   "lines": [
-   "What has branches but no fruit, trunk, or leaves?"
+   "What was the color of the dollhouse, where you and Bhavika played house ?"
   ],
-  "answerDisplay": "A BANK",
+  "answerDisplay": "Pink",
   "answers": [
-   "bank",
-   "a bank"
+   "pink"
   ],
-  "hint": "Think business, not trees."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 27,
   "date": "2026-10-24",
   "displayDate": "October 24, 2026",
-  "video": null,
+  "video": "https://youtu.be/SgRSLdRFpfE",
   "relation": "Cousin",
   "wishFrom": "Vatsal Bhai & Sejal",
   "lines": [
@@ -511,7 +509,7 @@ const DAYS = [
    "feb-2016",
    "feb"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-6.jpeg"
  },
  {
@@ -528,7 +526,7 @@ const DAYS = [
   "answers": [
    "11/6/2015"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-5.jpg"
  },
  {
@@ -556,9 +554,7 @@ const DAYS = [
   "wishFrom": "Jayshreeben, Udaybhai & Rinku",
   "lines": [
    "What was the exact date (mm/dd/yyyy) when this picture was taken ?",
-   "",
-   "OR",
-   "",
+   "or",
    "Name the City/Place where this picture was taken ?"
   ],
   "answerDisplay": "11/6/2017",
@@ -567,7 +563,7 @@ const DAYS = [
    "jersey city",
    "hoboken"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-6.jpg"
  },
  {
@@ -585,7 +581,7 @@ const DAYS = [
    "2018",
    "18"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-7.jpg"
  },
  {
@@ -602,7 +598,7 @@ const DAYS = [
   "answers": [
    "01/05/2017"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-12.jpg"
  },
  {
@@ -620,7 +616,7 @@ const DAYS = [
    "2020",
    "20"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-8.jpg"
  },
  {
@@ -638,7 +634,7 @@ const DAYS = [
    "2021",
    "21"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-9.jpg"
  },
  {
@@ -656,7 +652,7 @@ const DAYS = [
    "2022",
    "22"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-10.jpg"
  },
  {
@@ -673,7 +669,7 @@ const DAYS = [
   "answers": [
    "singapore"
   ],
-  "hint": "Study the photo and think about where this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-4.jpg"
  },
  {
@@ -690,7 +686,7 @@ const DAYS = [
   "answers": [
    "2024"
   ],
-  "hint": "Take a close look at the photo and think about when this memory happened.",
+  "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-11.jpg"
  },
  {

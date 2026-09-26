@@ -1643,3 +1643,172 @@ body.welcome-active .app-shell{width:100%;min-height:100dvh;padding:clamp(12px,2
  .welcome-enter b{font-size:30px}
 }
 
+
+
+/* =========================================================
+   v2.28 — mobile-first welcome / Rule of the Road refresh
+   Uses the approved Route 4T highway-sign artwork as a header
+   and the ORIGINAL uploaded Cybertruck photo without filters.
+   ========================================================= */
+body.welcome-active{
+  min-height:100dvh;
+  overflow:auto;
+  background:
+    radial-gradient(circle at 50% -6%,rgba(63,133,220,.34),transparent 31%),
+    linear-gradient(180deg,#174777 0%,#15345e 32%,#102649 65%,#13213a 100%)!important;
+}
+body.welcome-active .app-shell{
+  width:100%;
+  min-height:100dvh;
+  padding:max(8px,env(safe-area-inset-top)) 10px max(16px,env(safe-area-inset-bottom))!important;
+}
+.welcome-mobile-layout{
+  width:min(100%,520px)!important;
+  margin:0 auto!important;
+  gap:10px!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+.welcome-top-art{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:18px;
+  border:1px solid rgba(255,193,63,.68);
+  box-shadow:0 12px 28px rgba(5,18,43,.28),0 0 0 1px rgba(70,169,255,.24) inset;
+}
+.welcome-photo-wrap{
+  width:100%!important;
+  height:auto!important;
+  aspect-ratio:2048 / 1351;
+  border-radius:18px!important;
+  overflow:hidden!important;
+  background:#eef3f7!important;
+  border:2px solid rgba(255,191,47,.78)!important;
+  box-shadow:0 10px 24px rgba(5,18,43,.27),0 0 0 2px rgba(46,154,255,.46)!important;
+}
+.welcome-photo-wrap::after{display:none!important}
+.welcome-photo-wrap img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  filter:none!important;
+  opacity:1!important;
+}
+.welcome-rule-card{
+  padding:11px 12px 10px!important;
+  border-radius:18px!important;
+  border:2px solid rgba(255,193,49,.92)!important;
+  background:linear-gradient(135deg,rgba(11,43,82,.98),rgba(8,33,69,.99))!important;
+  box-shadow:0 10px 25px rgba(5,18,43,.27),0 0 0 2px rgba(42,151,255,.45)!important;
+}
+.welcome-rule-title{
+  margin:0 0 7px!important;
+  padding-bottom:7px;
+  border-bottom:1px solid rgba(255,208,76,.7);
+  text-align:center!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:clamp(18px,5vw,24px)!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.055em!important;
+  color:#ffe079!important;
+  text-shadow:0 2px 0 rgba(0,0,0,.28);
+}
+.welcome-rule-row{
+  display:grid;
+  grid-template-columns:30px minmax(0,1fr);
+  align-items:center;
+  gap:8px;
+  min-height:34px;
+  border-bottom:1px solid rgba(255,255,255,.13);
+  color:#fff;
+  font-family:Arial,"Helvetica Neue",sans-serif;
+  font-size:clamp(11px,3.05vw,14px);
+  font-weight:700;
+  line-height:1.08;
+  white-space:nowrap;
+}
+.welcome-rule-row:last-child{border-bottom:0}
+.welcome-rule-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
+  filter:drop-shadow(0 0 4px rgba(69,164,255,.45));
+}
+.welcome-enter{
+  position:relative;
+  overflow:hidden;
+  width:100%!important;
+  min-height:62px!important;
+  margin:0!important;
+  padding:11px 42px 17px 16px!important;
+  border:2px solid #ffc636!important;
+  border-radius:999px!important;
+  background:linear-gradient(180deg,#153a68 0%,#0b274e 58%,#071c38 100%)!important;
+  color:#ffe35e!important;
+  box-shadow:0 8px 22px rgba(4,17,39,.32),0 0 0 2px rgba(51,168,255,.5),inset 0 1px 0 rgba(255,255,255,.18)!important;
+  font-family:Impact,"Arial Black","Roboto Condensed","Arial Narrow",sans-serif!important;
+  font-size:clamp(18px,5.1vw,25px)!important;
+  font-weight:900!important;
+  font-style:italic!important;
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+  text-shadow:0 2px 0 rgba(0,0,0,.46);
+}
+.welcome-enter::before{
+  content:"";
+  position:absolute;
+  left:14%;
+  right:12%;
+  bottom:8px;
+  height:4px;
+  background:repeating-linear-gradient(90deg,#ffd523 0 24px,transparent 24px 39px);
+  border-radius:99px;
+  opacity:.95;
+}
+.welcome-enter::after{
+  content:"";
+  position:absolute;
+  left:11px;
+  top:12px;
+  bottom:15px;
+  width:4px;
+  background:repeating-linear-gradient(180deg,#ffd523 0 13px,transparent 13px 22px);
+  transform:skewX(-19deg);
+}
+.welcome-enter span{position:relative;z-index:1}
+.welcome-enter b{
+  position:absolute;
+  right:18px;
+  top:50%;
+  z-index:1;
+  transform:translateY(-54%);
+  font-family:Arial,sans-serif!important;
+  font-size:38px!important;
+  line-height:.7!important;
+  color:#ffd943;
+}
+.welcome-enter:active{transform:translateY(1px) scale(.995)}
+.welcome-enter:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+@media (max-width:420px){
+  .welcome-mobile-layout{gap:8px!important}
+  .welcome-top-art{border-radius:15px}
+  .welcome-photo-wrap{border-radius:15px!important}
+  .welcome-rule-card{padding:9px 10px 8px!important;border-radius:15px!important}
+  .welcome-rule-title{font-size:clamp(17px,5.3vw,21px)!important;margin-bottom:4px!important;padding-bottom:5px}
+  .welcome-rule-row{grid-template-columns:27px minmax(0,1fr);gap:6px;min-height:31px;font-size:clamp(10.5px,3vw,12.5px)}
+  .welcome-rule-icon{font-size:19px}
+  .welcome-enter{min-height:58px!important;padding:10px 38px 15px 14px!important;font-size:clamp(17px,5vw,21px)!important}
+  .welcome-enter::before{bottom:7px;height:3px;background:repeating-linear-gradient(90deg,#ffd523 0 18px,transparent 18px 30px)}
+  .welcome-enter b{right:15px;font-size:34px!important}
+}
+@media (max-width:350px){
+  .welcome-rule-row{font-size:10.4px}
+  .welcome-rule-icon{font-size:18px}
+  .welcome-enter{font-size:16px!important}
+}

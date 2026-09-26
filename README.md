@@ -1,22 +1,35 @@
-# Route 4T — v2.27 ALL-EXITS QA BUILD
+# Route 4T — v2.28 ALL-EXITS QA BUILD
 
-Built from the tested v2.26 all-exits QA build.
+Built from the tested v2.27 all-exits QA baseline.
 
-## What changed in v2.27
-- Refreshed ONLY the YouTube/content attribution mapping from the latest uploaded `YT URL.xlsx`.
+## What changed in v2.28
+- Refreshed YouTube/person mappings from the latest `YT URL(2).xlsx`.
+- Updated puzzle content from the same latest workbook where a new question/answer was supplied.
+- Current updated puzzle-content exits include EXIT 23, 24, 26 and revised wording on EXIT 31.
+- EXIT 27 now has its newly supplied YouTube URL.
+- Current TBD video exits: 25, 26, 36, 40.
 - EXIT 0 through EXIT 40 remain available in this QA build for full testing.
-- Gameplay, attempts, scoreboard, popup, surrender, storage, navigation, puzzle and photo logic were not intentionally changed.
-- The uploaded spreadsheet itself is intentionally NOT shipped in the public site package.
-- Current TBD video exits: 25, 26, 27, 36, 40. Those continue to use the existing VIDEO COMING SOON behavior.
+
+## Welcome screen
+- Mobile-first Route 4T highway-sign header based on the approved mockup.
+- Uses the ORIGINAL uploaded Cybertruck/Mika photo (`20260110_103317.jpg`) copied byte-for-byte as `welcome-mika.jpg`; no AI-rendered Mika image is used.
+- Concise Rule of the Road box.
+- Road/highway-style ENTER button.
+- Existing in-game HOME behavior is unchanged: HOME returns to the scoreboard/EXIT screen, not the welcome screen.
+
+## Gameplay protections carried forward
+- No visible reset/test footer.
+- No testDate/testTime URL overrides.
+- Completed EXIT outcomes remain immutable through normal app behavior.
+- Wrong-attempt state persists on the same browser/device.
+- Existing progress-storage keys are unchanged, so deploying this build does not intentionally reset prior test progress.
+- Puzzle definitions are frozen at runtime.
+- Persistent browser storage is requested when supported.
 
 ## QA / launch note
-`QA_SHOW_ALL_EXITS = true` intentionally exposes EXIT 0–40 for this QA build. It must not be used as the final date-gated launch setting.
+`QA_SHOW_ALL_EXITS = true` intentionally exposes EXIT 0–40 for this QA build.
+Do not use this setting for the final date-gated launch build.
 
-## Progress/reset protections inherited from v2.26
-- No visible reset/test footer.
-- No testDate/testTime query overrides.
-- Normal navigation does not overwrite a completed EXIT outcome.
-- Wrong-attempt state persists on the same browser/device.
-- Existing progress-storage keys remain unchanged so deploying this build does not intentionally reset current test progress.
+The spreadsheet itself is intentionally NOT shipped in the public website package.
 
-Cache/service-worker version: v227.
+Cache/service-worker version: v228.

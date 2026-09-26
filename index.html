@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0d1422">
 <title>ROUTE 4T · MIKA'S JOURNEY</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=227">
+<link rel="stylesheet" href="styles.css?v=228">
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
@@ -14,13 +14,7 @@
 
 <section id="welcome" class="screen active welcome-screen" aria-labelledby="welcomeTitle">
   <div class="welcome-mobile-layout">
-    <div class="welcome-mobile-brand" id="welcomeTitle">
-      <div class="welcome-route-sign" aria-label="Route 4T">
-        <span class="welcome-route-mark">ROUTE <b>4T</b></span>
-      </div>
-      <div class="welcome-journey">MIKA’S JOURNEY <em>with 40 EXITS</em></div>
-      <div class="welcome-wiser">Challenging Puzzles &amp; Rewarding Gifts for a Wiser You</div>
-    </div>
+    <img id="welcomeTitle" class="welcome-top-art" src="welcome-top.png" alt="Route 4T — Mika’s Journey with 40 Exits. Challenging Puzzles and Rewarding Gifts for a Wiser You.">
 
     <div class="welcome-photo-wrap">
       <img src="welcome-mika.jpg" alt="Mika standing in the back of a Cybertruck">
@@ -28,8 +22,10 @@
 
     <div class="welcome-rule-card">
       <div class="welcome-rule-title">RULE OF THE ROAD 🚗</div>
-      <p><strong>Phones while driving? Absolutely not.<br>Phones for Route 4T? Unfortunately, yes. 😏</strong></p>
-      <p>Pick one phone and one browser and stick with them for the entire journey.<br>Otherwise your score may mysteriously “take the next exit.” 😂</p>
+      <div class="welcome-rule-row"><span class="welcome-rule-icon">🚫</span><span>Phones while driving? Never.</span></div>
+      <div class="welcome-rule-row"><span class="welcome-rule-icon">📱</span><span>Phones for Route 4T? Sadly, yes. 😉</span></div>
+      <div class="welcome-rule-row"><span class="welcome-rule-icon">🔗</span><span>One phone. One browser. All 40 exits.</span></div>
+      <div class="welcome-rule-row"><span class="welcome-rule-icon">🏆</span><span>Or your score may “take the next exit.” 😂</span></div>
     </div>
 
     <button id="enterRouteMobile" class="welcome-enter" type="button">
@@ -174,6 +170,6 @@
 </section>
 
 </main>
-<script src="app.js?v=227"></script>
+<script src="app.js?v=228"></script>
 </body>
 </html>
