@@ -1,35 +1,28 @@
-# Route 4T — v2.28 ALL-EXITS QA BUILD
+# Route 4T — v2.29 SAMSUNG-MOBILE POPUP QA BUILD
 
-Built from the tested v2.27 all-exits QA baseline.
+Built directly from v2.28. Puzzle data, scoring, storage keys, answer validation,
+surrender logic, date logic, and all-exits QA visibility are otherwise unchanged.
 
-## What changed in v2.28
-- Refreshed YouTube/person mappings from the latest `YT URL(2).xlsx`.
-- Updated puzzle content from the same latest workbook where a new question/answer was supplied.
-- Current updated puzzle-content exits include EXIT 23, 24, 26 and revised wording on EXIT 31.
-- EXIT 27 now has its newly supplied YouTube URL.
-- Current TBD video exits: 25, 26, 36, 40.
-- EXIT 0 through EXIT 40 remain available in this QA build for full testing.
+## Surgical fixes in v2.29
+- First mobile wrong-answer popup is anchored to the TOP of the currently visible
+  browser viewport instead of depending on the keyboard's final height.
+- Uses `visualViewport` when available, with a safe fixed-top fallback.
+- After OK, an invisible 620 ms acknowledgement shield remains above the puzzle.
+- A matching global capture guard swallows delayed/synthetic pointer/click events
+  during that interval so the OK tap cannot fall through to HOME/SUBMIT.
+- Third-wrong-answer surrender transition waits until the acknowledgement shield
+  has expired, then uses the existing v2.16 surrender guard.
+- Attempts 2/3 keep the existing proven placement model.
 
-## Welcome screen
-- Mobile-first Route 4T highway-sign header based on the approved mockup.
-- Uses the ORIGINAL uploaded Cybertruck/Mika photo (`20260110_103317.jpg`) copied byte-for-byte as `welcome-mika.jpg`; no AI-rendered Mika image is used.
-- Concise Rule of the Road box.
-- Road/highway-style ENTER button.
-- Existing in-game HOME behavior is unchanged: HOME returns to the scoreboard/EXIT screen, not the welcome screen.
+## Welcome screen carried forward
+- Uses the approved full scenic Route 4T poster as the overall welcome artwork.
+- The Cybertruck/Mika panel is overlaid with the ORIGINAL uploaded photo
+  (`20260110_103317.jpg`) copied byte-for-byte as `welcome-mika.jpg`.
+- The rendered button is a transparent live hit target; game HOME behavior is unchanged.
 
-## Gameplay protections carried forward
-- No visible reset/test footer.
-- No testDate/testTime URL overrides.
-- Completed EXIT outcomes remain immutable through normal app behavior.
-- Wrong-attempt state persists on the same browser/device.
-- Existing progress-storage keys are unchanged, so deploying this build does not intentionally reset prior test progress.
-- Puzzle definitions are frozen at runtime.
-- Persistent browser storage is requested when supported.
+## QA note
+- EXIT 0 through EXIT 40 remain visible in this QA build.
+- This is NOT the date-gated launch build.
+- Test priority: Samsung Internet + Samsung Keyboard, then a quick Chrome regression.
 
-## QA / launch note
-`QA_SHOW_ALL_EXITS = true` intentionally exposes EXIT 0–40 for this QA build.
-Do not use this setting for the final date-gated launch build.
-
-The spreadsheet itself is intentionally NOT shipped in the public website package.
-
-Cache/service-worker version: v228.
+Cache/service-worker version: v229.

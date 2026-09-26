@@ -6,31 +6,23 @@
 <meta name="theme-color" content="#0d1422">
 <title>ROUTE 4T · MIKA'S JOURNEY</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=228">
+<link rel="stylesheet" href="styles.css?v=229">
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
 <main class="app-shell">
 
 <section id="welcome" class="screen active welcome-screen" aria-labelledby="welcomeTitle">
-  <div class="welcome-mobile-layout">
-    <img id="welcomeTitle" class="welcome-top-art" src="welcome-top.png" alt="Route 4T — Mika’s Journey with 40 Exits. Challenging Puzzles and Rewarding Gifts for a Wiser You.">
-
-    <div class="welcome-photo-wrap">
-      <img src="welcome-mika.jpg" alt="Mika standing in the back of a Cybertruck">
+  <div class="welcome-poster-shell">
+    <img class="welcome-poster-bg" src="welcome-poster.png" alt="" aria-hidden="true">
+    <h1 id="welcomeTitle" class="sr-only">Route 4T — Mika’s Journey with 40 Exits</h1>
+    <p class="sr-only">Challenging Puzzles and Rewarding Gifts for a Wiser You.</p>
+    <img class="welcome-original-photo" src="welcome-mika.jpg" alt="Mika standing in the back of a Cybertruck">
+    <div class="sr-only">
+      <h2>Rule of the Road</h2>
+      <p>Phones while driving? Never. Phones for Route 4T? Sadly, yes. One phone. One browser. All 40 exits. Or your score may take the next exit.</p>
     </div>
-
-    <div class="welcome-rule-card">
-      <div class="welcome-rule-title">RULE OF THE ROAD 🚗</div>
-      <div class="welcome-rule-row"><span class="welcome-rule-icon">🚫</span><span>Phones while driving? Never.</span></div>
-      <div class="welcome-rule-row"><span class="welcome-rule-icon">📱</span><span>Phones for Route 4T? Sadly, yes. 😉</span></div>
-      <div class="welcome-rule-row"><span class="welcome-rule-icon">🔗</span><span>One phone. One browser. All 40 exits.</span></div>
-      <div class="welcome-rule-row"><span class="welcome-rule-icon">🏆</span><span>Or your score may “take the next exit.” 😂</span></div>
-    </div>
-
-    <button id="enterRouteMobile" class="welcome-enter" type="button">
-      <span>FINE… LET’S HIT THE ROAD 🚗</span><b aria-hidden="true">›</b>
-    </button>
+    <button id="enterRouteMobile" class="welcome-poster-enter" type="button" aria-label="Fine, let’s hit the road"></button>
   </div>
 </section>
 
@@ -170,6 +162,6 @@
 </section>
 
 </main>
-<script src="app.js?v=228"></script>
+<script src="app.js?v=229"></script>
 </body>
 </html>
