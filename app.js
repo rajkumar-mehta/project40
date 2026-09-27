@@ -1,5 +1,5 @@
 
-const QA_SHOW_ALL_EXITS = true; // v2.32 QA: intentionally exposes EXIT 0–40 for full production-URL testing. Disable for launch.
+const QA_SHOW_ALL_EXITS = true; // v2.34 QA: intentionally exposes EXIT 0–40 for full production-URL testing. Disable for launch.
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mjykazrp";
@@ -1306,6 +1306,7 @@ function measurePortraitScore(){
  document.documentElement.style.setProperty("--portrait-score-left",r.left+"px");
  document.documentElement.style.setProperty("--portrait-score-width",r.width+"px");
  document.documentElement.style.setProperty("--portrait-score-space",(r.height+6)+"px");
+ document.documentElement.style.setProperty("--mobile-score-bottom",(8+r.height)+"px");
 }
 function syncPortraitScoreFreeze(){
  const portrait=window.matchMedia("(max-width: 620px) and (orientation: portrait)").matches;
@@ -1691,17 +1692,22 @@ function playHonkSound(){
    if(!AudioCtx) return Promise.resolve();
    const ctx=new AudioCtx();
    const master=ctx.createGain(); master.gain.value=.0001; master.connect(ctx.destination);
-   const compressor=ctx.createDynamicsCompressor(); compressor.threshold.value=-18; compressor.knee.value=8; compressor.ratio.value=5; compressor.attack.value=.003; compressor.release.value=.18; compressor.connect(master);
-   const start=ctx.currentTime+.02, dur=1.05;
-   [92,116,138].forEach((f,i)=>{
+   const compressor=ctx.createDynamicsCompressor(); compressor.threshold.value=-14; compressor.knee.value=12; compressor.ratio.value=3; compressor.attack.value=.006; compressor.release.value=.20; compressor.connect(master);
+   const start=ctx.currentTime+.015, dur=.52;
+   // A bright dual-tone passenger-car horn: clearly audible, but without the harsh truck/train rasp.
+   [[392,"triangle",.23],[494,"sine",.19]].forEach(([f,type,level])=>{
      const osc=ctx.createOscillator(), g=ctx.createGain();
-     osc.type=i===0?"sawtooth":"square"; osc.frequency.setValueAtTime(f,start); osc.frequency.linearRampToValueAtTime(f*.985,start+dur);
-     g.gain.setValueAtTime(.0001,start); g.gain.exponentialRampToValueAtTime(i===0?.18:.11,start+.04); g.gain.setValueAtTime(i===0?.18:.11,start+.72); g.gain.exponentialRampToValueAtTime(.0001,start+dur);
+     osc.type=type; osc.frequency.setValueAtTime(f,start); osc.frequency.linearRampToValueAtTime(f*1.008,start+dur);
+     g.gain.setValueAtTime(.0001,start);
+     g.gain.exponentialRampToValueAtTime(level,start+.025);
+     g.gain.setValueAtTime(level,start+.36);
+     g.gain.exponentialRampToValueAtTime(.0001,start+dur);
      osc.connect(g);g.connect(compressor);osc.start(start);osc.stop(start+dur+.03);
    });
-   const wob=ctx.createOscillator(), wobGain=ctx.createGain(); wob.type="sine";wob.frequency.value=2.8;wobGain.gain.value=.035;wob.connect(wobGain);wobGain.connect(master.gain);wob.start(start);wob.stop(start+dur);
-   master.gain.exponentialRampToValueAtTime(.78,start+.03); master.gain.setValueAtTime(.78,start+.72); master.gain.exponentialRampToValueAtTime(.0001,start+dur);
-   return new Promise(res=>setTimeout(()=>{ctx.close().catch(()=>{});res()},1120));
+   master.gain.exponentialRampToValueAtTime(.88,start+.025);
+   master.gain.setValueAtTime(.88,start+.36);
+   master.gain.exponentialRampToValueAtTime(.0001,start+dur);
+   return new Promise(res=>setTimeout(()=>{ctx.close().catch(()=>{});res()},590));
  }catch{return Promise.resolve()}
 }
 function enterRoute4T(){
@@ -1715,7 +1721,7 @@ function enterRoute4T(){
    renderGrid();
    show("home");
    if(button){button.disabled=false;button.classList.remove("honked");}
- },760);
+ },560);
  if(p&&typeof p.then==="function") p.catch(()=>{});
 }
 const enterRouteMobile=$("enterRouteMobile");
@@ -1731,7 +1737,7 @@ window.addEventListener("online",()=>flushEmailQueue().catch(()=>{}));
 if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=233").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=234").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

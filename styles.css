@@ -2658,3 +2658,200 @@ body::before,body::after{display:none!important;}
   #home .day-card .date{font-size:9.5px!important;}
   #home .day-card .state{font-size:8.6px!important;}
 }
+
+/* ===== Route 4T v2.34 — FINAL PRE-LAUNCH VISUAL CLEANUP ===== */
+html,body{
+  background:#f2d6a6!important;
+  background-image:linear-gradient(rgba(255,248,232,.36),rgba(239,199,138,.22)),url('fall-leaves-bg.svg')!important;
+  background-size:auto,520px 730px!important;
+  background-repeat:repeat,repeat!important;
+  background-position:center top,center top!important;
+  background-attachment:scroll,scroll!important;
+}
+#welcome.active,#home.active,#puzzle.active,#confirmGiveUp.active,#surrender.active,#video.active,#finale.active,#review.active{
+  background:transparent!important;
+  background-image:none!important;
+}
+
+/* Welcome: preserve every edge of the artwork; the fall leaves belong to the page, not a stretched photo. */
+.welcome-screen{background:transparent!important;overflow:visible!important;}
+.welcome-poster-shell{
+  width:100%!important;max-width:520px!important;margin:0 auto!important;padding:8px 8px 16px!important;
+  gap:8px!important;background:rgba(255,247,229,.16)!important;overflow:visible!important;border-radius:22px!important;
+}
+.welcome-photo-frame{width:96%!important;margin:0 auto!important;overflow:hidden!important;border-radius:18px!important;}
+.welcome-title-art,.welcome-rules-art{
+  display:block!important;width:94%!important;max-width:94%!important;height:auto!important;max-height:none!important;
+  object-fit:contain!important;object-position:center!important;margin:0 auto!important;overflow:visible!important;
+  border-radius:14px!important;
+}
+.welcome-rules-art{width:90%!important;max-width:90%!important;}
+.welcome-honk-button{width:min(56%,250px)!important;margin:4px auto 10px!important;overflow:visible!important;}
+.welcome-honk-button img{width:100%!important;height:auto!important;object-fit:contain!important;}
+
+/* GAME HOME: clean fall background, no photo wash. */
+#home{background:transparent!important;}
+#home .project40-header{background:transparent!important;}
+#home .project40-header .home-header-art{display:block!important;width:100%!important;height:auto!important;object-fit:contain!important;}
+#home .score-card{
+  background:linear-gradient(180deg,#653718 0%,#4a2814 56%,#382012 100%)!important;
+  border:2px solid #c89231!important;box-shadow:0 8px 18px rgba(70,36,10,.24)!important;
+}
+
+/* YOUR EXITS is a centered full-width sticky road sign. */
+#home .section-heading{
+  width:100%!important;box-sizing:border-box!important;text-align:center!important;display:block!important;
+  margin:0 0 8px!important;padding:8px 12px!important;border:2px solid #c89231!important;border-radius:13px!important;
+  background:linear-gradient(180deg,#0b5f43,#084934)!important;color:#fff4cf!important;
+  font-family:Georgia,'Times New Roman',serif!important;font-weight:900!important;letter-spacing:.06em!important;
+  box-shadow:0 6px 12px rgba(64,34,11,.18)!important;
+}
+
+/* EXIT cards: one single highway-green sign. No brown backing, no separate bands, no extra divider lines. */
+#home .day-card{
+  background:#075b3f!important;border:2px solid #c89433!important;border-radius:14px!important;
+  padding:12px 10px 11px!important;box-shadow:0 7px 14px rgba(63,34,13,.20)!important;overflow:hidden!important;
+}
+#home .day-card::before,#home .day-card::after{display:none!important;content:none!important;}
+#home .day-card .dayline{display:block!important;padding:0!important;background:transparent!important;border:0!important;}
+#home .day-card .day{
+  width:100%!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;
+  background:transparent!important;box-shadow:none!important;display:flex!important;flex-direction:column!important;align-items:center!important;
+  justify-content:center!important;color:#fff!important;
+}
+#home .day-card .exit-word{font-family:system-ui,sans-serif!important;font-size:12px!important;line-height:1!important;font-weight:900!important;color:#fff!important;letter-spacing:.05em!important;}
+#home .day-card .exit-number{margin-top:3px!important;font-family:system-ui,sans-serif!important;font-size:40px!important;line-height:.95!important;font-weight:900!important;color:#fff!important;text-shadow:0 2px 4px rgba(0,0,0,.20)!important;}
+#home .day-card .date{
+  margin:8px 0 0!important;padding:0!important;background:transparent!important;border:0!important;color:#fff1d9!important;
+  font-size:10px!important;line-height:1.2!important;font-weight:800!important;text-align:center!important;
+}
+#home .day-card .state-row,
+#home .day-card .state-row.ready-state,
+#home .day-card .state-row.solved-state,
+#home .day-card .state-row.flag-state,
+#home .day-card .state-row.locked-state{
+  margin:9px 0 0!important;padding:0!important;min-height:25px!important;background:transparent!important;border:0!important;
+  display:grid!important;grid-template-columns:22px minmax(0,1fr) 15px!important;gap:6px!important;align-items:center!important;
+}
+#home .day-card .state{margin:0!important;padding:0!important;color:#fff!important;font-size:8.8px!important;line-height:1.15!important;font-weight:850!important;text-align:left!important;overflow-wrap:anywhere!important;}
+#home .day-card .state-icon{width:20px!important;height:20px!important;}
+#home .day-card .state-chevron{font-size:24px!important;line-height:1!important;color:#ffe8a3!important;align-self:center!important;}
+#home .day-card .solved-icon{color:#57e77a!important;}
+#home .day-card .unsolved-icon{color:#ff6c68!important;}
+#home .day-card .flag-icon{color:#fff!important;}
+
+/* Fall puzzle/review/result pages: light translucent cream content over leaf background. */
+#puzzle,#confirmGiveUp,#surrender,#video,#finale,#review{
+  background:rgba(255,248,232,.34)!important;color:#2d2116!important;border-radius:20px!important;
+}
+#puzzle::before,#confirmGiveUp::before,#surrender::before,#video::before,#finale::before,#review::before{
+  background:linear-gradient(180deg,rgba(255,251,241,.56),rgba(250,230,193,.42))!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+#puzzle .puzzle-card,#review .puzzle-card,#confirmGiveUp .puzzle-card{
+  background:linear-gradient(180deg,#fff9ea,#f7e4bf)!important;border:2px solid #c9862d!important;color:#332417!important;
+}
+#puzzle .question,#review .question{color:#392719!important;}
+#puzzle .card-label,#review .card-label{color:#9a5c20!important;}
+#puzzle .scroll-cue{color:#6f4726!important;}
+#answerInput{
+  background:#fffaf0!important;border:2px solid #b77a31!important;color:#2d2117!important;box-shadow:none!important;
+}
+#answerInput::placeholder{color:#6f5a45!important;opacity:.88!important;}
+
+/* Every wrong-answer and surrender popup uses exactly one adult autumn style. */
+.wrong-answer-popover,
+.wrong-answer-popover[data-attempt="1"],
+.wrong-answer-popover[data-attempt="2"],
+.wrong-answer-popover[data-attempt="3"],
+.wrong-answer-popover[data-mode="wrong"],
+.wrong-answer-popover[data-mode="surrender"]{
+  background:linear-gradient(180deg,#fff8e7,#f4dba9)!important;
+  border:2px solid #c87925!important;color:#3d2615!important;
+  box-shadow:0 10px 24px rgba(79,43,14,.28)!important;
+}
+.wrong-answer-popover .wap-message,
+.wrong-answer-popover[data-attempt="1"] .wap-message,
+.wrong-answer-popover[data-attempt="2"] .wap-message,
+.wrong-answer-popover[data-attempt="3"] .wap-message{
+  color:#542d18!important;font-family:Georgia,'Times New Roman',serif!important;font-weight:800!important;
+}
+.wrong-answer-popover .wap-remaining{color:#75502d!important;}
+.wrong-answer-popover .wap-ok,
+.wrong-answer-popover[data-attempt="1"] .wap-ok,
+.wrong-answer-popover[data-attempt="2"] .wap-ok,
+.wrong-answer-popover[data-attempt="3"] .wap-ok,
+.wrong-answer-popover[data-mode="surrender"] .wap-ok{
+  background:linear-gradient(180deg,#168057,#0c6247)!important;border:1px solid #a16a28!important;color:#fff8dd!important;
+}
+
+/* Simpler, brighter surrender confirmation. */
+#confirmGiveUp{text-align:center!important;}
+#confirmGiveUp h2{color:#5b321a!important;font-size:clamp(30px,8vw,44px)!important;margin:8px 0 12px!important;}
+#confirmGiveUp .puzzle-card.compact{padding:16px 14px!important;margin:12px auto 16px!important;}
+#confirmGiveUp .puzzle-card.compact p{margin:4px 0!important;font-size:16px!important;line-height:1.35!important;color:#472d1d!important;}
+#tryAgainBtn{background:linear-gradient(180deg,#f7e6bf,#e6c78e)!important;color:#3d2919!important;border:2px solid #b87b32!important;}
+#saveMeBtn{background:linear-gradient(180deg,#a74a2c,#7f351f)!important;color:#fff7e7!important;border:2px solid #c9823e!important;}
+
+/* Consolation/final answer: lighter panel, smaller one-line answer. */
+#surrender{text-align:center!important;}
+#surrender h2{font-size:clamp(28px,7vw,40px)!important;color:#5a321c!important;line-height:1.08!important;}
+#surrender .answer-reveal{
+  font-size:clamp(15px,4.4vw,20px)!important;line-height:1.15!important;white-space:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;
+  width:100%!important;max-width:100%!important;padding:13px 10px!important;background:#fff4d2!important;border:2px solid #c7852c!important;
+  color:#5b3118!important;font-weight:800!important;text-align:center!important;box-sizing:border-box!important;
+}
+#surrender .muted{color:#60442e!important;}
+#surrenderSurpriseBtn{background:linear-gradient(180deg,#168057,#0c6247)!important;}
+
+/* Sequence modal keeps the proven logic but adopts the lighter fall style. */
+.sequence-gate-backdrop{background:rgba(68,38,16,.24)!important;}
+.sequence-gate-popup{background:linear-gradient(180deg,#fff8e7,#f4dba9)!important;border-color:#c87925!important;color:#412717!important;}
+.sequence-gate-title{color:#6b381b!important;}
+.sequence-gate-copy{color:#4a3020!important;}
+.sequence-gate-popup button{background:linear-gradient(180deg,#168057,#0c6247)!important;color:#fff8dc!important;}
+
+@media(max-width:620px){
+  .app-shell{padding:8px 10px max(14px,env(safe-area-inset-bottom))!important;}
+  .welcome-poster-shell{padding:7px 5px 14px!important;gap:6px!important;}
+  .welcome-photo-frame{width:96%!important;}
+  .welcome-title-art{width:95%!important;max-width:95%!important;}
+  .welcome-rules-art{width:89%!important;max-width:89%!important;}
+  .welcome-honk-button{width:min(54%,235px)!important;margin-top:3px!important;}
+
+  body.home-active #home .score-card,
+  body.home-active.portrait-score-fixed #home .score-card{background:linear-gradient(180deg,#653718,#4a2814 56%,#382012)!important;}
+  body.home-active #home .section-heading,
+  body.home-active.portrait-score-fixed #home .section-heading{
+    position:sticky!important;top:calc(var(--mobile-score-bottom,142px) + 5px)!important;z-index:79!important;
+    width:100%!important;margin:0 0 8px!important;padding:7px 10px!important;font-size:21px!important;
+  }
+  body.home-active.portrait-score-fixed #home .section-heading{margin-top:var(--portrait-score-space,0px)!important;}
+
+  #home .day-card{padding:11px 9px 10px!important;min-height:126px!important;}
+  #home .day-card .exit-number{font-size:36px!important;}
+  #home .day-card .date{font-size:9.2px!important;margin-top:7px!important;}
+  #home .day-card .state{font-size:8.2px!important;}
+
+  #answerInput{font-size:12.5px!important;letter-spacing:.01em!important;padding-left:12px!important;padding-right:12px!important;}
+  #answerInput::placeholder{font-size:12.5px!important;letter-spacing:.01em!important;}
+
+  .wrong-answer-popover,
+  .wrong-answer-popover[data-attempt="1"],
+  .wrong-answer-popover[data-attempt="2"],
+  .wrong-answer-popover[data-attempt="3"],
+  .wrong-answer-popover[data-mode="surrender"]{
+    width:min(92vw,390px)!important;top:calc(var(--visual-top,0px) + 10px)!important;bottom:auto!important;
+  }
+  .wap-message{font-size:16px!important;}
+  #confirmGiveUp .puzzle-card.compact p{font-size:15px!important;}
+}
+
+@media(max-width:390px){
+  .welcome-title-art{width:96%!important;max-width:96%!important;}
+  .welcome-rules-art{width:90%!important;max-width:90%!important;}
+  .welcome-honk-button{width:min(56%,220px)!important;}
+  #home .section-heading{font-size:19px!important;}
+  #home .day-card .exit-number{font-size:34px!important;}
+  #answerInput,#answerInput::placeholder{font-size:11.7px!important;}
+}
