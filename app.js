@@ -1,5 +1,5 @@
-const QA_SHOW_ALL_EXITS = true; // v2.37 FINAL QA: all EXIT 0–40 visible; date gating intentionally OFF for final rehearsal.
-const QA_DISABLE_SEQUENCE = false; // v2.37 FINAL QA: sequential progression ON. Production also keeps this false.
+const QA_SHOW_ALL_EXITS = true; // v2.39 FINAL QA: all EXIT 0–40 visible; date gating intentionally OFF for final rehearsal.
+const QA_DISABLE_SEQUENCE = false; // v2.39 FINAL QA: sequential progression ON. Production also keeps this false.
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mjykazrp";
@@ -1378,7 +1378,7 @@ function renderGrid(){
    const todayChip=d.date===todayISO()?`<span class="today-chip">TODAY</span>`:"";
    b.dataset.secret=String(d.day);
    b.dataset.date=d.date;
-   b.innerHTML=`<div class="route-tile-top"><svg class="us-route-shield" viewBox="0 0 64 72" role="img" aria-label="U.S. Route 4T"><path d="M32 3 C25 8 17 9 6 8 C7 17 6 24 3 31 C3 49 15 62 32 69 C49 62 61 49 61 31 C58 24 57 17 58 8 C47 9 39 8 32 3 Z" fill="#fff" stroke="#111" stroke-width="3.2" stroke-linejoin="round"/><text x="32" y="44" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="900" fill="#111">4T</text></svg><div class="exit-number-lockup"><span class="exit-sign-label">EXIT</span><span class="exit-sign-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
+   b.innerHTML=`<div class="route-tile-top"><svg class="us-route-shield" viewBox="0 0 64 72" role="img" aria-label="U.S. Route 4T"><path d="M32 3 C25 8 17 9 6 8 C7 17 6 24 3 31 C3 49 15 62 32 69 C49 62 61 49 61 31 C58 24 57 17 58 8 C47 9 39 8 32 3 Z" fill="#ffffff" stroke="#000000" stroke-width="3.2" stroke-linejoin="round"/><text x="32" y="44" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="900" fill="#000000">4T</text></svg><div class="exit-number-lockup"><span class="exit-sign-label">EXIT</span><span class="exit-sign-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
    b.onclick=()=>openDay(d.day);
    grid.appendChild(b);
  });
@@ -1735,7 +1735,7 @@ window.addEventListener("online",()=>flushEmailQueue().catch(()=>{}));
 if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=235").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=239").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

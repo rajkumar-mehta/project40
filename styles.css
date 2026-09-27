@@ -3302,3 +3302,191 @@ body.home-active.portrait-score-fixed #home .section-heading{
   #home .day-card .state-row,#home .day-card .state-row.ready-state,#home .day-card .state-row.solved-state,#home .day-card .state-row.flag-state,#home .day-card .state-row.locked-state{margin-top:4px!important;}
   #home .day-card .state{font-size:7.9px!important;}
 }
+
+/* ======================================================================
+   ROUTE 4T v2.38 — URGENT DEFECT FIXES ONLY
+   Photo replacement + frozen scoreboard + pure B/W shield + rectangular tiles.
+   ====================================================================== */
+
+/* Use the newly supplied Mika photo without filters or opacity effects. */
+#welcome .welcome-photo-new{
+  filter:none!important;
+  opacity:1!important;
+  mix-blend-mode:normal!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+}
+
+/* 4T shield must be PURE white with PURE black letters. */
+#home .us-route-shield{
+  opacity:1!important;
+  filter:none!important;
+  mix-blend-mode:normal!important;
+}
+#home .us-route-shield path{
+  fill:#ffffff!important;
+  stroke:#000000!important;
+  opacity:1!important;
+}
+#home .us-route-shield text{
+  fill:#000000!important;
+  color:#000000!important;
+  opacity:1!important;
+}
+
+/* Mobile portrait: freeze the header/scoreboard/YOUR EXITS by making ONLY the
+   EXIT grid scroll. This avoids browser-specific sticky/fixed conflicts. */
+@media (max-width:620px) and (orientation:portrait){
+  html,body,body.home-active{
+    width:100%!important;
+    height:100%!important;
+    height:100dvh!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    overscroll-behavior:none!important;
+  }
+  body.home-active .app-shell{
+    width:100%!important;
+    max-width:520px!important;
+    height:100%!important;
+    height:100dvh!important;
+    min-height:0!important;
+    margin:0 auto!important;
+    padding:max(7px,env(safe-area-inset-top)) 9px max(7px,env(safe-area-inset-bottom))!important;
+    overflow:hidden!important;
+    display:block!important;
+  }
+  body.home-active #home.active{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  body.home-active #home .project40-header{
+    position:relative!important;
+    inset:auto!important;
+    flex:0 0 auto!important;
+    margin:0!important;
+    padding:0 0 5px!important;
+    transform:none!important;
+  }
+  body.home-active #home .home-sticky-stack,
+  body.home-active.portrait-score-fixed #home .home-sticky-stack{
+    position:relative!important;
+    inset:auto!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    width:100%!important;
+    flex:0 0 auto!important;
+    z-index:50!important;
+    transform:none!important;
+  }
+  body.home-active #home .score-card,
+  body.home-active.portrait-score-fixed #home .score-card{
+    position:relative!important;
+    inset:auto!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    width:100%!important;
+    margin:0 0 4px!important;
+    transform:none!important;
+  }
+  body.home-active #home .section-heading,
+  body.home-active.portrait-score-fixed #home .section-heading{
+    position:relative!important;
+    inset:auto!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    width:100%!important;
+    margin:0 0 5px!important;
+    transform:none!important;
+  }
+  body.home-active #home .day-grid,
+  #home .day-grid{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-y:contain!important;
+    touch-action:pan-y!important;
+    padding:1px 1px max(12px,env(safe-area-inset-bottom))!important;
+  }
+
+  /* EXIT board proportions: visibly rectangular, less whitespace. */
+  #home .day-card{
+    box-sizing:border-box!important;
+    height:102px!important;
+    min-height:102px!important;
+    max-height:102px!important;
+    padding:5px 7px 5px!important;
+    border-radius:8px!important;
+    overflow:hidden!important;
+  }
+  #home .route-tile-top{
+    grid-template-columns:34px minmax(0,1fr)!important;
+    gap:4px!important;
+    min-height:34px!important;
+    height:34px!important;
+    align-items:center!important;
+  }
+  #home .us-route-shield{
+    width:32px!important;
+    height:36px!important;
+  }
+  #home .exit-number-lockup{
+    gap:5px!important;
+    justify-content:center!important;
+    align-items:baseline!important;
+    white-space:nowrap!important;
+    min-width:0!important;
+  }
+  #home .exit-sign-label{
+    font-size:16px!important;
+    line-height:1!important;
+    font-weight:900!important;
+    letter-spacing:.055em!important;
+  }
+  #home .exit-sign-number{
+    font-size:23px!important;
+    line-height:1!important;
+    font-weight:900!important;
+    letter-spacing:-.02em!important;
+  }
+  #home .day-card .date{
+    margin-top:3px!important;
+    font-size:8.3px!important;
+    line-height:1.05!important;
+  }
+  #home .day-card .state-row,
+  #home .day-card .state-row.ready-state,
+  #home .day-card .state-row.solved-state,
+  #home .day-card .state-row.flag-state,
+  #home .day-card .state-row.locked-state{
+    margin-top:3px!important;
+    min-height:17px!important;
+    grid-template-columns:17px minmax(0,1fr) 9px!important;
+    gap:3px!important;
+  }
+  #home .day-card .state-icon{
+    width:16px!important;
+    height:16px!important;
+  }
+  #home .day-card .state{
+    font-size:7.5px!important;
+    line-height:1.05!important;
+    white-space:normal!important;
+    overflow:hidden!important;
+  }
+  #home .day-card .state-chevron{
+    font-size:17px!important;
+    line-height:1!important;
+  }
+}
