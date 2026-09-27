@@ -1299,22 +1299,25 @@ function bindMobileHomeScroll(){
 
 let portraitScoreBound=false, portraitScoreTop=0;
 function measurePortraitScore(){
- const score=document.querySelector("#home .score-card");
- if(!score) return;
+ const stack=document.querySelector("#home .home-sticky-stack");
+ if(!stack) return;
  const portrait=window.matchMedia("(max-width: 620px) and (orientation: portrait)").matches;
  if(!portrait || !document.body.classList.contains("home-active")){
    document.body.classList.remove("portrait-score-fixed");
    return;
  }
- // Measure in normal flow only. Once fixed, preserve the previously measured threshold.
  if(!document.body.classList.contains("portrait-score-fixed")){
-   portraitScoreTop=score.getBoundingClientRect().top+window.scrollY;
+   portraitScoreTop=stack.getBoundingClientRect().top+window.scrollY;
  }
- const r=score.getBoundingClientRect();
- document.documentElement.style.setProperty("--portrait-score-left",r.left+"px");
- document.documentElement.style.setProperty("--portrait-score-width",r.width+"px");
- document.documentElement.style.setProperty("--portrait-score-space",(r.height+6)+"px");
- document.documentElement.style.setProperty("--mobile-score-bottom",(8+r.height)+"px");
+ const r=stack.getBoundingClientRect();
+ document.documentElement.style.setProperty("--portrait-stack-left",r.left+"px");
+ document.documentElement.style.setProperty("--portrait-stack-width",r.width+"px");
+ document.documentElement.style.setProperty("--portrait-stack-space",(r.height+8)+"px");
+ const score=document.querySelector("#home .score-card");
+ if(score){
+   const sr=score.getBoundingClientRect();
+   document.documentElement.style.setProperty("--mobile-score-bottom",(8+sr.height)+"px");
+ }
 }
 function syncPortraitScoreFreeze(){
  const portrait=window.matchMedia("(max-width: 620px) and (orientation: portrait)").matches;
@@ -1322,7 +1325,7 @@ function syncPortraitScoreFreeze(){
    document.body.classList.remove("portrait-score-fixed");
    return;
  }
- const topPad=8;
+ const topPad=7;
  if(!portraitScoreTop) measurePortraitScore();
  document.body.classList.toggle("portrait-score-fixed",window.scrollY>=Math.max(0,portraitScoreTop-topPad));
 }
@@ -1378,7 +1381,7 @@ function renderGrid(){
    const todayChip=d.date===todayISO()?`<span class="today-chip">TODAY</span>`:"";
    b.dataset.secret=String(d.day);
    b.dataset.date=d.date;
-   b.innerHTML=`<div class="route-tile-top"><svg class="us-route-shield" viewBox="0 0 64 72" role="img" aria-label="U.S. Route 4T"><path d="M32 3 C25 8 17 9 6 8 C7 17 6 24 3 31 C3 49 15 62 32 69 C49 62 61 49 61 31 C58 24 57 17 58 8 C47 9 39 8 32 3 Z" fill="#ffffff" stroke="#000000" style="fill:#ffffff!important;stroke:#000000!important;opacity:1!important" stroke-width="3.2" stroke-linejoin="round"/><text x="32" y="44" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="900" fill="#000000" style="fill:#000000!important;color:#000000!important;opacity:1!important">4T</text></svg><div class="exit-number-lockup"><span class="exit-sign-label">EXIT</span><span class="exit-sign-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
+   b.innerHTML=`<div class="route-tile-top"><svg class="us-route-shield" viewBox="0 0 64 72" role="img" aria-label="U.S. Route 4T" style="display:block;background:transparent!important;filter:none!important;opacity:1!important;color:#000!important"><path d="M32 3 C25 8 17 9 6 8 C7 17 6 24 3 31 C3 49 15 62 32 69 C49 62 61 49 61 31 C58 24 57 17 58 8 C47 9 39 8 32 3 Z" fill="#ffffff" stroke="#000000" style="fill:#ffffff!important;fill-opacity:1!important;stroke:#000000!important;stroke-opacity:1!important;opacity:1!important" stroke-width="3.2" stroke-linejoin="round"/><text x="32" y="44" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="900" fill="#000000" style="fill:#000000!important;color:#000000!important;fill-opacity:1!important;opacity:1!important">4T</text></svg><div class="exit-number-lockup"><span class="exit-sign-label">EXIT</span><span class="exit-sign-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
    b.onclick=()=>openDay(d.day);
    grid.appendChild(b);
  });
@@ -1735,7 +1738,7 @@ window.addEventListener("online",()=>flushEmailQueue().catch(()=>{}));
 if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=240").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=242").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

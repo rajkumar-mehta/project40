@@ -1,7 +1,7 @@
-const CACHE='mikas-40-exits-v240';
+const CACHE='mikas-40-exits-v242';
 const ASSETS=[
-  './','./index.html','./styles.css?v=240','./app.js?v=240','./manifest.webmanifest',
-  './icon-192.png','./icon-512.png','./home-header-autumn.png','./fall-leaves-tile.png','./welcome-main-reference.png',
+  './','./index.html','./styles.css?v=242','./app.js?v=242','./manifest.webmanifest',
+  './icon-192.png','./icon-512.png','./home-header-autumn.png','./fall-leaves-tile.png',
   './welcome-mika-fall.png','./welcome-title-autumn.png','./welcome-rules-autumn.png','./welcome-honk-only.png',
   './welcome-mika-new.jpg','./car-horn.mp3','./photos/Raj-13.jpg','./photos/Raj-14.jpg'
 ];

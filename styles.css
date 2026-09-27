@@ -3739,3 +3739,326 @@ body.home-active.portrait-score-fixed #home .section-heading{
   #welcome .welcome-honk-clean-zone{left:1.8%!important;right:1.8%!important;height:16.6%!important;bottom:.25%!important;}
   #welcome .welcome-honk-hotspot{left:7%!important;right:7%!important;bottom:.8%!important;height:15%!important;}
 }
+
+
+/* ======================================================================
+   ROUTE 4T v2.41 — WELCOME STRUCTURE FIX
+   The old composite welcome image is NO LONGER rendered. It contained the
+   old Mika photo and old HONK artwork baked into one raster, which caused
+   visible layering when replacements were positioned above it.
+   v2.41 uses separate existing assets in normal document flow instead.
+   ====================================================================== */
+#welcome.active{
+  background-color:#e8c690!important;
+  background-image:linear-gradient(rgba(242,218,171,.62),rgba(232,196,144,.62)),url('fall-leaves-tile.png')!important;
+  background-repeat:repeat!important;
+  background-size:auto,480px 480px!important;
+  padding:8px 8px max(16px,env(safe-area-inset-bottom))!important;
+}
+#welcome .welcome-v241-stack{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  gap:8px!important;
+  width:min(100%,620px)!important;
+  max-width:620px!important;
+  margin:0 auto!important;
+  padding:0!important;
+  overflow:visible!important;
+  background:transparent!important;
+}
+/* Old composite/overlay layers must never render in this build. */
+#welcome .welcome-reference-image,
+#welcome .welcome-honk-clean-zone,
+#welcome .welcome-honk-clean,
+#welcome .welcome-honk-hotspot{
+  display:none!important;
+}
+#welcome .welcome-v241-photo-frame{
+  position:relative!important;
+  width:100%!important;
+  aspect-ratio:2.05/1!important;
+  overflow:hidden!important;
+  border:3px solid #d99a31!important;
+  border-radius:18px!important;
+  background:#f4ddb3!important;
+  box-sizing:border-box!important;
+  box-shadow:0 5px 14px rgba(77,39,13,.24)!important;
+}
+#welcome .welcome-v241-photo-frame .welcome-photo-new{
+  position:static!important;
+  inset:auto!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  opacity:1!important;
+  mix-blend-mode:normal!important;
+}
+#welcome .welcome-v241-title,
+#welcome .welcome-v241-rules{
+  position:static!important;
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  margin:0!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+#welcome .welcome-v241-honk{
+  position:static!important;
+  display:block!important;
+  width:min(82%,470px)!important;
+  height:auto!important;
+  margin:2px auto 6px!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  cursor:pointer!important;
+  overflow:visible!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
+}
+#welcome .welcome-v241-honk img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  object-fit:contain!important;
+  pointer-events:none!important;
+  user-select:none!important;
+  mix-blend-mode:multiply!important;
+  filter:drop-shadow(0 6px 9px rgba(67,33,10,.28))!important;
+}
+#welcome .welcome-v241-honk:active,
+#welcome .welcome-v241-honk.honked{
+  transform:scale(.965)!important;
+}
+#welcome .welcome-v241-honk:focus-visible{
+  outline:3px solid #fff4b5!important;
+  outline-offset:4px!important;
+}
+@media(max-width:620px){
+  #welcome.active{padding:0 0 max(12px,env(safe-area-inset-bottom))!important;}
+  #welcome .welcome-v241-stack{gap:5px!important;width:100%!important;}
+  #welcome .welcome-v241-photo-frame{border-left:0!important;border-right:0!important;border-radius:0!important;}
+  #welcome .welcome-v241-honk{width:88%!important;margin:1px auto 5px!important;}
+}
+
+/* ======================================================================
+   ROUTE 4T v2.42 — Samsung/mobile QA fixes
+   Fixes only existing UI/CSS/JS behavior. No new rendered artwork.
+   ====================================================================== */
+
+/* 1) Scoreboard stat row: center each of the 5 groups inside equal columns. */
+#home .score-stats{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  justify-items:stretch!important;
+  width:100%!important;
+}
+#home .score-stats .stat-item{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  width:100%!important;
+  min-width:0!important;
+  padding:0 3px!important;
+  box-sizing:border-box!important;
+  gap:2px!important;
+}
+#home .score-stats .stat-item+.stat-item{border-left:1px solid rgba(239,192,82,.34)!important;}
+#home .score-stats .stat-icon,
+#home .score-stats .stat-label,
+#home .score-stats .stat-item b{
+  width:100%!important;
+  text-align:center!important;
+}
+
+/* 2) 4T shield must be pure white with black 4T text. */
+#home svg.us-route-shield,
+#home .day-card svg.us-route-shield{
+  display:block!important;
+  background:transparent!important;
+  color:#000000!important;
+  opacity:1!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+  mix-blend-mode:normal!important;
+}
+#home svg.us-route-shield path,
+#home .day-card svg.us-route-shield path{
+  fill:#ffffff!important;
+  stroke:#000000!important;
+  fill-opacity:1!important;
+  stroke-opacity:1!important;
+  opacity:1!important;
+}
+#home svg.us-route-shield text,
+#home .day-card svg.us-route-shield text{
+  fill:#000000!important;
+  color:#000000!important;
+  stroke:none!important;
+  fill-opacity:1!important;
+  opacity:1!important;
+}
+
+/* 3) EXIT tiles/signs: flatter rectangular look, larger EXIT label, smaller number. */
+#home .day-card{
+  min-height:96px!important;
+  height:96px!important;
+  max-height:96px!important;
+  padding:5px 8px 5px!important;
+  border-radius:8px!important;
+}
+#home .route-tile-top{
+  display:grid!important;
+  grid-template-columns:36px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:6px!important;
+  min-height:34px!important;
+  height:34px!important;
+}
+#home .us-route-shield{width:34px!important;height:38px!important;}
+#home .exit-number-lockup{
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:center!important;
+  gap:5px!important;
+  min-width:0!important;
+  white-space:nowrap!important;
+}
+#home .exit-sign-label{
+  font-size:20px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.04em!important;
+}
+#home .exit-sign-number{
+  font-size:17px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:-.01em!important;
+}
+#home .day-card .date{margin-top:4px!important;font-size:8.4px!important;line-height:1.05!important;}
+#home .day-card .state-row,
+#home .day-card .state-row.ready-state,
+#home .day-card .state-row.solved-state,
+#home .day-card .state-row.flag-state,
+#home .day-card .state-row.locked-state{
+  margin-top:4px!important;
+  min-height:18px!important;
+  grid-template-columns:17px minmax(0,1fr) 10px!important;
+  gap:4px!important;
+}
+#home .day-card .state-icon{width:16px!important;height:16px!important;}
+#home .day-card .state{font-size:7.6px!important;line-height:1.05!important;}
+#home .day-card .state-chevron{font-size:18px!important;line-height:1!important;}
+
+/* 4) Restore the intended portrait behavior on Samsung Internet:
+   header artwork scrolls away normally; then scoreboard/YOUR EXITS freezes. */
+@media (max-width:620px) and (orientation:portrait){
+  html,body,body.home-active{
+    height:auto!important;
+    min-height:100%!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    overscroll-behavior-y:auto!important;
+  }
+  body.home-active .app-shell,
+  body.home-active #home.active{
+    height:auto!important;
+    min-height:100dvh!important;
+    overflow:visible!important;
+    display:block!important;
+  }
+  body.home-active #home .project40-header{
+    position:relative!important;
+    inset:auto!important;
+    margin:0 0 6px!important;
+    padding:0!important;
+    z-index:1!important;
+    transform:none!important;
+  }
+  body.home-active #home .home-sticky-stack{
+    position:relative!important;
+    inset:auto!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    width:100%!important;
+    z-index:90!important;
+    transform:none!important;
+    background:transparent!important;
+  }
+  body.home-active.portrait-score-fixed #home .home-sticky-stack{
+    position:fixed!important;
+    top:max(7px,env(safe-area-inset-top))!important;
+    left:50%!important;
+    right:auto!important;
+    width:calc(100vw - 18px)!important;
+    max-width:502px!important;
+    transform:translateX(-50%)!important;
+    z-index:98!important;
+    background:transparent!important;
+  }
+  body.home-active #home .score-card,
+  body.home-active #home .section-heading{
+    position:relative!important;
+    inset:auto!important;
+    width:100%!important;
+    left:auto!important;
+    right:auto!important;
+    transform:none!important;
+  }
+  body.home-active #home .score-card{margin:0 0 4px!important;}
+  body.home-active #home .section-heading{margin:0 0 6px!important;}
+  body.home-active #home .day-grid{
+    height:auto!important;
+    max-height:none!important;
+    min-height:0!important;
+    overflow:visible!important;
+    padding:1px 1px max(12px,env(safe-area-inset-bottom))!important;
+    margin-top:0!important;
+  }
+  body.home-active.portrait-score-fixed #home .day-grid{
+    margin-top:calc(var(--portrait-stack-space, 182px) - 4px)!important;
+  }
+
+  /* Mobile-specific stat centering and readable labels. */
+  #home .score-stats .stat-item{padding:0 2px!important;gap:1px!important;}
+  #home .score-stats .stat-icon{font-size:17px!important;line-height:1!important;}
+  #home .score-stats .stat-label{font-size:6.8px!important;line-height:1.05!important;}
+  #home .score-stats .stat-item b{font-size:8px!important;line-height:1!important;}
+
+  /* Mobile-specific exit sign sizing tuned for 2-column Samsung portrait. */
+  #home .day-card{
+    min-height:94px!important;
+    height:94px!important;
+    max-height:94px!important;
+    padding:5px 7px 5px!important;
+  }
+  #home .route-tile-top{
+    grid-template-columns:31px minmax(0,1fr)!important;
+    min-height:31px!important;
+    height:31px!important;
+    gap:5px!important;
+  }
+  #home .us-route-shield{width:29px!important;height:33px!important;}
+  #home .exit-sign-label{font-size:19px!important;}
+  #home .exit-sign-number{font-size:16px!important;}
+  #home .day-card .date{font-size:8px!important;}
+  #home .day-card .state{font-size:7.2px!important;}
+}
