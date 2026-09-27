@@ -3490,3 +3490,252 @@ body.home-active.portrait-score-fixed #home .section-heading{
     line-height:1!important;
   }
 }
+
+
+/* ======================================================================
+   ROUTE 4T v2.40 — USER QA CORRECTIONS ONLY
+   No newly rendered artwork. Existing supplied assets are reused as-is.
+   ====================================================================== */
+
+/* 1) Welcome photo: fully cover the old photo AND its old gold frame so no
+   legacy image/frame can show behind the new Mika photograph. */
+#welcome .welcome-photo-new{
+  position:absolute!important;
+  left:1.2%!important;
+  right:1.2%!important;
+  top:0!important;
+  width:97.6%!important;
+  height:34.35%!important;
+  z-index:4!important;
+  display:block!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  opacity:1!important;
+  mix-blend-mode:normal!important;
+}
+
+/* 2) Clean HONK control. Cover the old baked-in button/extra HONK callout with
+   the existing fall texture, then reuse the existing HONK-only asset. */
+#welcome .welcome-honk-clean-zone{
+  position:absolute!important;
+  left:2.5%!important;
+  right:2.5%!important;
+  bottom:.5%!important;
+  height:16.4%!important;
+  z-index:4!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  border-radius:18px!important;
+  background-color:#9a5726!important;
+  background-image:linear-gradient(rgba(129,65,24,.12),rgba(81,39,16,.12)),url('fall-leaves-tile.png')!important;
+  background-size:auto,330px 330px!important;
+  background-position:center!important;
+}
+#welcome .welcome-honk-clean{
+  display:block!important;
+  width:94%!important;
+  height:auto!important;
+  max-height:92%!important;
+  object-fit:contain!important;
+  mix-blend-mode:multiply!important;
+  filter:contrast(1.04) saturate(1.02)!important;
+  pointer-events:none!important;
+  user-select:none!important;
+}
+#welcome .welcome-honk-hotspot{
+  left:8%!important;
+  right:8%!important;
+  bottom:1.2%!important;
+  height:14.5%!important;
+  z-index:7!important;
+}
+
+/* 3) EXIT boards: deliberately LANDSCAPE/RECTANGULAR. Make EXIT larger and
+   the number smaller so the visual hierarchy matches the requested road sign. */
+#home .day-card{
+  box-sizing:border-box!important;
+  min-height:100px!important;
+  height:100px!important;
+  max-height:100px!important;
+  padding:6px 8px 5px!important;
+  border-radius:7px!important;
+}
+#home .route-tile-top{
+  grid-template-columns:39px minmax(0,1fr)!important;
+  min-height:37px!important;
+  height:37px!important;
+  gap:5px!important;
+  align-items:center!important;
+}
+#home .us-route-shield{width:37px!important;height:41px!important;}
+#home .exit-number-lockup{gap:6px!important;align-items:baseline!important;justify-content:center!important;}
+#home .exit-sign-label{
+  font-size:18px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.055em!important;
+}
+#home .exit-sign-number{
+  font-size:24px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:-.015em!important;
+}
+#home .day-card .date{margin-top:4px!important;font-size:8.5px!important;line-height:1.05!important;}
+#home .day-card .state-row,
+#home .day-card .state-row.ready-state,
+#home .day-card .state-row.solved-state,
+#home .day-card .state-row.flag-state,
+#home .day-card .state-row.locked-state{
+  margin-top:4px!important;
+  min-height:18px!important;
+  grid-template-columns:18px minmax(0,1fr) 10px!important;
+  gap:4px!important;
+}
+#home .day-card .state-icon{width:17px!important;height:17px!important;}
+#home .day-card .state{font-size:7.7px!important;line-height:1.05!important;}
+#home .day-card .state-chevron{font-size:18px!important;line-height:1!important;}
+
+/* 4) 4T shield: force actual SVG geometry to pure white and actual glyphs
+   to pure black. Avoid opacity/filter inherited from any earlier theme layer. */
+#home svg.us-route-shield{
+  background:transparent!important;
+  color:#000!important;
+  opacity:1!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+}
+#home svg.us-route-shield path{
+  fill:rgb(255,255,255)!important;
+  stroke:rgb(0,0,0)!important;
+  stroke-opacity:1!important;
+  fill-opacity:1!important;
+}
+#home svg.us-route-shield text{
+  fill:rgb(0,0,0)!important;
+  color:rgb(0,0,0)!important;
+  stroke:none!important;
+  fill-opacity:1!important;
+  opacity:1!important;
+  font-weight:900!important;
+}
+
+/* 5) Mobile portrait scroll model: the header/artwork above the scoreboard is
+   normal content and scrolls away. Only the scoreboard/YOUR EXITS stack sticks
+   once it naturally reaches the top. The EXIT list is NOT a nested scroll pane. */
+@media (max-width:620px) and (orientation:portrait){
+  html,body,body.home-active{
+    width:100%!important;
+    height:auto!important;
+    min-height:100%!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    overscroll-behavior-y:auto!important;
+  }
+  body.home-active .app-shell{
+    width:100%!important;
+    max-width:520px!important;
+    height:auto!important;
+    min-height:100dvh!important;
+    margin:0 auto!important;
+    padding:max(7px,env(safe-area-inset-top)) 9px max(14px,env(safe-area-inset-bottom))!important;
+    overflow:visible!important;
+    display:block!important;
+  }
+  body.home-active #home.active{
+    width:100%!important;
+    height:auto!important;
+    min-height:100dvh!important;
+    overflow:visible!important;
+    display:block!important;
+  }
+  body.home-active #home .project40-header{
+    position:relative!important;
+    inset:auto!important;
+    z-index:auto!important;
+    margin:0!important;
+    padding:0 0 6px!important;
+    transform:none!important;
+  }
+  body.home-active #home .home-sticky-stack,
+  body.home-active.portrait-score-fixed #home .home-sticky-stack{
+    position:sticky!important;
+    top:max(7px,env(safe-area-inset-top))!important;
+    left:auto!important;
+    right:auto!important;
+    width:100%!important;
+    z-index:90!important;
+    transform:none!important;
+    background:transparent!important;
+  }
+  body.home-active #home .score-card,
+  body.home-active.portrait-score-fixed #home .score-card{
+    position:relative!important;
+    inset:auto!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    width:100%!important;
+    margin:0 0 4px!important;
+    transform:none!important;
+    z-index:auto!important;
+  }
+  body.home-active #home .section-heading,
+  body.home-active.portrait-score-fixed #home .section-heading{
+    position:relative!important;
+    inset:auto!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    width:100%!important;
+    margin:0 0 6px!important;
+    transform:none!important;
+    z-index:auto!important;
+  }
+  body.home-active #home .day-grid,
+  #home .day-grid{
+    height:auto!important;
+    max-height:none!important;
+    min-height:0!important;
+    overflow:visible!important;
+    padding:1px 1px max(12px,env(safe-area-inset-bottom))!important;
+    touch-action:pan-y!important;
+  }
+
+  /* Stronger portrait proportions. */
+  #home .day-card{
+    height:94px!important;
+    min-height:94px!important;
+    max-height:94px!important;
+    padding:5px 7px 4px!important;
+  }
+  #home .route-tile-top{
+    grid-template-columns:32px minmax(0,1fr)!important;
+    min-height:32px!important;
+    height:32px!important;
+    gap:4px!important;
+  }
+  #home .us-route-shield{width:30px!important;height:34px!important;}
+  #home .exit-sign-label{font-size:17px!important;}
+  #home .exit-sign-number{font-size:21px!important;}
+  #home .day-card .date{font-size:8px!important;margin-top:3px!important;}
+  #home .day-card .state-row,
+  #home .day-card .state-row.ready-state,
+  #home .day-card .state-row.solved-state,
+  #home .day-card .state-row.flag-state,
+  #home .day-card .state-row.locked-state{margin-top:3px!important;min-height:17px!important;}
+  #home .day-card .state{font-size:7.3px!important;}
+
+  #welcome .welcome-photo-new{
+    left:1%!important;right:1%!important;width:98%!important;
+    top:0!important;height:34.45%!important;border-radius:0!important;
+  }
+  #welcome .welcome-honk-clean-zone{left:1.8%!important;right:1.8%!important;height:16.6%!important;bottom:.25%!important;}
+  #welcome .welcome-honk-hotspot{left:7%!important;right:7%!important;bottom:.8%!important;height:15%!important;}
+}

@@ -1,19 +1,10 @@
-# Route 4T v2.39 — Cache/Version Synchronization QA Build
+# Route 4T v2.40
 
-Built directly from v2.38. No visual redesign or gameplay/content changes.
+Built from v2.39. User-requested QA corrections only; no new image generation.
 
-Critical fix:
-- Every live bundle reference now uses v239 consistently.
-- index.html loads styles.css?v=239 and app.js?v=239.
-- app.js registers sw.js?v=239.
-- service worker cache is mikas-40-exits-v239 and pre-caches the v239 CSS/JS URLs.
-- Old Route 4T caches are deleted during service-worker activation.
-
-Carried forward unchanged from v2.38:
-- User-supplied 20201106_140331.jpg as welcome-mika-new.jpg, no filters.
-- Mobile portrait scoreboard + YOUR EXITS fixed/frozen while only EXIT grid scrolls.
-- 4T U.S.-route shield pure white with black 4T letters.
-- Rectangular EXIT tile proportions, larger EXIT label, smaller EXIT number.
-- All EXIT 0–40 visible for QA, date gating OFF, sequential progression ON.
-- Completed EXIT read-only revisit flow.
-- Mika/Raj profile isolation, Formspree email behavior, latest content, and horn preserved.
+- New Mika photo fully covers legacy photo/frame on welcome page.
+- HONK control uses existing HONK-only asset; duplicate HONK callout is covered.
+- EXIT tiles made more rectangular; EXIT label enlarged; EXIT number reduced.
+- 4T route shield forced to pure white with black 4T text.
+- Mobile portrait header scrolls away naturally; scoreboard/YOUR EXITS stack becomes sticky only after reaching the top.
+- Cache-busting/version references updated to v240.
