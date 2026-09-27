@@ -2855,3 +2855,266 @@ html,body{
   #home .day-card .exit-number{font-size:34px!important;}
   #answerInput,#answerInput::placeholder{font-size:11.7px!important;}
 }
+
+/* ======================================================================
+   ROUTE 4T v2.35 — LAUNCH QA VISUAL CORRECTIONS
+   - non-stretched repeating fall-leaf background
+   - sticky scoreboard + YOUR EXITS stack
+   - Route 40 shield + EXIT sign tiles
+   - mature unified autumn alerts
+   - transparent answer field + embossed controls
+   ====================================================================== */
+:root{
+  --r4t-leaf-cream:#f9edcf;
+  --r4t-leaf-tan:#efd39c;
+  --r4t-rust:#a7542d;
+  --r4t-rust-dark:#73361f;
+  --r4t-bronze:#9d6b32;
+  --r4t-brown:#4b2c1b;
+  --r4t-green:#0b6348;
+  --r4t-green-dark:#084c38;
+  --r4t-ink:#2f2117;
+}
+
+/* One real fall-leaf canvas. The SVG repeats at its natural ratio; it is never stretched. */
+html,body{
+  background-color:#efd39c!important;
+  background-image:url('fall-leaves-bg.svg')!important;
+  background-repeat:repeat!important;
+  background-size:320px auto!important;
+  background-position:top center!important;
+  background-attachment:fixed!important;
+}
+body::before,body::after,.stars{display:none!important;content:none!important;}
+.app-shell{background:transparent!important;}
+#welcome.active,#home.active,#puzzle.active,#review.active,#confirmGiveUp.active,#surrender.active,#video.active,#finale.active{
+  background-image:none!important;
+  background-color:rgba(255,248,231,.20)!important;
+  box-shadow:none!important;
+}
+
+/* WELCOME — keep Mika as a normal image, never as a stretched page background. */
+#welcome .welcome-poster-shell{
+  background:transparent!important;
+  overflow:visible!important;
+  padding:8px 10px max(16px,env(safe-area-inset-bottom))!important;
+  gap:8px!important;
+}
+#welcome .welcome-photo-frame{
+  width:min(94%,520px)!important;
+  overflow:hidden!important;
+  border-radius:16px!important;
+  border:2px solid rgba(126,73,33,.58)!important;
+  background:#f8e6bd!important;
+  box-shadow:0 6px 16px rgba(79,44,20,.18)!important;
+}
+#welcome .welcome-original-photo{display:block!important;width:100%!important;height:auto!important;object-fit:cover!important;}
+#welcome .welcome-title-art{
+  width:min(91%,500px)!important;max-width:91%!important;height:auto!important;object-fit:contain!important;
+  margin:0 auto!important;overflow:visible!important;clip-path:none!important;
+}
+#welcome .welcome-rules-art{
+  width:min(84%,450px)!important;max-width:84%!important;height:auto!important;object-fit:contain!important;
+  margin:0 auto!important;overflow:visible!important;clip-path:none!important;
+}
+#welcome .welcome-honk-button{
+  width:min(48%,205px)!important;max-width:205px!important;margin:2px auto 8px!important;
+  overflow:visible!important;background:transparent!important;border:0!important;box-shadow:none!important;
+}
+#welcome .welcome-honk-button img{width:100%!important;height:auto!important;display:block!important;object-fit:contain!important;}
+#welcome .welcome-honk-button:active,#welcome .welcome-honk-button.honked{transform:scale(.94)!important;}
+
+/* HOME — sticky scoreboard + YOUR EXITS as one stack, so the heading cannot slide behind it. */
+#home{background:transparent!important;}
+#home .project40-header{background:transparent!important;}
+#home .home-header-art{display:block!important;width:100%!important;height:auto!important;object-fit:contain!important;border-radius:14px!important;}
+#home .home-sticky-stack{width:100%!important;box-sizing:border-box!important;z-index:90!important;}
+#home .home-sticky-stack .score-card{margin:4px 0 5px!important;}
+#home .home-sticky-stack .section-heading{
+  display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;
+  width:100%!important;box-sizing:border-box!important;margin:0 0 8px!important;padding:8px 12px!important;
+  color:#fff7df!important;background:linear-gradient(180deg,#7d4728,#59311d)!important;
+  border:2px solid #b9813f!important;border-radius:12px!important;
+  font-family:Georgia,'Times New Roman',serif!important;font-weight:900!important;letter-spacing:.08em!important;
+  box-shadow:0 3px 0 #4d2918,0 6px 12px rgba(76,43,20,.15)!important;
+}
+@media(max-width:620px) and (orientation:portrait){
+  body.home-active #home .home-sticky-stack{
+    position:sticky!important;top:max(7px,env(safe-area-inset-top))!important;z-index:90!important;
+  }
+  /* JS still measures the scoreboard for older builds; v2.35 intentionally lets the wrapper own stickiness. */
+  body.home-active #home .score-card,
+  body.home-active.portrait-score-fixed #home .score-card{
+    position:relative!important;top:auto!important;left:auto!important;width:auto!important;margin:4px 0 5px!important;z-index:auto!important;
+  }
+  body.home-active #home .section-heading,
+  body.home-active.portrait-score-fixed #home .section-heading{
+    position:relative!important;top:auto!important;margin:0 0 8px!important;width:100%!important;
+  }
+}
+
+/* EXIT TILE — one green highway tile, with a Route 40 shield and a real EXIT sign. */
+#home .day-card{
+  background:linear-gradient(180deg,#0b684b 0%,#095a42 100%)!important;
+  border:2px solid #efe8d5!important;border-radius:14px!important;padding:11px 10px 10px!important;
+  box-shadow:0 5px 0 #5b3a21,0 8px 15px rgba(70,42,22,.18)!important;
+  overflow:visible!important;min-height:136px!important;
+}
+#home .day-card::before,#home .day-card::after{display:none!important;content:none!important;}
+#home .route-tile-signs{
+  display:grid!important;grid-template-columns:64px minmax(0,1fr)!important;gap:8px!important;align-items:center!important;
+  width:100%!important;margin:0!important;padding:0!important;
+}
+#home .route-shield{
+  width:62px!important;height:68px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  background:#fff!important;color:#111!important;clip-path:polygon(18% 0,82% 0,100% 22%,90% 69%,50% 100%,10% 69%,0 22%)!important;
+  box-shadow:inset 0 0 0 3px #161616!important;font-family:Arial,Helvetica,sans-serif!important;
+}
+#home .route-shield .route-word{font-size:9px!important;font-weight:900!important;line-height:1!important;letter-spacing:.07em!important;margin-top:-2px!important;}
+#home .route-shield .route-number{font-size:31px!important;font-weight:900!important;line-height:.95!important;letter-spacing:-.04em!important;}
+#home .exit-sign{
+  min-height:60px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;
+  padding:7px 9px!important;background:#08704f!important;color:#fff!important;border:3px solid #fff!important;border-radius:7px!important;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.10)!important;font-family:Arial,Helvetica,sans-serif!important;
+}
+#home .exit-sign-label{font-size:15px!important;font-weight:900!important;letter-spacing:.06em!important;line-height:1!important;}
+#home .exit-sign-number{font-size:34px!important;font-weight:900!important;line-height:.92!important;letter-spacing:-.03em!important;}
+#home .day-card .date{
+  margin:8px 0 0!important;padding:0!important;border:0!important;background:transparent!important;color:#fff4df!important;
+  text-align:center!important;font-size:10px!important;font-weight:750!important;line-height:1.2!important;
+}
+#home .day-card .state-row,
+#home .day-card .state-row.ready-state,
+#home .day-card .state-row.solved-state,
+#home .day-card .state-row.flag-state,
+#home .day-card .state-row.locked-state{
+  margin:8px 0 0!important;padding:0!important;border:0!important;background:transparent!important;
+  display:grid!important;grid-template-columns:22px minmax(0,1fr) 13px!important;gap:6px!important;align-items:center!important;min-height:24px!important;
+}
+#home .day-card .state{padding:0!important;margin:0!important;color:#fff!important;font-size:8.5px!important;line-height:1.12!important;font-weight:850!important;text-align:left!important;}
+#home .day-card .state-icon{width:20px!important;height:20px!important;}
+#home .day-card .solved-icon{color:#55ec72!important;}
+#home .day-card .unsolved-icon{color:#ff655f!important;}
+#home .day-card .flag-icon{color:#fff!important;}
+#home .day-card .state-chevron{font-size:22px!important;color:#fff2bd!important;}
+
+/* Puzzle / review / surrender / gift pages — all on the same fall canvas. */
+#puzzle,#review,#confirmGiveUp,#surrender,#video,#finale{
+  background:rgba(255,249,235,.42)!important;color:var(--r4t-ink)!important;border-radius:18px!important;
+}
+#puzzle::before,#review::before,#confirmGiveUp::before,#surrender::before,#video::before,#finale::before{display:none!important;content:none!important;}
+#puzzle .puzzle-card,#review .puzzle-card,#confirmGiveUp .puzzle-card.compact{
+  background:rgba(255,248,226,.92)!important;border:2px solid #b97834!important;color:#342419!important;
+  box-shadow:0 7px 16px rgba(88,48,20,.16)!important;
+}
+#puzzle .question,#review .question{color:#342419!important;}
+#puzzle .card-label,#review .card-label{color:#8a4f28!important;}
+.home-link,.day-eyebrow,.muted{color:#624329!important;}
+.secret-mark{color:#a85b2d!important;}
+
+/* Text field should look like an entry field — translucent, inset, and clearly unlike the button. */
+#answerInput{
+  background:rgba(255,255,255,.54)!important;color:#302218!important;border:2px solid #9f7143!important;border-radius:13px!important;
+  box-shadow:inset 0 2px 5px rgba(76,47,26,.14)!important;font-size:16px!important;font-weight:600!important;
+}
+#answerInput::placeholder{color:#6b5845!important;opacity:.9!important;font-size:11.6px!important;letter-spacing:0!important;font-weight:650!important;}
+
+/* Embossed primary button; distinct secondary HOME button in a softer fall color. */
+button.primary,#submitBtn,#watchBtn,#birthdaySurpriseBtn,#surrenderSurpriseBtn,#reviewGiftBtn{
+  background:linear-gradient(180deg,#b96934 0%,#92431f 100%)!important;color:#fff8e8!important;border:2px solid #6f351b!important;
+  box-shadow:0 4px 0 #5d2d17,0 7px 12px rgba(72,39,20,.18)!important;text-shadow:0 1px 1px rgba(0,0,0,.24)!important;
+}
+button.primary:active,#submitBtn:active,#watchBtn:active,#birthdaySurpriseBtn:active,#surrenderSurpriseBtn:active,#reviewGiftBtn:active{
+  transform:translateY(2px)!important;box-shadow:0 2px 0 #5d2d17,0 4px 8px rgba(72,39,20,.16)!important;
+}
+.home-button{
+  background:linear-gradient(180deg,#ead7ad,#d7b77e)!important;color:#4a321f!important;border:2px solid #a37643!important;
+  box-shadow:0 3px 0 #8a6238,0 6px 10px rgba(75,46,25,.13)!important;
+}
+
+/* All wrong-answer + give-up popups are one restrained autumn style. No green/purple/red. */
+.wrong-answer-backdrop{background:rgba(74,45,24,.18)!important;}
+.wrong-answer-popover,
+.wrong-answer-popover[data-attempt="1"],
+.wrong-answer-popover[data-attempt="2"],
+.wrong-answer-popover[data-attempt="3"],
+.wrong-answer-popover[data-mode="wrong"],
+.wrong-answer-popover[data-mode="surrender"]{
+  background:linear-gradient(180deg,#fff3d7 0%,#efd19b 100%)!important;color:#432a1a!important;border:2px solid #ad6733!important;
+  box-shadow:0 8px 20px rgba(68,39,20,.25)!important;
+}
+.wrong-answer-popover .wap-message,.wrong-answer-popover .wap-remaining{color:#4f2f1c!important;}
+.wrong-answer-popover .wap-ok,
+.wrong-answer-popover[data-attempt="1"] .wap-ok,
+.wrong-answer-popover[data-attempt="2"] .wap-ok,
+.wrong-answer-popover[data-attempt="3"] .wap-ok,
+.wrong-answer-popover[data-mode="surrender"] .wap-ok{
+  background:linear-gradient(180deg,#b96835,#914522)!important;color:#fff7e6!important;border:2px solid #71371f!important;
+  box-shadow:0 3px 0 #63301b!important;
+}
+@media(max-width:620px){
+  .wrong-answer-popover,
+  .wrong-answer-popover[data-attempt="1"],
+  .wrong-answer-popover[data-attempt="2"],
+  .wrong-answer-popover[data-attempt="3"],
+  .wrong-answer-popover[data-mode="surrender"]{
+    top:calc(var(--visual-top,0px) + 10px)!important;bottom:auto!important;width:min(91vw,390px)!important;
+  }
+}
+
+/* Sequence gate: subtle cream/tan panel separated from the leaf background. */
+.sequence-gate-backdrop{background:rgba(78,48,27,.20)!important;}
+.sequence-gate-popup{
+  background:linear-gradient(180deg,#fff2d5,#ebca93)!important;color:#3f291b!important;border:2px solid #ad6935!important;
+  box-shadow:0 10px 22px rgba(67,39,20,.24)!important;
+}
+.sequence-gate-icons{font-size:25px!important;line-height:1!important;margin-bottom:5px!important;}
+.sequence-gate-title{color:#62361e!important;font-weight:900!important;}
+.sequence-gate-copy{color:#49301f!important;}
+.sequence-gate-popup button{
+  background:linear-gradient(180deg,#b96835,#914522)!important;color:#fff7e6!important;border:2px solid #71371f!important;
+  box-shadow:0 3px 0 #63301b!important;
+}
+
+/* ARE YOU SURE — concise, bright, single-card confirmation. */
+#confirmGiveUp{text-align:center!important;background:rgba(255,247,228,.54)!important;}
+#confirmGiveUp h2{color:#5d341e!important;margin:7px 0 10px!important;}
+#confirmGiveUp .puzzle-card.compact{padding:13px 12px!important;margin:10px auto 14px!important;}
+#confirmGiveUp .puzzle-card.compact p{margin:0!important;font-size:15px!important;color:#4b3120!important;line-height:1.3!important;}
+#tryAgainBtn{background:linear-gradient(180deg,#ead9b5,#d8ba82)!important;color:#432e20!important;border:2px solid #a5753c!important;}
+#saveMeBtn{background:linear-gradient(180deg,#b76238,#8e4227)!important;color:#fff6e8!important;border:2px solid #6d351f!important;}
+
+/* Surrender/result page — light fall treatment and one-line answer. */
+#surrender{background:rgba(255,247,226,.58)!important;text-align:center!important;}
+#surrender h2{color:#5c341f!important;}
+#surrender .answer-reveal{
+  width:100%!important;box-sizing:border-box!important;white-space:nowrap!important;overflow:hidden!important;
+  background:#fff1ce!important;color:#5a311b!important;border:2px solid #b97934!important;border-radius:12px!important;
+  padding:10px 8px!important;font-weight:850!important;line-height:1.12!important;text-align:center!important;
+}
+
+/* Review + success screens — no dark wash; HOME remains visually secondary. */
+#review .review-answer-card,#video .gift-from,#finale .finale-content{
+  background-color:rgba(255,247,226,.72)!important;border-color:#b97934!important;color:#3d291d!important;
+}
+#video,#finale{color:#33241a!important;}
+#video h2,#finale h2{color:#5a321e!important;}
+
+@media(max-width:620px){
+  html,body{background-size:280px auto!important;}
+  #welcome .welcome-title-art{width:90%!important;max-width:90%!important;}
+  #welcome .welcome-rules-art{width:82%!important;max-width:82%!important;}
+  #welcome .welcome-honk-button{width:min(47%,190px)!important;}
+  #home .home-sticky-stack .section-heading{font-size:20px!important;padding:7px 10px!important;}
+  #home .day-card{min-height:132px!important;padding:10px 9px!important;}
+  #home .route-tile-signs{grid-template-columns:58px minmax(0,1fr)!important;gap:7px!important;}
+  #home .route-shield{width:56px!important;height:62px!important;}
+  #home .route-shield .route-word{font-size:8px!important;}
+  #home .route-shield .route-number{font-size:28px!important;}
+  #home .exit-sign{min-height:54px!important;padding:6px 7px!important;gap:6px!important;}
+  #home .exit-sign-label{font-size:13px!important;}
+  #home .exit-sign-number{font-size:30px!important;}
+  #home .day-card .date{font-size:9px!important;}
+  #home .day-card .state{font-size:8px!important;}
+  #answerInput::placeholder{font-size:11px!important;}
+}

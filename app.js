@@ -1,10 +1,15 @@
-
-const QA_SHOW_ALL_EXITS = true; // v2.34 QA: intentionally exposes EXIT 0–40 for full production-URL testing. Disable for launch.
+const QA_SHOW_ALL_EXITS = true; // v2.35 QA: EXIT 0–40 visible for launch testing. Disable in final production build.
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mjykazrp";
-const EMAIL_QUEUE_KEY = "route4t_email_queue_v1";
-const EMAIL_SENT_PREFIX = "route4t_email_sent_v1_";
+
+// Same website, two isolated local progress profiles.
+// Missing/unknown player defaults to Mika so route4t.com itself stays her game.
+const _playerParam=(new URLSearchParams(window.location.search).get("player")||"").trim().toLowerCase();
+const PLAYER=_playerParam==="raj"?"Raj":"Mika";
+const IS_MIKA=PLAYER==="Mika";
+const EMAIL_QUEUE_KEY=IS_MIKA?"route4t_email_queue_v1":"route4t_raj_email_queue_v1";
+const EMAIL_SENT_PREFIX=IS_MIKA?"route4t_email_sent_v1_":"route4t_raj_email_sent_v1_";
 
 const DAYS = [
  {
@@ -15,8 +20,8 @@ const DAYS = [
   "relation": "Uncle, Aunty & Family",
   "wishFrom": "Mahendrabhai",
   "lines": [
-   "Before you entered this world, your story had already begun… Your mother could have been anywhere on Earth…",
-   "Name the place (city), where your mom was physically present today - 40 years ago (40 days before your birth)?"
+   "Before you entered this world, your story had already begun. ",
+   "40 years ago, where (city) was your mom physically present today, ie: 40 days before your birth?"
   ],
   "answerDisplay": "Ajman",
   "answers": [
@@ -438,7 +443,7 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Jetha Bapa Family",
   "lines": [
-   "What was the subject of the Rangoli where you got the prize ?"
+   "What was the subject of the Rangoli, for which you won the prize ?"
   ],
   "answerDisplay": "Ganesh",
   "answers": [
@@ -452,16 +457,15 @@ const DAYS = [
   "displayDate": "October 22, 2026",
   "video": null,
   "relation": "Friend",
-  "wishFrom": "Misri - Jayshree",
+  "wishFrom": "Mayuri",
   "lines": [
-   "What has a bed but never sleeps?"
+   "Which year (yyyy) did you win Toastmasters in Bahrain ?"
   ],
-  "answerDisplay": "A RIVER",
+  "answerDisplay": "2003",
   "answers": [
-   "river",
-   "a river"
+   "2003"
   ],
-  "hint": "It flows."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 26,
@@ -487,14 +491,13 @@ const DAYS = [
   "relation": "Cousin",
   "wishFrom": "Vatsal Bhai & Sejal",
   "lines": [
-   "What invention lets you look right through a wall?"
+   "What souvenir did I bring from Brazil ?"
   ],
-  "answerDisplay": "A WINDOW",
+  "answerDisplay": "Windchime",
   "answers": [
-   "window",
-   "a window"
+   "windchime"
   ],
-  "hint": "Common in every home."
+  "hint": "Think back carefully to the memory behind this question."
  },
  {
   "day": 28,
@@ -556,8 +559,8 @@ const DAYS = [
   "relation": "Cousin",
   "wishFrom": "Jayshreeben, Udaybhai & Rinku",
   "lines": [
-   "What was the exact date (mm/dd/yyyy) when this picture was taken ?",
-   "or",
+   "What was the exact date (mm/dd/yyyy) when this picture was taken ? ",
+   "or ",
    "Name the City/Place where this picture was taken ?"
   ],
   "answerDisplay": "11/6/2017",
@@ -700,16 +703,14 @@ const DAYS = [
   "relation": "Mom",
   "wishFrom": "Leela Chavda",
   "lines": [
-   "What has no beginning, end, or middle?"
+   "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "A DONUT",
+  "answerDisplay": "2016",
   "answers": [
-   "donut",
-   "doughnut",
-   "a donut",
-   "a doughnut"
+   "2016"
   ],
-  "hint": "Think round and delicious."
+  "hint": "Think back carefully to the memory behind this question.",
+  "photo": "Raj-13.jpg"
  },
  {
   "day": 40,
@@ -719,19 +720,14 @@ const DAYS = [
   "relation": "Husband",
   "wishFrom": "Raj",
   "lines": [
-   "I come once every year,",
-   "but today I arrive with forty candles.",
-   "",
-   "What am I?"
+   "Which year (yyyy) was this picture taken ?"
   ],
-  "answerDisplay": "A BIRTHDAY",
+  "answerDisplay": "2019",
   "answers": [
-   "birthday",
-   "a birthday",
-   "40th birthday",
-   "fortieth birthday"
+   "2019"
   ],
-  "hint": "Today, this celebration belongs entirely to you.",
+  "hint": "Think back carefully to the memory behind this question.",
+  "photo": "Raj-14.jpg",
   "unlockAt": "2026-11-06T00:01:00"
  }
 ];
@@ -775,13 +771,18 @@ function isLikelyPhone(){
 }
 function fitRevealAnswer(text){
  const el=$("answerReveal"); if(!el) return;
- const n=(text||"").trim().length;
- // v2.33: reveal answers are intentionally ~35% smaller and kept on one line.
- const size=n<=8?"clamp(30px,8vw,52px)":n<=14?"clamp(24px,6.7vw,42px)":n<=22?"clamp(20px,5.6vw,34px)":"clamp(16px,4.6vw,28px)";
- el.style.fontSize=size;
  el.style.whiteSpace="nowrap";
- el.style.overflowX="auto";
+ el.style.overflow="hidden";
  el.style.textOverflow="clip";
+ const start=isLikelyPhone()?22:28;
+ el.style.fontSize=start+"px";
+ requestAnimationFrame(()=>{
+   let size=start;
+   while(el.scrollWidth>el.clientWidth && size>12){
+     size-=1;
+     el.style.fontSize=size+"px";
+   }
+ });
 }
 function hidePhoneQr(){
  const phone=isLikelyPhone();
@@ -1080,8 +1081,8 @@ function show(id){
  },0);
 }
 function norm(v){return v.trim().toLowerCase().replace(/\s+/g," ")}
-const RESULT_PREFIX="route4t_2026_exit_";
-const BACKUP_KEY="route4t_2026_progress_backup_v1";
+const RESULT_PREFIX=IS_MIKA?"route4t_2026_exit_":"route4t_2026_raj_exit_";
+const BACKUP_KEY=IS_MIKA?"route4t_2026_progress_backup_v1":"route4t_2026_raj_progress_backup_v1";
 function key(day){return `${RESULT_PREFIX}${day}`}
 function validResult(r){
  if(!r || typeof r!=="object") return false;
@@ -1160,6 +1161,7 @@ async function deliverEmail(item){
  return false;
 }
 function sendGameEmailOnce(id,fields){
+ if(!IS_MIKA) return;
  if(emailWasSent(id)) return;
  const item={id,fields:{...fields,_subject:fields._subject||"Route 4T Game Alert"}};
  deliverEmail(item).then(ok=>{if(!ok) queueEmail(item)});
@@ -1173,30 +1175,30 @@ async function flushEmailQueue(){
 function notifyExitOpened(day){
  const r=getResult(day.day); if(isFinalResult(r)) return;
  sendGameEmailOnce(`open-${day.day}`,{
-   _subject:`Route 4T — EXIT ${day.day} OPENED`,event:"EXIT OPENED",exit:day.day,date:day.displayDate,time:emailTime(),scoreboard:scoreSnapshot()
+   _subject:`MIKA — Route 4T — EXIT ${day.day} OPENED`,event:"EXIT OPENED",exit:day.day,date:day.displayDate,time:emailTime(),scoreboard:scoreSnapshot()
  });
 }
 function notifyAnswer(day,attempt,answer,result){
  sendGameEmailOnce(`answer-${day.day}-${attempt}-${result}`,{
-   _subject:`Route 4T — EXIT ${day.day} — ANSWER ${result.toUpperCase()}`,
+   _subject:`MIKA — Route 4T — EXIT ${day.day} — ANSWER ${result.toUpperCase()}`,
    event:"ANSWER SUBMITTED",exit:day.day,date:day.displayDate,attempt:`${attempt} of ${MAX_ATTEMPTS}`,answer,result,time:emailTime(),scoreboard:scoreSnapshot()
  });
 }
 function notifySolved(day,attempt){
  sendGameEmailOnce(`solved-${day.day}`,{
-   _subject:`Route 4T — EXIT ${day.day} SOLVED ✅`,event:"EXIT SOLVED",exit:day.day,date:day.displayDate,attempts:attempt,time:emailTime(),scoreboard:scoreSnapshot()
+   _subject:`MIKA — Route 4T — EXIT ${day.day} SOLVED ✅`,event:"EXIT SOLVED",exit:day.day,date:day.displayDate,attempts:attempt,time:emailTime(),scoreboard:scoreSnapshot()
  });
 }
 function notifySurrender(day){
  sendGameEmailOnce(`surrender-${day.day}`,{
-   _subject:`Route 4T — EXIT ${day.day} WHITE FLAG 🏳️`,event:"EXIT SURRENDERED",exit:day.day,date:day.displayDate,time:emailTime(),scoreboard:scoreSnapshot()
+   _subject:`MIKA — Route 4T — EXIT ${day.day} WHITE FLAG 🏳️`,event:"EXIT SURRENDERED",exit:day.day,date:day.displayDate,time:emailTime(),scoreboard:scoreSnapshot()
  });
 }
 function showSequencePopup(required,requested){
  const old=$("sequenceGateBackdrop"); if(old)old.remove();
  const bd=document.createElement("div"); bd.id="sequenceGateBackdrop"; bd.className="sequence-gate-backdrop";
  const box=document.createElement("div"); box.className="sequence-gate-popup";
- box.innerHTML=`<div class="sequence-gate-title">NOT SO FAST, MIKA 😏</div><div class="sequence-gate-copy">No skipping exits on Route 4T.<br><strong>EXIT ${required.day} is your next stop.</strong><br>Clear it first, then keep rolling. 🚗</div><button type="button">TAKE ME TO EXIT ${required.day} →</button>`;
+ box.innerHTML=`<div class="sequence-gate-icons">🚧 ⚠️</div><div class="sequence-gate-title">NOT SO FAST, MIKA !!</div><div class="sequence-gate-copy">Cant skip Exit.<br><strong>Exit ${required.day} is your next exit.</strong></div><button type="button">Take me to Exit ${required.day}</button>`;
  bd.appendChild(box);document.body.appendChild(bd);
  const go=()=>{bd.remove();openDay(required.day)};
  box.querySelector("button").onclick=go;
@@ -1350,7 +1352,7 @@ function stateMarkup(d){
    return {icon:lockIcon(true),rowClass:"solved-state",state:`<span class="solved">${d.day===FINAL_EXIT?"🎉 HAPPY BIRTHDAY!":`MYSTERY SOLVED · ${r.attempts} ATTEMPT${r.attempts===1?"":"S"}`}</span>`};
  }
  if(r?.outcome==="gave-up"){
-   return {icon:flagIcon(),rowClass:"flag-state",state:`<span class="flag">THE MYSTERY WON THIS ONE</span>`};
+   return {icon:flagIcon(),rowClass:"flag-state",state:`<span class="flag">MYSTERY WON</span>`};
  }
  if(!isDateEligible(d)) return {icon:lockIcon(false),rowClass:"locked-state",state:`<span class="locked">LOCKED</span>`};
  const required=nextRequiredDay();
@@ -1370,7 +1372,7 @@ function renderGrid(){
    const todayChip=d.date===todayISO()?`<span class="today-chip">TODAY</span>`:"";
    b.dataset.secret=String(d.day);
    b.dataset.date=d.date;
-   b.innerHTML=`<div class="dayline"><div class="day"><span class="exit-word">EXIT</span><span class="exit-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
+   b.innerHTML=`<div class="route-tile-signs"><div class="route-shield" aria-label="Route 40"><span class="route-word">ROUTE</span><span class="route-number">40</span></div><div class="exit-sign"><span class="exit-sign-label">EXIT</span><span class="exit-sign-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
    b.onclick=()=>openDay(d.day);
    grid.appendChild(b);
  });
@@ -1687,42 +1689,32 @@ document.addEventListener("click",e=>{
  },{capture:true,passive:false});
 });
 function playHonkSound(){
- try{
-   const AudioCtx=window.AudioContext||window.webkitAudioContext;
-   if(!AudioCtx) return Promise.resolve();
-   const ctx=new AudioCtx();
-   const master=ctx.createGain(); master.gain.value=.0001; master.connect(ctx.destination);
-   const compressor=ctx.createDynamicsCompressor(); compressor.threshold.value=-14; compressor.knee.value=12; compressor.ratio.value=3; compressor.attack.value=.006; compressor.release.value=.20; compressor.connect(master);
-   const start=ctx.currentTime+.015, dur=.52;
-   // A bright dual-tone passenger-car horn: clearly audible, but without the harsh truck/train rasp.
-   [[392,"triangle",.23],[494,"sine",.19]].forEach(([f,type,level])=>{
-     const osc=ctx.createOscillator(), g=ctx.createGain();
-     osc.type=type; osc.frequency.setValueAtTime(f,start); osc.frequency.linearRampToValueAtTime(f*1.008,start+dur);
-     g.gain.setValueAtTime(.0001,start);
-     g.gain.exponentialRampToValueAtTime(level,start+.025);
-     g.gain.setValueAtTime(level,start+.36);
-     g.gain.exponentialRampToValueAtTime(.0001,start+dur);
-     osc.connect(g);g.connect(compressor);osc.start(start);osc.stop(start+dur+.03);
-   });
-   master.gain.exponentialRampToValueAtTime(.88,start+.025);
-   master.gain.setValueAtTime(.88,start+.36);
-   master.gain.exponentialRampToValueAtTime(.0001,start+dur);
-   return new Promise(res=>setTimeout(()=>{ctx.close().catch(()=>{});res()},590));
- }catch{return Promise.resolve()}
+ return new Promise(resolve=>{
+   try{
+     const audio=new Audio("car-horn.mp3");
+     audio.preload="auto";
+     audio.volume=1;
+     let settled=false;
+     const finish=()=>{if(settled)return;settled=true;resolve()};
+     audio.addEventListener("ended",finish,{once:true});
+     audio.addEventListener("error",finish,{once:true});
+     const p=audio.play();
+     if(p&&typeof p.catch==="function") p.catch(finish);
+     setTimeout(finish,1450);
+   }catch{resolve()}
+ });
 }
 function enterRoute4T(){
  const button=$("enterRouteMobile");
  if(button?.disabled) return;
  if(button){button.disabled=true;button.classList.add("honked");}
  const p=playHonkSound();
- // Keep the HONK sign on screen for a beat so the press animation and horn
- // feel intentional, then enter the existing game HOME without touching progress.
- setTimeout(()=>{
+ // Keep the sign visible long enough to hear the uploaded double honk, then enter.
+ Promise.resolve(p).finally(()=>{
    renderGrid();
    show("home");
    if(button){button.disabled=false;button.classList.remove("honked");}
- },560);
- if(p&&typeof p.then==="function") p.catch(()=>{});
+ });
 }
 const enterRouteMobile=$("enterRouteMobile");
 if(enterRouteMobile) enterRouteMobile.onclick=enterRoute4T;
@@ -1737,7 +1729,7 @@ window.addEventListener("online",()=>flushEmailQueue().catch(()=>{}));
 if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=234").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=235").catch(()=>{}));
 }
 
 function syncDesktopFrame(){
