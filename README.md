@@ -1,12 +1,16 @@
-# Route 4T v2.43
+# Route 4T — Production Build v2.45
 
-Built from the tested v2.42 baseline. No new AI-rendered artwork.
+Production-style release prepared from the approved v2.44 baseline.
 
-- Preserves v2.42 scoreboard centering and mobile sticky behavior.
-- Welcome title uses the existing uncropped home-header artwork so the full bottom line is visible.
-- HONK keeps a visible press animation without using the browser disabled state (prevents Samsung white flash).
-- U.S. Route 4T shield keeps pure white fill / black 4T text and uses a corrected shield silhouette.
-- EXIT label and exit number are rebalanced to nearly equal visual size.
-- EXIT cards are flatter/more rectangular.
-- Removed the offset teal/gray card shadow so each EXIT is one clean green board.
-- Cache/service worker bumped to v243.
+- Real calendar/date gating ON
+- Sequential EXIT progression ON
+- Future EXITs hidden until unlock
+- EXIT 40 unlocks 2026-11-06 at 12:01 AM device-local time
+- SHOW HINT removed
+- Test/debug/reset/simulated-date UI not present
+- Mobile QR hidden; gift/video button remains primary
+- Approved sticky scoreboard and mobile layout preserved
+- Cross-browser/light-dark compatibility hardening preserved
+- HONK press animation preserved with transparent artwork background to eliminate white flash
+
+Known content placeholders retained by design: EXIT 25, 26, 36 and 40 currently have no video URL and display the existing coming-soon behavior until links are supplied.

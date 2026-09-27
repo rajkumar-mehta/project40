@@ -4318,3 +4318,39 @@ button {
 .primary {
   color-scheme:only light!important;
 }
+
+/* ======================================================================
+   ROUTE 4T v2.45 PRODUCTION — final HONK transparency + release locks
+   Built from approved v2.44. No layout/gameplay redesign.
+   ====================================================================== */
+
+/* The HONK PNG now has a true alpha background. Render it normally so the
+   transformed/animated layer never relies on blend-mode compositing. */
+#welcome .welcome-v241-honk,
+#welcome .welcome-v241-honk:hover,
+#welcome .welcome-v241-honk:focus,
+#welcome .welcome-v241-honk:active,
+#welcome .welcome-v241-honk.honked,
+#welcome .welcome-v241-honk[aria-busy="true"]{
+  background:none!important;
+  background-color:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+  isolation:isolate!important;
+}
+#welcome .welcome-v241-honk img{
+  background:transparent!important;
+  mix-blend-mode:normal!important;
+  opacity:1!important;
+  filter:drop-shadow(0 6px 9px rgba(67,33,10,.28))!important;
+  transform:translateZ(0);
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+
+/* Keep the approved visible press/release animation. */
+#welcome .welcome-v241-honk:active{transform:translateY(3px) scale(.975)!important;}
+#welcome .welcome-v241-honk.honked{animation:r4tHonkPress .34s cubic-bezier(.2,.8,.25,1) both!important;}

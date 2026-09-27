@@ -1,5 +1,5 @@
-const QA_SHOW_ALL_EXITS = true; // v2.39 FINAL QA: all EXIT 0–40 visible; date gating intentionally OFF for final rehearsal.
-const QA_DISABLE_SEQUENCE = false; // v2.39 FINAL QA: sequential progression ON. Production also keeps this false.
+const QA_SHOW_ALL_EXITS = false; // PRODUCTION: real date/unlock gating is ON.
+const QA_DISABLE_SEQUENCE = false; // PRODUCTION: sequential progression is ON.
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mjykazrp";
@@ -1750,7 +1750,7 @@ window.addEventListener("online",()=>flushEmailQueue().catch(()=>{}));
 if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=244").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=245").catch(()=>{}));
 }
 
 function syncDesktopFrame(){
