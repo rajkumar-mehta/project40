@@ -1381,7 +1381,7 @@ function renderGrid(){
    const todayChip=d.date===todayISO()?`<span class="today-chip">TODAY</span>`:"";
    b.dataset.secret=String(d.day);
    b.dataset.date=d.date;
-   b.innerHTML=`<div class="route-tile-top"><svg class="us-route-shield" viewBox="0 0 64 72" role="img" aria-label="U.S. Route 4T" style="display:block;background:transparent!important;filter:none!important;opacity:1!important;color:#000!important"><path d="M32 3 C25 8 17 9 6 8 C7 17 6 24 3 31 C3 49 15 62 32 69 C49 62 61 49 61 31 C58 24 57 17 58 8 C47 9 39 8 32 3 Z" fill="#ffffff" stroke="#000000" style="fill:#ffffff!important;fill-opacity:1!important;stroke:#000000!important;stroke-opacity:1!important;opacity:1!important" stroke-width="3.2" stroke-linejoin="round"/><text x="32" y="44" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="900" fill="#000000" style="fill:#000000!important;color:#000000!important;fill-opacity:1!important;opacity:1!important">4T</text></svg><div class="exit-number-lockup"><span class="exit-sign-label">EXIT</span><span class="exit-sign-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
+   b.innerHTML=`<div class="route-tile-top"><svg class="us-route-shield" viewBox="0 0 64 72" role="img" aria-label="U.S. Route 4T" style="display:block;background:transparent!important;filter:none!important;opacity:1!important;color:#000!important"><path d="M32 3 C25 7 18 9 8 8 C9 15 8 21 5 27 C2 33 4 42 8 49 C13 58 22 65 32 70 C42 65 51 58 56 49 C60 42 62 33 59 27 C56 21 55 15 56 8 C46 9 39 7 32 3 Z" fill="#ffffff" stroke="#000000" style="fill:#ffffff!important;fill-opacity:1!important;stroke:#000000!important;stroke-opacity:1!important;opacity:1!important" stroke-width="3.2" stroke-linejoin="round"/><text x="32" y="44" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="900" fill="#000000" style="fill:#000000!important;color:#000000!important;fill-opacity:1!important;opacity:1!important">4T</text></svg><div class="exit-number-lockup"><span class="exit-sign-label">EXIT</span><span class="exit-sign-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
    b.onclick=()=>openDay(d.day);
    grid.appendChild(b);
  });
@@ -1715,14 +1715,26 @@ function playHonkSound(){
 }
 function enterRoute4T(){
  const button=$("enterRouteMobile");
- if(button?.disabled) return;
- if(button){button.disabled=true;button.classList.add("honked");}
+ if(button?.dataset.busy==="1") return;
+ if(button){
+   button.dataset.busy="1";
+   button.setAttribute("aria-busy","true");
+   button.classList.remove("honked");
+   // Force a restartable visual press animation without invoking Samsung's disabled-button skin.
+   void button.offsetWidth;
+   button.classList.add("honked");
+   setTimeout(()=>button?.classList.remove("honked"),360);
+ }
  const p=playHonkSound();
  // Keep the sign visible long enough to hear the uploaded double honk, then enter.
  Promise.resolve(p).finally(()=>{
    renderGrid();
    show("home");
-   if(button){button.disabled=false;button.classList.remove("honked");}
+   if(button){
+     delete button.dataset.busy;
+     button.removeAttribute("aria-busy");
+     button.classList.remove("honked");
+   }
  });
 }
 const enterRouteMobile=$("enterRouteMobile");
@@ -1738,7 +1750,7 @@ window.addEventListener("online",()=>flushEmailQueue().catch(()=>{}));
 if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=242").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=244").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

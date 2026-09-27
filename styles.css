@@ -4062,3 +4062,259 @@ body.home-active.portrait-score-fixed #home .section-heading{
   #home .day-card .date{font-size:8px!important;}
   #home .day-card .state{font-size:7.2px!important;}
 }
+
+/* ======================================================================
+   ROUTE 4T v2.43 — final QA corrections from Samsung screenshots/video
+   Built on v2.42. Preserve scoreboard centering + sticky behavior.
+   No new rendered artwork.
+   ====================================================================== */
+
+/* Welcome title: the markup now uses the already-approved uncropped
+   home-header-autumn.png. Keep it natural-size / fully visible. */
+#welcome .welcome-v241-title{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  overflow:visible!important;
+}
+
+/* HONK: retain a visible physical press/release animation, but never let
+   Samsung Internet paint a native/disabled white button background. */
+#welcome .welcome-v241-honk,
+#welcome .welcome-v241-honk:hover,
+#welcome .welcome-v241-honk:active,
+#welcome .welcome-v241-honk:focus,
+#welcome .welcome-v241-honk.honked,
+#welcome .welcome-v241-honk[aria-busy="true"]{
+  background:transparent!important;
+  background-color:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+#welcome .welcome-v241-honk:active{transform:translateY(3px) scale(.975)!important;}
+#welcome .welcome-v241-honk.honked{
+  animation:r4tHonkPress .34s cubic-bezier(.2,.8,.25,1) both!important;
+}
+@keyframes r4tHonkPress{
+  0%{transform:translateY(0) scale(1)}
+  38%{transform:translateY(5px) scale(.955)}
+  72%{transform:translateY(1px) scale(.985)}
+  100%{transform:translateY(0) scale(1)}
+}
+#welcome .welcome-v241-honk img{
+  background:transparent!important;
+  opacity:1!important;
+}
+
+/* EXIT board: a single green rectangle. Remove the offset dark/teal layer
+   that looked like a second card underneath every EXIT tile. */
+#home .day-card,
+#home .day-card:hover,
+#home .day-card:active,
+#home .day-card:focus{
+  background:#0a6a4a!important;
+  border:3px solid #f8f4e8!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+
+/* EXIT + number should carry almost equal visual weight. */
+#home .exit-number-lockup{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:baseline!important;
+  gap:6px!important;
+  white-space:nowrap!important;
+}
+#home .exit-sign-label,
+#home .exit-sign-number{
+  font-family:Arial,Helvetica,sans-serif!important;
+  font-weight:900!important;
+  line-height:1!important;
+  color:#fff!important;
+}
+#home .exit-sign-label{font-size:19px!important;letter-spacing:.035em!important;}
+#home .exit-sign-number{font-size:20px!important;letter-spacing:-.01em!important;}
+
+/* Keep the corrected white/black colors and let the revised SVG path define
+   the actual U.S.-route shield silhouette. */
+#home svg.us-route-shield,
+#home .day-card svg.us-route-shield{
+  background:transparent!important;
+  color:#000!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+  opacity:1!important;
+  mix-blend-mode:normal!important;
+  overflow:visible!important;
+}
+#home svg.us-route-shield path,
+#home .day-card svg.us-route-shield path{
+  fill:#fff!important;
+  stroke:#000!important;
+  stroke-width:3.2!important;
+  stroke-linejoin:round!important;
+  fill-opacity:1!important;
+  stroke-opacity:1!important;
+  opacity:1!important;
+}
+#home svg.us-route-shield text,
+#home .day-card svg.us-route-shield text{
+  fill:#000!important;
+  color:#000!important;
+  stroke:none!important;
+  font-weight:900!important;
+  fill-opacity:1!important;
+  opacity:1!important;
+}
+
+/* Flatter, unmistakably rectangular EXIT boards while keeping the approved
+   date/status rows unchanged in structure. */
+#home .day-card{
+  min-height:92px!important;
+  height:92px!important;
+  max-height:92px!important;
+  padding:5px 7px 5px!important;
+  border-radius:8px!important;
+  overflow:hidden!important;
+}
+#home .route-tile-top{
+  grid-template-columns:32px minmax(0,1fr)!important;
+  gap:5px!important;
+  min-height:31px!important;
+  height:31px!important;
+  align-items:center!important;
+}
+#home .us-route-shield{width:31px!important;height:35px!important;}
+#home .day-card .date{margin-top:4px!important;}
+#home .day-card .state-row,
+#home .day-card .state-row.ready-state,
+#home .day-card .state-row.solved-state,
+#home .day-card .state-row.flag-state,
+#home .day-card .state-row.locked-state{margin-top:4px!important;}
+
+@media (max-width:620px) and (orientation:portrait){
+  #home .day-card{
+    min-height:90px!important;
+    height:90px!important;
+    max-height:90px!important;
+    padding:4px 6px 4px!important;
+  }
+  #home .route-tile-top{
+    grid-template-columns:31px minmax(0,1fr)!important;
+    gap:4px!important;
+    min-height:30px!important;
+    height:30px!important;
+  }
+  #home .us-route-shield{width:30px!important;height:34px!important;}
+  #home .exit-number-lockup{gap:5px!important;}
+  #home .exit-sign-label{font-size:18px!important;letter-spacing:.025em!important;}
+  #home .exit-sign-number{font-size:19px!important;}
+  #home .day-card .date{margin-top:3px!important;font-size:8px!important;}
+  #home .day-card .state-row,
+  #home .day-card .state-row.ready-state,
+  #home .day-card .state-row.solved-state,
+  #home .day-card .state-row.flag-state,
+  #home .day-card .state-row.locked-state{margin-top:3px!important;min-height:17px!important;}
+  #home .day-card .state{font-size:7.1px!important;line-height:1.04!important;}
+}
+
+/* ======================================================================
+   ROUTE 4T v2.44 — cross-browser + light/dark-theme hardening only.
+   No visual redesign. Preserve v2.43 layout and gameplay behavior.
+   ====================================================================== */
+
+/* Route4T owns its visual palette. Do not let OS/browser dark mode recolor UI. */
+:root, html {
+  color-scheme: only light!important;
+  -webkit-text-size-adjust:100%!important;
+  text-size-adjust:100%!important;
+}
+html, body {
+  background-color:#d59a55!important;
+}
+
+/* Normalize interactive controls across Chrome Android, Samsung Internet,
+   Safari/iOS, Edge and Firefox without changing the approved appearance. */
+button,
+input,
+select,
+textarea {
+  font:inherit;
+  color:inherit;
+  border-radius:inherit;
+}
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  -webkit-appearance:none!important;
+  appearance:none!important;
+}
+button {
+  -webkit-tap-highlight-color:transparent!important;
+  touch-action:manipulation;
+}
+
+/* Samsung/Chrome pressed/disabled-state protection for the HONK control. */
+#welcome .welcome-v241-honk,
+#welcome .welcome-v241-honk:hover,
+#welcome .welcome-v241-honk:focus,
+#welcome .welcome-v241-honk:active,
+#welcome .welcome-v241-honk.honked,
+#welcome .welcome-v241-honk[aria-busy="true"] {
+  background:transparent!important;
+  background-color:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  color:inherit!important;
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+#welcome .welcome-v241-honk::-moz-focus-inner {
+  border:0!important;
+  padding:0!important;
+}
+
+/* Explicitly preserve the approved Route4T colors if the device uses dark UI. */
+#home .day-card {
+  color:#ffffff!important;
+}
+#home .score-card,
+#home .section-heading {
+  color:#ffffff!important;
+}
+#home svg.us-route-shield,
+#home svg.us-route-shield path,
+#home svg.us-route-shield text {
+  opacity:1!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+  mix-blend-mode:normal!important;
+}
+#home svg.us-route-shield path {
+  fill:#ffffff!important;
+  stroke:#000000!important;
+}
+#home svg.us-route-shield text {
+  fill:#000000!important;
+  color:#000000!important;
+}
+
+/* Form controls should not flip themselves into a browser dark theme. */
+#answerInput,
+#submitBtn,
+#giveUpBtn,
+.home-link,
+.home-button,
+.secondary,
+.primary {
+  color-scheme:only light!important;
+}

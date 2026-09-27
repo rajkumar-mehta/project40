@@ -1,17 +1,12 @@
-# Route 4T v2.40
+# Route 4T v2.43
 
-Built from v2.39. User-requested QA corrections only; no new image generation.
+Built from the tested v2.42 baseline. No new AI-rendered artwork.
 
-- New Mika photo fully covers legacy photo/frame on welcome page.
-- HONK control uses existing HONK-only asset; duplicate HONK callout is covered.
-- EXIT tiles made more rectangular; EXIT label enlarged; EXIT number reduced.
-- 4T route shield forced to pure white with black 4T text.
-- Mobile portrait header scrolls away naturally; scoreboard/YOUR EXITS stack becomes sticky only after reaching the top.
-- Cache-busting/version references updated to v241.
-
-
-## v2.41 welcome fix
-- Removed the old composite welcome image from rendered markup.
-- The old Mika photo and old HONK artwork can no longer sit behind replacements.
-- Welcome is now built from separate existing assets in normal flow: new Mika photo, title art, rules art, and one HONK button.
-- No new image was rendered.
+- Preserves v2.42 scoreboard centering and mobile sticky behavior.
+- Welcome title uses the existing uncropped home-header artwork so the full bottom line is visible.
+- HONK keeps a visible press animation without using the browser disabled state (prevents Samsung white flash).
+- U.S. Route 4T shield keeps pure white fill / black 4T text and uses a corrected shield silhouette.
+- EXIT label and exit number are rebalanced to nearly equal visual size.
+- EXIT cards are flatter/more rectangular.
+- Removed the offset teal/gray card shadow so each EXIT is one clean green board.
+- Cache/service worker bumped to v243.
