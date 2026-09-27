@@ -1,6 +1,6 @@
-const CACHE='mikas-40-exits-v245-prod';
+const CACHE='mikas-40-exits-v246-prod';
 const ASSETS=[
-  './','./index.html','./styles.css?v=245','./app.js?v=245','./manifest.webmanifest',
+  './','./index.html','./styles.css?v=246','./app.js?v=246','./manifest.webmanifest',
   './icon-192.png','./icon-512.png','./home-header-autumn.png','./fall-leaves-tile.png',
   './welcome-mika-fall.png','./welcome-title-autumn.png','./welcome-rules-autumn.png','./welcome-honk-only.png',
   './welcome-mika-new.jpg','./car-horn.mp3','./photos/Raj-13.jpg','./photos/Raj-14.jpg'
