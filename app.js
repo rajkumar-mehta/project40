@@ -1,5 +1,5 @@
-const QA_SHOW_ALL_EXITS = true; // v2.36 QA: EXIT 0–40 visible for launch testing. Disable in final production build.
-const QA_DISABLE_SEQUENCE = true; // v2.36 QA ONLY: allow direct testing of any EXIT. MUST be false for production.
+const QA_SHOW_ALL_EXITS = true; // v2.37 FINAL QA: all EXIT 0–40 visible; date gating intentionally OFF for final rehearsal.
+const QA_DISABLE_SEQUENCE = false; // v2.37 FINAL QA: sequential progression ON. Production also keeps this false.
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mjykazrp";
@@ -1214,10 +1214,15 @@ function renderQuestionInto(targetId,day){
 function openReview(day,result){
  currentDay=day;
  $("reviewEyebrow").textContent=`EXIT ${day.day} · ${day.displayDate.toUpperCase()}`;
+ const badge=document.querySelector("#review .review-badge");
+ if(badge) badge.textContent=result.outcome==="solved"?"ALREADY SOLVED ✅":"MYSTERY WON 🏳️";
  renderQuestionInto("reviewQuestion",day);
  $("reviewAnswer").textContent=day.answerDisplay;
- $("reviewOutcome").textContent=result.outcome==="solved"?`Solved in ${result.attempts} attempt${result.attempts===1?"":"s"}. Score is locked.`:"White flag recorded. Score is locked.";
+ $("reviewOutcome").textContent=result.outcome==="solved"
+   ?`You already cleared this Exit in ${result.attempts} attempt${result.attempts===1?"":"s"}. Your score is locked.`
+   :"You already completed this Exit. Your white flag and score are locked.";
  const gift=$("reviewGiftBtn");
+ gift.textContent="VIEW YOUR GIFT 🎁";
  gift.style.display=hasVideo(day)?"":"none";
  gift.onclick=()=>result.outcome==="solved"?(day.day===FINAL_EXIT?openBirthdayFinale():openSurprise(true)):(day.day===FINAL_EXIT?openBirthdayFinale():openSurprise(false));
  show("review");
@@ -1245,7 +1250,7 @@ function visibleDays(){
    .sort((a,b)=>dateValue(b.date)-dateValue(a.date)); // newest first, deterministic across browsers
 }
 function computeStats(){
- const ordered=DAYS.filter(d=>isVisible(d)).slice().sort((a,b)=>dateValue(a.date)-dateValue(b.date)); // chronological
+ const ordered=DAYS.filter(d=>isVisible(d) && d.day!==FINAL_EXIT).slice().sort((a,b)=>dateValue(a.date)-dateValue(b.date)); // EXIT 40 finale is playable but intentionally excluded from scoreboard stats
  let solved=0,flags=0,firstTry=0,current=0,best=0;
  for(const d of ordered){
    const r=getResult(d.day);
@@ -1373,7 +1378,7 @@ function renderGrid(){
    const todayChip=d.date===todayISO()?`<span class="today-chip">TODAY</span>`:"";
    b.dataset.secret=String(d.day);
    b.dataset.date=d.date;
-   b.innerHTML=`<div class="route-tile-top"><svg class="us-route-shield" viewBox="0 0 64 72" role="img" aria-label="Route 4T"><path d="M32 3C39 8 47 9 58 8C57 20 59 29 62 37C57 51 47 62 32 69C17 62 7 51 2 37C5 29 7 20 6 8C17 9 25 8 32 3Z" fill="#fff" stroke="#111" stroke-width="3"/><text x="32" y="43" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="900" fill="#111">4T</text></svg><div class="exit-number-lockup"><span class="exit-sign-label">EXIT</span><span class="exit-sign-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
+   b.innerHTML=`<div class="route-tile-top"><svg class="us-route-shield" viewBox="0 0 64 72" role="img" aria-label="U.S. Route 4T"><path d="M32 3 C25 8 17 9 6 8 C7 17 6 24 3 31 C3 49 15 62 32 69 C49 62 61 49 61 31 C58 24 57 17 58 8 C47 9 39 8 32 3 Z" fill="#fff" stroke="#111" stroke-width="3.2" stroke-linejoin="round"/><text x="32" y="44" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="900" fill="#111">4T</text></svg><div class="exit-number-lockup"><span class="exit-sign-label">EXIT</span><span class="exit-sign-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
    b.onclick=()=>openDay(d.day);
    grid.appendChild(b);
  });
