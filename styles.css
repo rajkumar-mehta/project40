@@ -3118,3 +3118,108 @@ button.primary:active,#submitBtn:active,#watchBtn:active,#birthdaySurpriseBtn:ac
   #home .day-card .state{font-size:8px!important;}
   #answerInput::placeholder{font-size:11px!important;}
 }
+
+
+/* ======================================================================
+   ROUTE 4T v2.36 — LOCKED QA VISUALS
+   ====================================================================== */
+:root{
+  --r4t-cream:#fff7e6;
+  --r4t-deep-green:#075f42;
+  --r4t-green:#0b704f;
+  --r4t-navy:#173a59;
+  --r4t-rust:#9a512e;
+  --r4t-brown:#54311f;
+}
+
+/* WELCOME: use the approved image itself so the curvy road, mountains and real
+   fall trees appear exactly as approved. Never stretch it. */
+html,body{background:#efd7aa!important;background-image:none!important;}
+#welcome.active{background:#e7c28e!important;padding:0!important;}
+#welcome .welcome-reference-shell{position:relative;width:100%;max-width:620px;margin:0 auto;background:#e7c28e;overflow:hidden;}
+#welcome .welcome-reference-image{display:block;width:100%;height:auto;object-fit:contain;}
+#welcome .welcome-honk-hotspot{position:absolute;left:24%;right:24%;bottom:2.2%;height:10.5%;border:0;background:transparent;box-shadow:none;border-radius:18px;cursor:pointer;}
+#welcome .welcome-honk-hotspot:active,#welcome .welcome-honk-hotspot.honked{transform:scale(.96);}
+@media(max-width:620px){#welcome .welcome-reference-shell{max-width:none;}#welcome .welcome-honk-hotspot{left:21%;right:21%;bottom:2%;height:11%;}}
+
+/* GAME + all internal screens: real leaf artwork supplied by user, repeated at
+   natural proportions instead of stretched or generated emoji/explosion shapes. */
+#home.active,#puzzle.active,#review.active,#confirmGiveUp.active,#surrender.active,#video.active,#finale.active{
+  background-color:#f2dfb9!important;
+  background-image:linear-gradient(rgba(249,239,216,.70),rgba(239,210,164,.70)),url('fall-leaves-tile.png')!important;
+  background-repeat:repeat!important;
+  background-size:auto,600px 600px!important;
+  background-position:0 0,center top!important;
+  box-shadow:none!important;
+}
+
+/* YOUR EXITS: mathematically centered, full width, sticky with scoreboard. */
+#home .home-sticky-stack{position:sticky!important;top:max(6px,env(safe-area-inset-top))!important;z-index:95!important;width:100%!important;}
+#home .home-sticky-stack .section-heading{
+  display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;
+  width:100%!important;max-width:none!important;box-sizing:border-box!important;margin:0 0 8px!important;padding:8px 10px!important;
+  color:#fff4dc!important;background:#5e341f!important;border:2px solid #b57a39!important;border-radius:10px!important;
+  font-family:Georgia,'Times New Roman',serif!important;font-size:20px!important;font-weight:900!important;letter-spacing:.08em!important;
+}
+body.home-active.portrait-score-fixed #home .section-heading,body.home-active #home .section-heading{position:relative!important;top:auto!important;left:auto!important;right:auto!important;}
+
+/* EXIT TILE — locked Option 1: ONE solid green highway board. No brown backing,
+   no second green inset. Only B/W US-style 4T shield + EXIT number + existing metadata. */
+#home .day-card{
+  background:#0a6a4a!important;border:3px solid #f8f4e8!important;border-radius:10px!important;
+  box-shadow:0 4px 0 #064c37,0 7px 12px rgba(58,41,24,.16)!important;
+  padding:10px 10px 9px!important;min-height:132px!important;overflow:hidden!important;
+}
+#home .day-card::before,#home .day-card::after{display:none!important;content:none!important;}
+#home .route-tile-top{display:grid!important;grid-template-columns:50px minmax(0,1fr)!important;align-items:center!important;gap:8px!important;width:100%!important;}
+#home .us-route-shield{display:block!important;width:48px!important;height:54px!important;filter:none!important;}
+#home .exit-number-lockup{display:flex!important;align-items:baseline!important;justify-content:center!important;gap:7px!important;min-width:0!important;color:#fff!important;}
+#home .exit-sign-label{font-family:Arial,Helvetica,sans-serif!important;font-size:14px!important;line-height:1!important;font-weight:900!important;letter-spacing:.07em!important;color:#fff!important;}
+#home .exit-sign-number{font-family:Arial,Helvetica,sans-serif!important;font-size:36px!important;line-height:.9!important;font-weight:900!important;letter-spacing:-.02em!important;color:#fff!important;}
+#home .day-card .date{margin-top:7px!important;color:#fff5df!important;text-align:center!important;font-size:9.5px!important;font-weight:750!important;background:transparent!important;border:0!important;}
+#home .day-card .state-row,#home .day-card .state-row.ready-state,#home .day-card .state-row.solved-state,#home .day-card .state-row.flag-state,#home .day-card .state-row.locked-state{
+  margin-top:7px!important;padding:0!important;background:transparent!important;border:0!important;display:grid!important;grid-template-columns:21px minmax(0,1fr) 12px!important;gap:5px!important;align-items:center!important;
+}
+#home .day-card .state{font-size:8.3px!important;line-height:1.13!important;color:#fff!important;font-weight:850!important;margin:0!important;padding:0!important;text-align:left!important;}
+#home .day-card .solved-icon{color:#55ec72!important;}#home .day-card .unsolved-icon{color:#ff625e!important;}#home .day-card .flag-icon{color:#fff!important;}
+#home .day-card .state-chevron{color:#fff4d2!important;}
+
+/* Question input must read as an input, not as a button. */
+#answerInput{background:rgba(255,255,255,.68)!important;border:2px solid #9b7655!important;box-shadow:inset 0 2px 5px rgba(74,48,28,.13)!important;color:#312318!important;}
+#answerInput::placeholder{font-size:10.6px!important;letter-spacing:0!important;color:#6f5e4e!important;opacity:.95!important;}
+#submitBtn{background:linear-gradient(180deg,#aa5b34,#86401f)!important;border:2px solid #6d341d!important;box-shadow:0 4px 0 #5f2c18,0 7px 10px rgba(80,45,25,.18)!important;}
+
+/* Locked popup style for attempts 1/2/3 + give-up prompt: cream body, green border, navy OK. */
+.wrong-answer-backdrop{background:rgba(66,48,30,.18)!important;}
+.wrong-answer-popover,.wrong-answer-popover[data-attempt="1"],.wrong-answer-popover[data-attempt="2"],.wrong-answer-popover[data-attempt="3"],.wrong-answer-popover[data-mode="wrong"],.wrong-answer-popover[data-mode="surrender"]{
+  background:#fffaf0!important;color:#35271d!important;border:3px solid #3f7b57!important;border-radius:17px!important;box-shadow:0 10px 24px rgba(61,42,25,.20)!important;
+}
+.wrong-answer-popover .wap-message,.wrong-answer-popover .wap-remaining{color:#3a2a20!important;}
+.wrong-answer-popover .wap-ok,.wrong-answer-popover[data-attempt="1"] .wap-ok,.wrong-answer-popover[data-attempt="2"] .wap-ok,.wrong-answer-popover[data-attempt="3"] .wap-ok,.wrong-answer-popover[data-mode="surrender"] .wap-ok{
+  background:#173a59!important;color:#fff!important;border:2px solid #102b44!important;box-shadow:0 3px 0 #0c2237!important;border-radius:10px!important;
+}
+@media(max-width:620px){.wrong-answer-popover,.wrong-answer-popover[data-attempt="1"],.wrong-answer-popover[data-attempt="2"],.wrong-answer-popover[data-attempt="3"],.wrong-answer-popover[data-mode="surrender"]{top:calc(var(--visual-top,0px) + 10px)!important;bottom:auto!important;width:min(91vw,390px)!important;}}
+
+/* NOT SO FAST locked style. Production uses this when QA_DISABLE_SEQUENCE=false. */
+.sequence-gate-backdrop{background:rgba(66,48,30,.22)!important;}
+.sequence-gate-popup{background:#fffaf0!important;color:#3a2a20!important;border:3px solid #3f7b57!important;border-radius:17px!important;box-shadow:0 10px 24px rgba(61,42,25,.20)!important;}
+.sequence-gate-title{color:#7e3d22!important;font-family:Georgia,'Times New Roman',serif!important;font-weight:900!important;}
+.sequence-gate-copy{color:#3a2a20!important;}
+.sequence-gate-popup button{background:#d6a34e!important;color:#5e331f!important;border:2px solid #a76c2d!important;box-shadow:0 3px 0 #86511f!important;font-family:Georgia,'Times New Roman',serif!important;font-weight:900!important;}
+
+/* Success screen: keep approved theme; sender name matches ENJOY TODAY'S GIFT. */
+#video #giftHeading,#video .gift-from,#video .gift-from-name{font-family:Georgia,'Times New Roman',serif!important;color:#6f3b23!important;}
+#video .gift-from{font-weight:500!important;}#video .gift-from-name{font-weight:700!important;}
+#video .home-button,#finale .home-button,#review .home-button{background:#d8c4a0!important;color:#4d3524!important;border:2px solid #9f7b4f!important;box-shadow:0 3px 0 #87643e!important;}
+
+/* Confirmation + surrender/result remain light fall themed. */
+#confirmGiveUp,#surrender,#video,#review{color:#33251c!important;}
+#confirmGiveUp .puzzle-card.compact,#surrender .answer-reveal,#review .review-answer-card{background:rgba(255,250,238,.94)!important;border-color:#b77a3c!important;}
+#surrender .answer-reveal{font-size:clamp(18px,5vw,28px)!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;letter-spacing:.01em!important;}
+
+@media(max-width:620px){
+  #home .day-card{min-height:126px!important;padding:9px 8px!important;}
+  #home .route-tile-top{grid-template-columns:46px minmax(0,1fr)!important;gap:6px!important;}
+  #home .us-route-shield{width:44px!important;height:50px!important;}
+  #home .exit-sign-label{font-size:12px!important;}#home .exit-sign-number{font-size:32px!important;}
+}

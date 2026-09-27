@@ -1,4 +1,5 @@
-const QA_SHOW_ALL_EXITS = true; // v2.35 QA: EXIT 0–40 visible for launch testing. Disable in final production build.
+const QA_SHOW_ALL_EXITS = true; // v2.36 QA: EXIT 0–40 visible for launch testing. Disable in final production build.
+const QA_DISABLE_SEQUENCE = true; // v2.36 QA ONLY: allow direct testing of any EXIT. MUST be false for production.
 const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mjykazrp";
@@ -1198,7 +1199,7 @@ function showSequencePopup(required,requested){
  const old=$("sequenceGateBackdrop"); if(old)old.remove();
  const bd=document.createElement("div"); bd.id="sequenceGateBackdrop"; bd.className="sequence-gate-backdrop";
  const box=document.createElement("div"); box.className="sequence-gate-popup";
- box.innerHTML=`<div class="sequence-gate-icons">🚧 ⚠️</div><div class="sequence-gate-title">NOT SO FAST, MIKA !!</div><div class="sequence-gate-copy">Cant skip Exit.<br><strong>Exit ${required.day} is your next exit.</strong></div><button type="button">Take me to Exit ${required.day}</button>`;
+ box.innerHTML=`<div class="sequence-gate-icons">🚧 ⚠️</div><div class="sequence-gate-title">NOT SO FAST, MIKA !!</div><div class="sequence-gate-copy">Cant Skip Exit on Route-4T.<br><strong>Exit ${required.day} is your next exit.</strong></div><button type="button">Take me to Exit ${required.day}</button>`;
  bd.appendChild(box);document.body.appendChild(bd);
  const go=()=>{bd.remove();openDay(required.day)};
  box.querySelector("button").onclick=go;
@@ -1356,7 +1357,7 @@ function stateMarkup(d){
  }
  if(!isDateEligible(d)) return {icon:lockIcon(false),rowClass:"locked-state",state:`<span class="locked">LOCKED</span>`};
  const required=nextRequiredDay();
- if(required && d.day!==required.day){
+ if(!QA_DISABLE_SEQUENCE && required && d.day!==required.day){
    return {icon:lockIcon(false),rowClass:"locked-state sequence-locked",state:`<span class="locked">COMPLETE EXIT ${required.day} FIRST</span>`};
  }
  return {icon:lockIcon(true),rowClass:"ready-state",state:`<span class="ready">READY TO UNLOCK</span>`};
@@ -1372,7 +1373,7 @@ function renderGrid(){
    const todayChip=d.date===todayISO()?`<span class="today-chip">TODAY</span>`:"";
    b.dataset.secret=String(d.day);
    b.dataset.date=d.date;
-   b.innerHTML=`<div class="route-tile-signs"><div class="route-shield" aria-label="Route 40"><span class="route-word">ROUTE</span><span class="route-number">40</span></div><div class="exit-sign"><span class="exit-sign-label">EXIT</span><span class="exit-sign-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
+   b.innerHTML=`<div class="route-tile-top"><svg class="us-route-shield" viewBox="0 0 64 72" role="img" aria-label="Route 4T"><path d="M32 3C39 8 47 9 58 8C57 20 59 29 62 37C57 51 47 62 32 69C17 62 7 51 2 37C5 29 7 20 6 8C17 9 25 8 32 3Z" fill="#fff" stroke="#111" stroke-width="3"/><text x="32" y="43" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="900" fill="#111">4T</text></svg><div class="exit-number-lockup"><span class="exit-sign-label">EXIT</span><span class="exit-sign-number">${d.day}</span></div></div><div class="date">${d.displayDate} ${todayChip}</div><div class="state-row ${status.rowClass}">${status.icon}<div class="state">${status.state}</div><span class="state-chevron" aria-hidden="true">›</span></div>`;
    b.onclick=()=>openDay(d.day);
    grid.appendChild(b);
  });
@@ -1399,7 +1400,7 @@ function openDay(n){
  if(isFinalResult(existing)){openReview(requested,existing);return;}
  if(!isDateEligible(requested)) return;
  const required=nextRequiredDay();
- if(required && requested.day!==required.day){showSequencePopup(required,requested);return;}
+ if(!QA_DISABLE_SEQUENCE && required && requested.day!==required.day){showSequencePopup(required,requested);return;}
  currentDay=requested;
  resetPuzzle();
  if(existing?.outcome==="in-progress"){
