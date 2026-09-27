@@ -4,6 +4,63 @@ const MAX_ATTEMPTS = 3;
 const FINAL_EXIT = 40;
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mjykazrp";
 
+// v2.47: unlocks use trusted Route4T server time, never the phone wall clock.
+// A server anchor advances with performance.now(), which is unaffected by manual
+// Android/iPhone date changes. If the server cannot be reached, the last verified
+// server instant is used as a frozen fail-closed fallback (future exits stay locked).
+const TRUSTED_TIME_KEY="route4t_trusted_server_time_v1";
+let trustedServerAnchorMs=null;
+let trustedPerfAnchorMs=null;
+let trustedTimeSyncPromise=null;
+
+function readLastTrustedServerMs(){
+ try{
+  const n=Number(localStorage.getItem(TRUSTED_TIME_KEY));
+  return Number.isFinite(n)&&n>0?n:null;
+ }catch{return null}
+}
+function trustedNowMs(){
+ if(Number.isFinite(trustedServerAnchorMs)&&Number.isFinite(trustedPerfAnchorMs)){
+  return trustedServerAnchorMs+Math.max(0,performance.now()-trustedPerfAnchorMs);
+ }
+ return readLastTrustedServerMs();
+}
+function easternDateISO(ms){
+ if(!Number.isFinite(ms)) return null;
+ try{
+  const parts=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date(ms));
+  const p=Object.fromEntries(parts.map(x=>[x.type,x.value]));
+  return `${p.year}-${p.month}-${p.day}`;
+ }catch{return null}
+}
+function gameNowISO(){
+ const ms=trustedNowMs();
+ return new Date(Number.isFinite(ms)?ms:Date.now()).toISOString();
+}
+async function syncTrustedTime(){
+ if(trustedTimeSyncPromise) return trustedTimeSyncPromise;
+ trustedTimeSyncPromise=(async()=>{
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),4500);
+  try{
+   const url=new URL("./index.html",window.location.href);
+   url.searchParams.set("__route4t_time",`${Math.random().toString(36).slice(2)}-${performance.now().toFixed(0)}`);
+   const res=await fetch(url.href,{method:"GET",cache:"no-store",credentials:"same-origin",signal:controller.signal,headers:{"Cache-Control":"no-cache"}});
+   const header=res.headers.get("Date");
+   const serverMs=Date.parse(header||"");
+   if(!res.ok || !Number.isFinite(serverMs)) throw new Error("trusted time unavailable");
+   trustedServerAnchorMs=serverMs;
+   trustedPerfAnchorMs=performance.now();
+   try{localStorage.setItem(TRUSTED_TIME_KEY,String(serverMs))}catch{}
+   return true;
+  }finally{clearTimeout(timer)}
+ })().catch(()=>false).finally(()=>{trustedTimeSyncPromise=null});
+ return trustedTimeSyncPromise;
+}
+function ensureTrustedTime(){
+ return Number.isFinite(trustedNowMs())?Promise.resolve(true):syncTrustedTime();
+}
+
 // Same website, two isolated local progress profiles.
 // Missing/unknown player defaults to Mika so route4t.com itself stays her game.
 const _playerParam=(new URLSearchParams(window.location.search).get("player")||"").trim().toLowerCase();
@@ -729,7 +786,7 @@ const DAYS = [
   ],
   "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-14.jpg",
-  "unlockAt": "2026-11-06T00:01:00"
+  "unlockAt": "2026-11-06T00:01:00-05:00"
  }
 ];
 
@@ -1061,10 +1118,12 @@ function showSurrenderPopup(){
 const screens=[...document.querySelectorAll(".screen")];
 
 function todayISO(){
- const d=new Date();
- return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+ return easternDateISO(trustedNowMs());
 }
-function visibilityNow(){ return new Date(); }
+function visibilityNow(){
+ const ms=trustedNowMs();
+ return Number.isFinite(ms)?new Date(ms):null;
+}
 function show(id){
  if(id!=="finale") stopBirthdayCelebration();
  screens.forEach(s=>s.classList.toggle("active",s.id===id));
@@ -1118,9 +1177,9 @@ function saveResult(day,result){
  const backup=readBackup(); backup[day]=result; writeBackup(backup);
  return result;
 }
-function saveInProgress(day,count){return saveResult(day,{outcome:"in-progress",attemptsUsed:count,updatedAt:new Date().toISOString()})}
+function saveInProgress(day,count){return saveResult(day,{outcome:"in-progress",attemptsUsed:count,updatedAt:gameNowISO()})}
 function restartInProgress(day){
- const r={outcome:"in-progress",attemptsUsed:0,updatedAt:new Date().toISOString()};
+ const r={outcome:"in-progress",attemptsUsed:0,updatedAt:gameNowISO()};
  try{localStorage.setItem(key(day),JSON.stringify(r))}catch{}
  const backup=readBackup(); backup[day]=r; writeBackup(backup);
  return r;
@@ -1129,8 +1188,11 @@ function restartInProgress(day){
 function isFinalResult(r){return !!r&&(r.outcome==="solved"||r.outcome==="gave-up")}
 function isDateEligible(d){
  if(QA_SHOW_ALL_EXITS) return true;
- if(d.unlockAt) return visibilityNow().getTime()>=new Date(d.unlockAt).getTime();
- return d.date<=todayISO();
+ const now=visibilityNow();
+ if(!now) return false; // fail closed: never trust the phone clock
+ if(d.unlockAt) return now.getTime()>=Date.parse(d.unlockAt);
+ const today=todayISO();
+ return !!today && d.date<=today;
 }
 function nextRequiredDay(){
  const eligible=DAYS.filter(isDateEligible).slice().sort((a,b)=>a.day-b.day);
@@ -1141,16 +1203,21 @@ function scoreSnapshot(){
  return `Mika ${s.solved} | Mystery ${s.flags} | Solved ${s.solved}/40 | White Flags ${s.flags} | First-Try ${s.firstTry} | Current Streak ${s.current} | Best Streak ${s.best}`;
 }
 function emailTime(){
- try{return new Date().toLocaleString("en-US",{timeZone:"America/New_York",dateStyle:"medium",timeStyle:"short"})+" ET"}catch{return new Date().toString()}
+ const ms=trustedNowMs();
+ const d=new Date(Number.isFinite(ms)?ms:Date.now());
+ try{return d.toLocaleString("en-US",{timeZone:"America/New_York",dateStyle:"medium",timeStyle:"short"})+" ET"}catch{return d.toString()}
 }
 function emailSentKey(id){return EMAIL_SENT_PREFIX+id}
 function emailWasSent(id){try{return localStorage.getItem(emailSentKey(id))==="1"}catch{return false}}
 function markEmailSent(id){try{localStorage.setItem(emailSentKey(id),"1")}catch{}}
 function readEmailQueue(){try{const x=JSON.parse(localStorage.getItem(EMAIL_QUEUE_KEY)||"[]");return Array.isArray(x)?x:[]}catch{return []}}
 function writeEmailQueue(q){try{localStorage.setItem(EMAIL_QUEUE_KEY,JSON.stringify(q.slice(-60)))}catch{}}
+function isFinalEmailItem(item){
+ return !!item && typeof item.id==="string" && (/^solved-\d+$/.test(item.id)||/^surrender-\d+$/.test(item.id));
+}
 function queueEmail(item){
- if(emailWasSent(item.id)) return;
- const q=readEmailQueue();
+ if(!isFinalEmailItem(item) || emailWasSent(item.id)) return;
+ const q=readEmailQueue().filter(isFinalEmailItem);
  if(!q.some(x=>x.id===item.id)){q.push(item);writeEmailQueue(q)}
 }
 async function deliverEmail(item){
@@ -1168,23 +1235,17 @@ function sendGameEmailOnce(id,fields){
  deliverEmail(item).then(ok=>{if(!ok) queueEmail(item)});
 }
 async function flushEmailQueue(){
- const q=readEmailQueue(); if(!q.length)return;
+ // Discard legacy OPEN/ANSWER queue entries from v2.46 so they cannot consume quota later.
+ const q=readEmailQueue().filter(isFinalEmailItem);
+ writeEmailQueue(q);
+ if(!q.length)return;
  const keep=[];
  for(const item of q){if(!(await deliverEmail(item))) keep.push(item)}
  writeEmailQueue(keep);
 }
-function notifyExitOpened(day){
- const r=getResult(day.day); if(isFinalResult(r)) return;
- sendGameEmailOnce(`open-${day.day}`,{
-   _subject:`MIKA — Route 4T — EXIT ${day.day} OPENED`,event:"EXIT OPENED",exit:day.day,date:day.displayDate,time:emailTime(),scoreboard:scoreSnapshot()
- });
-}
-function notifyAnswer(day,attempt,answer,result){
- sendGameEmailOnce(`answer-${day.day}-${attempt}-${result}`,{
-   _subject:`MIKA — Route 4T — EXIT ${day.day} — ANSWER ${result.toUpperCase()}`,
-   event:"ANSWER SUBMITTED",exit:day.day,date:day.displayDate,attempt:`${attempt} of ${MAX_ATTEMPTS}`,answer,result,time:emailTime(),scoreboard:scoreSnapshot()
- });
-}
+// v2.47 quota protection: intermediate activity is intentionally silent.
+function notifyExitOpened(day){}
+function notifyAnswer(day,attempt,answer,result){}
 function notifySolved(day,attempt){
  sendGameEmailOnce(`solved-${day.day}`,{
    _subject:`MIKA — Route 4T — EXIT ${day.day} SOLVED ✅`,event:"EXIT SOLVED",exit:day.day,date:day.displayDate,attempts:attempt,time:emailTime(),scoreboard:scoreSnapshot()
@@ -1229,6 +1290,8 @@ function openReview(day,result){
 }
 function isVisible(d){
  if(QA_SHOW_ALL_EXITS) return true;
+ // Grandfather any exit already completed before v2.47 so Mika's score/history never changes.
+ if(isFinalResult(getResult(d.day))) return true;
  return isDateEligible(d);
 }
 function wrongMessageForAttempt(attemptNumber){
@@ -1427,7 +1490,7 @@ function check(){
  if(!value)return;
  if(currentDay.answers.includes(value)){
    const tries=attemptsUsed+1;
-   saveResult(currentDay.day,{outcome:"solved",attempts:tries,completedAt:new Date().toISOString()});
+   saveResult(currentDay.day,{outcome:"solved",attempts:tries,completedAt:gameNowISO()});
    notifyAnswer(currentDay,tries,raw,"correct");
    notifySolved(currentDay,tries);
    input.value="";
@@ -1528,7 +1591,7 @@ $("tryAgainBtn").onclick=e=>{
 };
 $("saveMeBtn").onclick=e=>{
  if(Date.now()<confirmGiveUpReadyAt){e.preventDefault();e.stopPropagation();return;}
- saveResult(currentDay.day,{outcome:"gave-up",attempts:MAX_ATTEMPTS,completedAt:new Date().toISOString()});
+ saveResult(currentDay.day,{outcome:"gave-up",attempts:MAX_ATTEMPTS,completedAt:gameNowISO()});
  notifySurrender(currentDay);
  $("answerReveal").textContent=currentDay.answerDisplay;fitRevealAnswer(currentDay.answerDisplay);show("surrender");
 };
@@ -1726,8 +1789,10 @@ function enterRoute4T(){
    setTimeout(()=>button?.classList.remove("honked"),360);
  }
  const p=playHonkSound();
- // Keep the sign visible long enough to hear the uploaded double honk, then enter.
- Promise.resolve(p).finally(()=>{
+ const timeCheck=syncTrustedTime();
+ // Keep the sign visible long enough to hear the uploaded double honk. The time
+ // check runs in parallel; if it fails, rendering safely uses only the last verified time.
+ Promise.allSettled([p,timeCheck]).finally(()=>{
    renderGrid();
    show("home");
    if(button){
@@ -1743,14 +1808,23 @@ if(enterRouteMobile) enterRouteMobile.onclick=enterRoute4T;
 document.body.classList.add("welcome-active");
 show("welcome");
 
+// Start trusted-time verification immediately so it normally finishes before HONK.
+syncTrustedTime().catch(()=>{});
 flushEmailQueue().catch(()=>{});
-window.addEventListener("online",()=>flushEmailQueue().catch(()=>{}));
+window.addEventListener("online",()=>{
+ syncTrustedTime().then(()=>{if(document.body.classList.contains("home-active")) renderGrid()}).catch(()=>{});
+ flushEmailQueue().catch(()=>{});
+});
+document.addEventListener("visibilitychange",()=>{
+ if(document.visibilityState!=="visible") return;
+ syncTrustedTime().then(()=>{if(document.body.classList.contains("home-active")) renderGrid()}).catch(()=>{});
+});
 
 // Ask the browser not to evict Route 4T progress under storage pressure.
 if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=246").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=247").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

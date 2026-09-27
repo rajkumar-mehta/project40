@@ -20,3 +20,13 @@ Known content placeholders retained by design: EXIT 25, 26, 36 and 40 currently 
 - Isolated artwork update: curved road visible in the Route 4T title graphic on Welcome and Home.
 - HONK implementation unchanged from v2.45.
 - Production gameplay/date/sequence behavior unchanged.
+
+
+## v2.47 QA — Trusted Time + Formspree Quota
+- Future EXIT unlocks no longer trust the phone's manually editable date/time.
+- Route4T syncs the same-origin server Date header and advances it with performance.now().
+- Offline/time-check failure is fail-closed; the last verified instant is frozen and future exits stay locked.
+- Already completed EXIT results are grandfathered, preserving Mika's existing scoreboard/progress.
+- Formspree now sends only one final notification per EXIT: SOLVED or WHITE FLAG.
+- Legacy queued OPEN/ANSWER notifications are discarded.
+- No visual, HONK, scoreboard, sticky, puzzle, answer, or progress-storage-format changes.

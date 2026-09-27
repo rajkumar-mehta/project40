@@ -1,6 +1,6 @@
-const CACHE='mikas-40-exits-v246-prod';
+const CACHE='mikas-40-exits-v247-qa';
 const ASSETS=[
-  './','./index.html','./styles.css?v=246','./app.js?v=246','./manifest.webmanifest',
+  './','./index.html','./styles.css?v=247','./app.js?v=247','./manifest.webmanifest',
   './icon-192.png','./icon-512.png','./home-header-autumn.png','./fall-leaves-tile.png',
   './welcome-mika-fall.png','./welcome-title-autumn.png','./welcome-rules-autumn.png','./welcome-honk-only.png',
   './welcome-mika-new.jpg','./car-horn.mp3','./photos/Raj-13.jpg','./photos/Raj-14.jpg'
@@ -15,6 +15,11 @@ self.addEventListener('activate',event=>{
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET') return;
   const url=new URL(event.request.url);
+  // Trusted-time probe must be network-only. Never satisfy it from Service Worker cache.
+  if(url.origin===self.location.origin && url.searchParams.has('__route4t_time')){
+    event.respondWith(fetch(event.request,{cache:'no-store'}));
+    return;
+  }
   if(url.origin===self.location.origin &&
     (url.pathname.endsWith('/') || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/app.js') || url.pathname.endsWith('/styles.css'))){
     event.respondWith(fetch(event.request,{cache:'no-store'}).then(response=>{
