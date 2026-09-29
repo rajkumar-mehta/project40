@@ -1,8 +1,18 @@
 const QA_SHOW_ALL_EXITS = false; // PRODUCTION: real date/unlock gating is ON.
 const QA_DISABLE_SEQUENCE = false; // PRODUCTION: sequential progression is ON.
-const MAX_ATTEMPTS = 3;
+const QA_HOST = location.hostname.toLowerCase() === "qa.route4t.com";
+// QA preview is deliberately hard-gated to the QA hostname. The same URL parameter
+// on route4t.com does nothing. Preview uses isolated progress and sends no email.
+const QA_PREVIEW_MODE = QA_HOST && new URLSearchParams(location.search).get("preview") === "1";
+const MAX_ATTEMPTS = 3; // normal guesses
+const MAX_TOTAL_ATTEMPTS = 4; // one optional bonus guess after the surrender warning
 const FINAL_EXIT = 40;
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mjykazrp";
+// Environment-aware email subject label.
+// QA custom domain and GitHub Pages fallback are labeled QA; Route4T.com is labeled PROD.
+const EMAIL_ENV_LABEL = (
+  QA_HOST || location.pathname.toLowerCase().startsWith("/project40-qa")
+) ? "QA" : "PROD";
 
 // v2.47: unlocks use trusted Route4T server time, never the phone wall clock.
 // A server anchor advances with performance.now(), which is unaffected by manual
@@ -111,10 +121,10 @@ const DAYS = [
   "date": "2026-09-29",
   "displayDate": "September 29, 2026",
   "video": "https://youtu.be/btRYOcFNmwo",
-  "relation": "Friend + Neighbor",
+  "relation": "Friend",
   "wishFrom": "Kamalbhai & Krupali",
   "lines": [
-   "Where (place) did you celebrate your 1st Bday in 1987"
+   "Where (City) did you celebrate your 1st Bday in 1987"
   ],
   "answerDisplay": "Ajman",
   "answers": [
@@ -144,7 +154,7 @@ const DAYS = [
   "date": "2026-10-01",
   "displayDate": "October 1, 2026",
   "video": "https://youtu.be/vAzVv0Oc8Zg",
-  "relation": "Friend + Neighbor",
+  "relation": "Friend",
   "wishFrom": "Beenaben",
   "lines": [
    "Around 2003-2004, what was your favorite unhealthy morning drink for Breakfast ?"
@@ -164,7 +174,7 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Bharat Patel",
   "lines": [
-   "Where was this picture taken ?"
+   "Where (Country) was this picture taken ?"
   ],
   "answerDisplay": "Kuwait",
   "answers": [
@@ -178,7 +188,7 @@ const DAYS = [
   "date": "2026-10-03",
   "displayDate": "October 3, 2026",
   "video": "https://youtu.be/zxKw6SfIT9M",
-  "relation": "Friend + Neighbor",
+  "relation": "Friend",
   "wishFrom": "Vimalbhai & Pallaviben",
   "lines": [
    "What was the name of the Hindi Teacher in Bahrain you got into trouble with ?"
@@ -231,9 +241,9 @@ const DAYS = [
   "day": 9,
   "date": "2026-10-06",
   "displayDate": "October 6, 2026",
-  "video": "https://youtu.be/GC6Eh0lCJ84",
+  "video": "https://youtu.be/cG0eOPmZUbo",
   "relation": "Friend",
-  "wishFrom": "Misri - Payal",
+  "wishFrom": "Ashesh & Krishna",
   "lines": [
    "Who is carrying you in her arms?"
   ],
@@ -250,7 +260,7 @@ const DAYS = [
   "displayDate": "October 7, 2026",
   "video": "https://youtu.be/bQa0x3hiDr0",
   "relation": "Friend",
-  "wishFrom": "Chirag & Arlett",
+  "wishFrom": "ArChi",
   "lines": [
    "What was the color of the Scooty, from where you and Archana fell in the middle of the road ?"
   ],
@@ -271,7 +281,7 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "GariMan",
   "lines": [
-   "Which city (Place) was this picture taken ?"
+   "Where (City) was this picture taken ?"
   ],
   "answerDisplay": "Ajman",
   "answers": [
@@ -287,9 +297,9 @@ const DAYS = [
   "day": 12,
   "date": "2026-10-09",
   "displayDate": "October 9, 2026",
-  "video": "https://youtu.be/b46etLzpx5c",
+  "video": "https://youtube.com/shorts/rrS010BKXLc",
   "relation": "Friend",
-  "wishFrom": "ShAmeet",
+  "wishFrom": "Finny",
   "lines": [
    "What was your favourite orange drink from Ajman"
   ],
@@ -321,11 +331,11 @@ const DAYS = [
   "day": 14,
   "date": "2026-10-11",
   "displayDate": "October 11, 2026",
-  "video": "https://youtu.be/aq81_wqX7QI",
+  "video": "https://youtu.be/b46etLzpx5c",
   "relation": "Friend",
-  "wishFrom": "Umang & Hiral Family",
+  "wishFrom": "ShAmeet",
   "lines": [
-   "Name the country where this picture was taken"
+   "Where (Country) was this picture taken ?"
   ],
   "answerDisplay": "Bahrain",
   "answers": [
@@ -338,16 +348,15 @@ const DAYS = [
   "day": 15,
   "date": "2026-10-12",
   "displayDate": "October 12, 2026",
-  "video": "https://youtu.be/cG0eOPmZUbo",
-  "relation": "Cousin",
-  "wishFrom": "Ashesh & Krishna",
+  "video": "https://youtu.be/_c1vlWvXKes",
+  "relation": "Friend",
+  "wishFrom": "Rushabh, Palak, Arav & Rian",
   "lines": [
-   "Where was this picture taken ?"
+   "Where (City) was this picture taken ?"
   ],
   "answerDisplay": "Navsari",
   "answers": [
    "navsari",
-   "navsaari",
    "nawsari"
   ],
   "hint": "Think back carefully to the memory behind this question.",
@@ -357,17 +366,15 @@ const DAYS = [
   "day": 16,
   "date": "2026-10-13",
   "displayDate": "October 13, 2026",
-  "video": "https://youtu.be/_c1vlWvXKes",
+  "video": "https://youtu.be/1MorLQh1csk",
   "relation": "Friend",
-  "wishFrom": "Rushabh, Palak, Arav & Rian",
+  "wishFrom": "Preet & Dimpy",
   "lines": [
-   "Who is the baby in the middle ?"
+   "What is the name of the baby in the middle ?"
   ],
-  "answerDisplay": "Dhamini",
+  "answerDisplay": "Bhavika",
   "answers": [
-   "dhamini",
-   "anjani",
-   "bhargav"
+   "bhavika"
   ],
   "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-2.jpeg"
@@ -376,11 +383,11 @@ const DAYS = [
   "day": 17,
   "date": "2026-10-14",
   "displayDate": "October 14, 2026",
-  "video": "https://youtu.be/EOwkfgBSgbk",
+  "video": "https://youtu.be/I_UHWNkgzGI",
   "relation": "Friend",
-  "wishFrom": "Preet & Finny",
+  "wishFrom": "Mayuri",
   "lines": [
-   "Where was this picture taken ?"
+   "Where (City) was this picture taken ?"
   ],
   "answerDisplay": "Sedona",
   "answers": [
@@ -415,7 +422,7 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Leah & Shree",
   "lines": [
-   "Where was this picture taken ?"
+   "Where (State) was this picture taken ?"
   ],
   "answerDisplay": "Alaska",
   "answers": [
@@ -432,7 +439,7 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Jagruti",
   "lines": [
-   "Where was this picture taken ? Its not Boston - HAHA"
+   "Where (City) was this picture taken ? Its not Boston - HAHA"
   ],
   "answerDisplay": "San Francisco",
   "answers": [
@@ -449,7 +456,7 @@ const DAYS = [
   "relation": "Friend",
   "wishFrom": "Divya & Pankaj",
   "lines": [
-   "Which city (Place) was this picture taken ?"
+   "Where (City) was this picture taken ?"
   ],
   "answerDisplay": "Ajman",
   "answers": [
@@ -480,16 +487,17 @@ const DAYS = [
   "day": 23,
   "date": "2026-10-20",
   "displayDate": "October 20, 2026",
-  "video": "https://youtu.be/1b2bhSTGTkU",
-  "relation": "Friend",
-  "wishFrom": "Rajubhai & Ruchita",
+  "video": "https://www.youtube.com/watch?v=aq81_wqX7QI",
+  "relation": "Cousin",
+  "wishFrom": "Umang & Hiral Family",
   "lines": [
    "What was the name of the tutor whose house Bhavika ran away from ?"
   ],
   "answerDisplay": "Janet",
   "answers": [
    "janet",
-   "janet aunty"
+   "janet aunty",
+   "ms janet"
   ],
   "hint": "Think back carefully to the memory behind this question."
  },
@@ -498,14 +506,15 @@ const DAYS = [
   "date": "2026-10-21",
   "displayDate": "October 21, 2026",
   "video": "https://youtu.be/26SCfqydB5c",
-  "relation": "Friend",
+  "relation": "Cousin",
   "wishFrom": "Jetha Bapa Family",
   "lines": [
-   "What was the subject of the Rangoli, for which you won the prize ?"
+   "What was the subject of your Rangoli, for which you won the prize ?"
   ],
   "answerDisplay": "Ganesh",
   "answers": [
-   "ganesh"
+   "ganesh",
+   "ganpati"
   ],
   "hint": "Think back carefully to the memory behind this question."
  },
@@ -513,9 +522,9 @@ const DAYS = [
   "day": 25,
   "date": "2026-10-22",
   "displayDate": "October 22, 2026",
-  "video": null,
+  "video": "https://youtu.be/GC6Eh0lCJ84",
   "relation": "Friend",
-  "wishFrom": "Mayuri",
+  "wishFrom": "Misri - Payal",
   "lines": [
    "Which year (yyyy) did you win Toastmasters in Bahrain ?"
   ],
@@ -529,9 +538,9 @@ const DAYS = [
   "day": 26,
   "date": "2026-10-23",
   "displayDate": "October 23, 2026",
-  "video": null,
+  "video": "https://youtu.be/phHyke6ATkM",
   "relation": "Cousin",
-  "wishFrom": "Payal & Sapan",
+  "wishFrom": "Komal",
   "lines": [
    "What was the color of the dollhouse, where you and Bhavika played house ?"
   ],
@@ -549,7 +558,7 @@ const DAYS = [
   "relation": "Cousin",
   "wishFrom": "Vatsal Bhai & Sejal",
   "lines": [
-   "What souvenir did I bring from Brazil ?"
+   "What souvenir did Raj bring for you from Brazil ?"
   ],
   "answerDisplay": "Windchime",
   "answers": [
@@ -561,17 +570,15 @@ const DAYS = [
   "day": 28,
   "date": "2026-10-25",
   "displayDate": "October 25, 2026",
-  "video": "https://youtube.com/shorts/dMGs_tKZvNg?feature=share",
+  "video": "https://youtu.be/TtJjY6mlONw?si=ICLkMwLpJCyYmHmT",
   "relation": "Uncle-In-Law",
-  "wishFrom": "Harsh & Zalak",
+  "wishFrom": "Mayurbhai & Rajubhai Family",
   "lines": [
    "Which month and year (mm/yyyy) was this picture taken ?"
   ],
   "answerDisplay": "02/2016",
   "answers": [
-   "02/2016",
-   "feb-2016",
-   "feb"
+   "02/2016"
   ],
   "hint": "Think back carefully to the memory behind this question.",
   "photo": "Alap-6.jpeg"
@@ -601,7 +608,7 @@ const DAYS = [
   "relation": "Niece",
   "wishFrom": "Jayanti Bapa Family",
   "lines": [
-   "Name the city/place, you spent your birthday in 2016"
+   "Where (City) did you celebrate your 30th Bday ?"
   ],
   "answerDisplay": "Surednranagar",
   "answers": [
@@ -615,17 +622,13 @@ const DAYS = [
   "displayDate": "October 28, 2026",
   "video": "https://youtube.com/shorts/SknlZ23htAU?feature=share",
   "relation": "Cousin",
-  "wishFrom": "Jayshreeben, Udaybhai & Rinku",
+  "wishFrom": "Jayshreeben, Neelamben & Rinku",
   "lines": [
-   "What was the exact date (mm/dd/yyyy) when this picture was taken ? ",
-   "or ",
-   "Name the City/Place where this picture was taken ?"
+   "What was the exact date (mm/dd/yyyy) when this picture was taken ?"
   ],
-  "answerDisplay": "11/6/2017",
+  "answerDisplay": "11/06/2017",
   "answers": [
-   "11/6/2017",
-   "jersey city",
-   "hoboken"
+   "11/06/2017"
   ],
   "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-6.jpg"
@@ -642,8 +645,7 @@ const DAYS = [
   ],
   "answerDisplay": "2018",
   "answers": [
-   "2018",
-   "18"
+   "2018"
   ],
   "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-7.jpg"
@@ -671,14 +673,13 @@ const DAYS = [
   "displayDate": "October 31, 2026",
   "video": "https://youtu.be/A8tQixyaVbg",
   "relation": "Aunty & Family",
-  "wishFrom": "Kaki & Family",
+  "wishFrom": "Kaki, Gaurav, Avani, Dhamini",
   "lines": [
    "Which year (yyyy) was this picture taken ?"
   ],
   "answerDisplay": "2020",
   "answers": [
-   "2020",
-   "20"
+   "2020"
   ],
   "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-8.jpg"
@@ -695,8 +696,7 @@ const DAYS = [
   ],
   "answerDisplay": "2021",
   "answers": [
-   "2021",
-   "21"
+   "2021"
   ],
   "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-9.jpg"
@@ -713,8 +713,7 @@ const DAYS = [
   ],
   "answerDisplay": "2022",
   "answers": [
-   "2022",
-   "22"
+   "2022"
   ],
   "hint": "Think back carefully to the memory behind this question.",
   "photo": "Raj-10.jpg"
@@ -727,7 +726,7 @@ const DAYS = [
   "relation": "Sister",
   "wishFrom": "Bhavika",
   "lines": [
-   "Where was this picture taken ?"
+   "Where (Country) was this picture taken ?"
   ],
   "answerDisplay": "Singapore",
   "answers": [
@@ -808,10 +807,11 @@ const ANSWER_PLACEHOLDERS=[
  "3 GUESSES — ENTER YOUR ANSWER",
  "2 GUESSES LEFT — TRY AGAIN",
  "1 GUESS LEFT — MAKE IT COUNT",
+ "BONUS 4TH GUESS — LAST CHANCE",
  ""
 ];
 
-let currentDay=DAYS[0], attemptsUsed=0;
+let currentDay=DAYS[0], attemptsUsed=0, bonusAttemptActive=false;
 let wrongPopupAwaitingAck=false, wrongPopupSuppressClickUntil=0, wrongPopupReadyAt=0;
 let wrongPopupLockedValue="";
 let mobileWrongAckGuardUntil=0, wrongAckShieldTimer=0;
@@ -1124,6 +1124,10 @@ function visibilityNow(){
  const ms=trustedNowMs();
  return Number.isFinite(ms)?new Date(ms):null;
 }
+if(QA_PREVIEW_MODE){
+ try{document.title=`QA PREVIEW · ${document.title}`}catch{}
+}
+
 function show(id){
  if(id!=="finale") stopBirthdayCelebration();
  screens.forEach(s=>s.classList.toggle("active",s.id===id));
@@ -1141,14 +1145,18 @@ function show(id){
  },0);
 }
 function norm(v){return v.trim().toLowerCase().replace(/\s+/g," ")}
-const RESULT_PREFIX=IS_MIKA?"route4t_2026_exit_":"route4t_2026_raj_exit_";
-const BACKUP_KEY=IS_MIKA?"route4t_2026_progress_backup_v1":"route4t_2026_raj_progress_backup_v1";
+const RESULT_PREFIX=QA_PREVIEW_MODE
+ ? "route4t_qa_preview_exit_"
+ : (IS_MIKA?"route4t_2026_exit_":"route4t_2026_raj_exit_");
+const BACKUP_KEY=QA_PREVIEW_MODE
+ ? "route4t_qa_preview_progress_backup_v1"
+ : (IS_MIKA?"route4t_2026_progress_backup_v1":"route4t_2026_raj_progress_backup_v1");
 function key(day){return `${RESULT_PREFIX}${day}`}
 function validResult(r){
  if(!r || typeof r!=="object") return false;
- if(r.outcome==="solved") return Number.isInteger(r.attempts)&&r.attempts>=1&&r.attempts<=MAX_ATTEMPTS;
- if(r.outcome==="gave-up") return r.attempts===MAX_ATTEMPTS;
- if(r.outcome==="in-progress") return Number.isInteger(r.attemptsUsed)&&r.attemptsUsed>=0&&r.attemptsUsed<=MAX_ATTEMPTS;
+ if(r.outcome==="solved") return Number.isInteger(r.attempts)&&r.attempts>=1&&r.attempts<=MAX_TOTAL_ATTEMPTS;
+ if(r.outcome==="gave-up") return r.attempts===MAX_ATTEMPTS||r.attempts===MAX_TOTAL_ATTEMPTS;
+ if(r.outcome==="in-progress") return Number.isInteger(r.attemptsUsed)&&r.attemptsUsed>=0&&r.attemptsUsed<=MAX_TOTAL_ATTEMPTS;
  return false;
 }
 function readBackup(){try{const x=JSON.parse(localStorage.getItem(BACKUP_KEY)||"{}");return x&&typeof x==="object"?x:{}}catch{return {}}}
@@ -1177,17 +1185,14 @@ function saveResult(day,result){
  const backup=readBackup(); backup[day]=result; writeBackup(backup);
  return result;
 }
-function saveInProgress(day,count){return saveResult(day,{outcome:"in-progress",attemptsUsed:count,updatedAt:gameNowISO()})}
-function restartInProgress(day){
- const r={outcome:"in-progress",attemptsUsed:0,updatedAt:gameNowISO()};
- try{localStorage.setItem(key(day),JSON.stringify(r))}catch{}
- const backup=readBackup(); backup[day]=r; writeBackup(backup);
- return r;
+function saveInProgress(day,count,bonus=false){return saveResult(day,{outcome:"in-progress",attemptsUsed:count,bonusAttempt:!!bonus,updatedAt:gameNowISO()})}
+function grantBonusAttempt(day){
+ return saveResult(day,{outcome:"in-progress",attemptsUsed:MAX_ATTEMPTS,bonusAttempt:true,updatedAt:gameNowISO()});
 }
 
 function isFinalResult(r){return !!r&&(r.outcome==="solved"||r.outcome==="gave-up")}
 function isDateEligible(d){
- if(QA_SHOW_ALL_EXITS) return true;
+ if(QA_PREVIEW_MODE || QA_SHOW_ALL_EXITS) return true;
  const now=visibilityNow();
  if(!now) return false; // fail closed: never trust the phone clock
  if(d.unlockAt) return now.getTime()>=Date.parse(d.unlockAt);
@@ -1229,12 +1234,13 @@ async function deliverEmail(item){
  return false;
 }
 function sendGameEmailOnce(id,fields){
- if(!IS_MIKA) return;
+ if(!IS_MIKA || QA_PREVIEW_MODE) return;
  if(emailWasSent(id)) return;
  const item={id,fields:{...fields,_subject:fields._subject||"Route 4T Game Alert"}};
  deliverEmail(item).then(ok=>{if(!ok) queueEmail(item)});
 }
 async function flushEmailQueue(){
+ if(QA_PREVIEW_MODE) return;
  // Discard legacy OPEN/ANSWER queue entries from v2.46 so they cannot consume quota later.
  const q=readEmailQueue().filter(isFinalEmailItem);
  writeEmailQueue(q);
@@ -1248,12 +1254,12 @@ function notifyExitOpened(day){}
 function notifyAnswer(day,attempt,answer,result){}
 function notifySolved(day,attempt){
  sendGameEmailOnce(`solved-${day.day}`,{
-   _subject:`MIKA — Route 4T — EXIT ${day.day} SOLVED ✅`,event:"EXIT SOLVED",exit:day.day,date:day.displayDate,attempts:attempt,time:emailTime(),scoreboard:scoreSnapshot()
+   _subject:`[${EMAIL_ENV_LABEL}] MIKA — Route 4T — EXIT ${day.day} SOLVED ✅`,event:"EXIT SOLVED",exit:day.day,date:day.displayDate,attempts:attempt,time:emailTime(),scoreboard:scoreSnapshot()
  });
 }
 function notifySurrender(day){
  sendGameEmailOnce(`surrender-${day.day}`,{
-   _subject:`MIKA — Route 4T — EXIT ${day.day} WHITE FLAG 🏳️`,event:"EXIT SURRENDERED",exit:day.day,date:day.displayDate,time:emailTime(),scoreboard:scoreSnapshot()
+   _subject:`[${EMAIL_ENV_LABEL}] MIKA — Route 4T — EXIT ${day.day} WHITE FLAG 🏳️`,event:"EXIT SURRENDERED",exit:day.day,date:day.displayDate,time:emailTime(),scoreboard:scoreSnapshot()
  });
 }
 function showSequencePopup(required,requested){
@@ -1283,10 +1289,30 @@ function openReview(day,result){
    ?`You already cleared this Exit in ${result.attempts} attempt${result.attempts===1?"":"s"}. Your score is locked.`
    :"You already completed this Exit. Your white flag and score are locked.";
  const gift=$("reviewGiftBtn");
- gift.textContent="VIEW YOUR GIFT 🎁";
- gift.style.display=hasVideo(day)?"":"none";
- gift.onclick=()=>result.outcome==="solved"?(day.day===FINAL_EXIT?openBirthdayFinale():openSurprise(true)):(day.day===FINAL_EXIT?openBirthdayFinale():openSurprise(false));
+ const isFinal=day.day===FINAL_EXIT;
+ const available=hasVideo(day);
+ gift.disabled=false;
+ if(isFinal){
+   // Completed EXIT 40 should still feel like the finale while letting Mika
+   // reread the puzzle and answer. Keep the final-video placeholder visible
+   // even before the video URL is supplied, and replay the celebration.
+   gift.style.display="";
+   gift.textContent=available?"VIEW YOUR BIRTHDAY SURPRISE 🎁":"FINAL VIDEO COMING SOON";
+   gift.disabled=!available;
+   gift.onclick=available?()=>openBirthdayFinale():null;
+ }else{
+   gift.textContent="VIEW YOUR GIFT 🎁";
+   gift.style.display=available?"":"none";
+   gift.onclick=available?()=>result.outcome==="solved"?openSurprise(true):openSurprise(false):null;
+ }
  show("review");
+ if(isFinal){
+   const reviewRun=celebrationRunId;
+   requestAnimationFrame(()=>requestAnimationFrame(()=>{
+     if(reviewRun!==celebrationRunId || !$("review")?.classList.contains("active")) return;
+     launchBirthdayCelebration("review");
+   }));
+ }
 }
 function isVisible(d){
  if(QA_SHOW_ALL_EXITS) return true;
@@ -1428,7 +1454,7 @@ function stateMarkup(d){
  }
  if(!isDateEligible(d)) return {icon:lockIcon(false),rowClass:"locked-state",state:`<span class="locked">LOCKED</span>`};
  const required=nextRequiredDay();
- if(!QA_DISABLE_SEQUENCE && required && d.day!==required.day){
+ if(!(QA_DISABLE_SEQUENCE||QA_PREVIEW_MODE) && required && d.day!==required.day){
    return {icon:lockIcon(false),rowClass:"locked-state sequence-locked",state:`<span class="locked">COMPLETE EXIT ${required.day} FIRST</span>`};
  }
  return {icon:lockIcon(true),rowClass:"ready-state",state:`<span class="ready">READY TO UNLOCK</span>`};
@@ -1456,6 +1482,7 @@ function renderGrid(){
 function renderQuestion(day){renderQuestionInto("puzzleText",day)}
 function resetPuzzle(){
  attemptsUsed=0;
+ bonusAttemptActive=false;
  wrongPopupAwaitingAck=false;
  wrongPopupLockedValue="";
  $("answerInput").value="";$("answerInput").disabled=false;
@@ -1471,13 +1498,15 @@ function openDay(n){
  if(isFinalResult(existing)){openReview(requested,existing);return;}
  if(!isDateEligible(requested)) return;
  const required=nextRequiredDay();
- if(!QA_DISABLE_SEQUENCE && required && requested.day!==required.day){showSequencePopup(required,requested);return;}
+ if(!(QA_DISABLE_SEQUENCE||QA_PREVIEW_MODE) && required && requested.day!==required.day){showSequencePopup(required,requested);return;}
  currentDay=requested;
  resetPuzzle();
  if(existing?.outcome==="in-progress"){
-   attemptsUsed=Math.max(0,Math.min(MAX_ATTEMPTS,existing.attemptsUsed||0));
+   attemptsUsed=Math.max(0,Math.min(MAX_TOTAL_ATTEMPTS,existing.attemptsUsed||0));
+   bonusAttemptActive=!!existing.bonusAttempt;
    syncAnswerPlaceholder();
-   if(attemptsUsed>=MAX_ATTEMPTS){openConfirmGiveUpGuarded();return;}
+   if(attemptsUsed>=MAX_TOTAL_ATTEMPTS){completeSurrender(MAX_TOTAL_ATTEMPTS);return;}
+   if(attemptsUsed>=MAX_ATTEMPTS && !bonusAttemptActive){openConfirmGiveUpGuarded();return;}
  }
  $("dayEyebrow").textContent=`EXIT ${currentDay.day} · ${currentDay.displayDate.toUpperCase()}`;
  renderQuestion(currentDay);
@@ -1499,9 +1528,15 @@ function check(){
    return;
  }
  attemptsUsed++;
- saveInProgress(currentDay.day,attemptsUsed);
+ saveInProgress(currentDay.day,attemptsUsed,bonusAttemptActive);
  notifyAnswer(currentDay,attemptsUsed,raw,"wrong");
  input.value="";
+ if(bonusAttemptActive && attemptsUsed>=MAX_TOTAL_ATTEMPTS){
+   input.disabled=true;
+   $("submitBtn").disabled=true;
+   completeSurrender(MAX_TOTAL_ATTEMPTS);
+   return;
+ }
  const remaining=MAX_ATTEMPTS-attemptsUsed;
  const wrongMessage=wrongMessageForAttempt(attemptsUsed);
  syncAnswerPlaceholder();
@@ -1583,17 +1618,27 @@ window.addEventListener("resize",hidePhoneQr,{passive:true});
 window.addEventListener("orientationchange",()=>setTimeout(hidePhoneQr,120),{passive:true});
 hidePhoneQr();
 $("scrollCue").onclick=()=>$("answerArea").scrollIntoView({behavior:"smooth",block:"start"});
+function completeSurrender(attemptCount=MAX_ATTEMPTS){
+ saveResult(currentDay.day,{outcome:"gave-up",attempts:attemptCount,completedAt:gameNowISO()});
+ notifySurrender(currentDay);
+ $("answerReveal").textContent=currentDay.answerDisplay;
+ fitRevealAnswer(currentDay.answerDisplay);
+ show("surrender");
+}
 $("giveUpBtn").onclick=()=>show("confirmGiveUp");
 $("tryAgainBtn").onclick=e=>{
  if(Date.now()<confirmGiveUpReadyAt){e.preventDefault();e.stopPropagation();return;}
- restartInProgress(currentDay.day);
- resetPuzzle();show("puzzle");
+ grantBonusAttempt(currentDay.day);
+ resetPuzzle();
+ attemptsUsed=MAX_ATTEMPTS;
+ bonusAttemptActive=true;
+ syncAnswerPlaceholder();
+ $("attempts").textContent=isLikelyPhone()?"":"BONUS 4TH ATTEMPT — LAST CHANCE";
+ show("puzzle");
 };
 $("saveMeBtn").onclick=e=>{
  if(Date.now()<confirmGiveUpReadyAt){e.preventDefault();e.stopPropagation();return;}
- saveResult(currentDay.day,{outcome:"gave-up",attempts:MAX_ATTEMPTS,completedAt:gameNowISO()});
- notifySurrender(currentDay);
- $("answerReveal").textContent=currentDay.answerDisplay;fitRevealAnswer(currentDay.answerDisplay);show("surrender");
+ completeSurrender(MAX_ATTEMPTS);
 };
 function birthdayWishText(day=currentDay){
  const from=(day?.wishFrom||"").trim();
@@ -1637,9 +1682,9 @@ function stopBirthdayCelebration(){
  const layer=$("celebrationLayer");
  if(layer) layer.innerHTML="";
 }
-function launchBirthdayCelebration(){
+function launchBirthdayCelebration(screenId="finale"){
  const layer=$("celebrationLayer");
- if(!layer || !$("finale")?.classList.contains("active")) return;
+ if(!layer || !$(screenId)?.classList.contains("active")) return;
 
  clearTimeout(celebrationCleanupTimer);
  const runId=++celebrationRunId;
@@ -1707,7 +1752,7 @@ function openBirthdayFinale(){
  const finaleRun=celebrationRunId;
  requestAnimationFrame(()=>requestAnimationFrame(()=>{
    if(finaleRun!==celebrationRunId || !$("finale")?.classList.contains("active")) return;
-   launchBirthdayCelebration();
+   launchBirthdayCelebration("finale");
  }));
 }
 
@@ -1824,7 +1869,7 @@ document.addEventListener("visibilitychange",()=>{
 if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=247").catch(()=>{}));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=301").catch(()=>{}));
 }
 
 function syncDesktopFrame(){

@@ -30,3 +30,39 @@ Known content placeholders retained by design: EXIT 25, 26, 36 and 40 currently 
 - Formspree now sends only one final notification per EXIT: SOLVED or WHITE FLAG.
 - Legacy queued OPEN/ANSWER notifications are discarded.
 - No visual, HONK, scoreboard, sticky, puzzle, answer, or progress-storage-format changes.
+
+
+## v2.48 QA — future content update
+- Based directly on approved v2.47 PROD.
+- EXIT 0 and EXIT 1 preserved exactly.
+- EXIT 2–40 content synchronized from YT URL(4).xlsx.
+- Updated future puzzle questions, accepted answers, photo mappings, sender metadata and YouTube URLs.
+- TBD videos remain unavailable rather than being treated as URLs.
+- No change to saved-game keys/format, scoreboard logic, trusted server time, Formspree final-only notification behavior, sequence gating, HONK, sticky UI, or EXIT styling.
+
+
+## v2.49 QA — Formspree subject labeling
+- Formspree frequency is unchanged: one final notification per completed EXIT.
+- QA subjects begin with [QA].
+- PROD subjects begin with [PROD] automatically after promotion.
+- No gameplay, scoring, progress-storage, trusted-time, sequence, HONK, sticky UI, puzzle, or visual changes.
+- QA CNAME is qa.route4t.com.
+
+
+## v2.50 QA — QA Preview + One Bonus 4th Attempt
+- QA preview URL: https://qa.route4t.com/?preview=1
+- Preview is hard-gated to qa.route4t.com; the parameter cannot activate on route4t.com.
+- Preview reveals future EXITs, bypasses sequence gating, uses isolated preview progress, and suppresses Formspree.
+- Normal QA remains trusted-time/sequential and still sends one final [QA] Formspree notification per completed EXIT.
+- After 3 failed guesses, LET ME TRY ONE MORE TIME grants exactly one bonus 4th attempt.
+- A wrong bonus 4th attempt immediately records surrender; there is no repeat 3-attempt reset.
+- Existing PROD progress format and completed 1–3 attempt results remain valid.
+- HONK, sticky UI, artwork, puzzles/videos, and trusted-time logic are unchanged.
+
+
+## v3.01 QA — EXIT 40 regression fixes
+- v2.50 objectives remain unchanged and are carried forward.
+- Fixed text contrast across puzzle/review/result/gift/finale screens for both light and dark device themes.
+- EXIT 40 legacy pale lavender finale text is explicitly replaced with high-contrast dark brown.
+- Reopening a completed EXIT 40 keeps the question/answer review, shows FINAL VIDEO COMING SOON when the final video is still TBD, and replays balloons/confetti.
+- No change to QA-only preview isolation, trusted-time protection, Formspree frequency/labels, saved-game keys, HONK, sticky scoreboard, EXIT layout, or the one-time bonus 4th attempt.
